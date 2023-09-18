@@ -44,3 +44,6 @@ TagManager:
   - name: Player
     uniqueID: 177567387
     locked: 0
+  - name: Icons
+    uniqueID: 4034209783
+    locked: 0
