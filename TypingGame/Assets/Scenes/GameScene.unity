@@ -3375,14 +3375,6 @@ PrefabInstance:
       propertyPath: _pathTiles
       value: 
       objectReference: {fileID: 1365548262}
-    - target: {fileID: 5998215316062292709, guid: 4027ab85223ce774ba8a36737cb40311, type: 3}
-      propertyPath: navigableTiles
-      value: 
-      objectReference: {fileID: 1365548262}
-    - target: {fileID: 5998215316062292709, guid: 4027ab85223ce774ba8a36737cb40311, type: 3}
-      propertyPath: nonNavigableTiles
-      value: 
-      objectReference: {fileID: 1570697528}
     - target: {fileID: 6546154498657371939, guid: 4027ab85223ce774ba8a36737cb40311, type: 3}
       propertyPath: m_LocalPosition.x
       value: -8

@@ -28,70 +28,26 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             ""id"": ""458a1d1e-cf75-4048-bb51-296069abcb3a"",
             ""actions"": [
                 {
-                    ""name"": ""Movement"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""cc41022c-4048-4bee-998c-ff417fb35cf7"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": ""NormalizeVector2"",
-                    ""interactions"": ""Press"",
+                    ""name"": ""TypingMovement"",
+                    ""type"": ""Button"",
+                    ""id"": ""3f3b250d-6eed-4387-a09f-b370b5936ce7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
                 {
-                    ""name"": ""wasd"",
-                    ""id"": ""6a5c9504-d0a5-4624-816a-c0168003784c"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
+                    ""name"": """",
+                    ""id"": ""11746b7c-eeed-4691-b27a-eb8621bf9435"",
+                    ""path"": ""<Keyboard>/anyKey"",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Movement"",
-                    ""isComposite"": true,
+                    ""action"": ""TypingMovement"",
+                    ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""50b6c165-2ba8-4919-816a-56b75cdf3559"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Movement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""880f0077-0a38-4a9a-aa8c-afd21c1c62af"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Movement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""9b037b86-a66f-4d9d-91fd-762363925a98"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Movement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""b504c560-4654-438f-8d0a-1de2a03c901b"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Movement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -100,7 +56,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
 }");
         // Main
         m_Main = asset.FindActionMap("Main", throwIfNotFound: true);
-        m_Main_Movement = m_Main.FindAction("Movement", throwIfNotFound: true);
+        m_Main_TypingMovement = m_Main.FindAction("TypingMovement", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -162,12 +118,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     // Main
     private readonly InputActionMap m_Main;
     private List<IMainActions> m_MainActionsCallbackInterfaces = new List<IMainActions>();
-    private readonly InputAction m_Main_Movement;
+    private readonly InputAction m_Main_TypingMovement;
     public struct MainActions
     {
         private @PlayerInput m_Wrapper;
         public MainActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Movement => m_Wrapper.m_Main_Movement;
+        public InputAction @TypingMovement => m_Wrapper.m_Main_TypingMovement;
         public InputActionMap Get() { return m_Wrapper.m_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -177,16 +133,16 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_MainActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_MainActionsCallbackInterfaces.Add(instance);
-            @Movement.started += instance.OnMovement;
-            @Movement.performed += instance.OnMovement;
-            @Movement.canceled += instance.OnMovement;
+            @TypingMovement.started += instance.OnTypingMovement;
+            @TypingMovement.performed += instance.OnTypingMovement;
+            @TypingMovement.canceled += instance.OnTypingMovement;
         }
 
         private void UnregisterCallbacks(IMainActions instance)
         {
-            @Movement.started -= instance.OnMovement;
-            @Movement.performed -= instance.OnMovement;
-            @Movement.canceled -= instance.OnMovement;
+            @TypingMovement.started -= instance.OnTypingMovement;
+            @TypingMovement.performed -= instance.OnTypingMovement;
+            @TypingMovement.canceled -= instance.OnTypingMovement;
         }
 
         public void RemoveCallbacks(IMainActions instance)
@@ -206,6 +162,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     public MainActions @Main => new MainActions(this);
     public interface IMainActions
     {
-        void OnMovement(InputAction.CallbackContext context);
+        void OnTypingMovement(InputAction.CallbackContext context);
     }
 }

@@ -1,13 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
+[RequireComponent(typeof(InputField))]
 public class PlayerMovement : MonoBehaviour
 {
     private PlayerInput _input;
 
     [SerializeField] private Tilemap _pathTiles;
+    private InputField _inputField;
 
     private void Awake()
     {
@@ -16,6 +22,21 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnEnable()
     {
+        _inputField = GetComponent<InputField>();
+        _inputField.Select();
+        _inputField.onValueChanged.AddListener(value =>
+        {
+            if (value == "")
+                return;
+
+            TryMoveToKey(value[0]);
+
+            _inputField.text = "";
+        });
+        _inputField.onEndEdit.AddListener(value =>
+        {
+            StartCoroutine(DoNextFrame(() => _inputField.Select()));
+        });
         _input.Enable();
     }
 
@@ -24,23 +45,24 @@ public class PlayerMovement : MonoBehaviour
         _input.Disable();
     }
 
-    private void Start()
+    private bool TryMoveToKey(char key)
     {
-        _input.Main.Movement.performed += context => Move(context.ReadValue<Vector2>());
-    }
-
-    private void Move(Vector2 direction)
-    {
-        if (CanMove(direction))
+        var position = _pathTiles.WorldToCell(transform.position);
+        foreach(var keyTile in LevelTiles.Instance.GetNeighboursOf(position))
         {
-            transform.position += (Vector3)direction;
+            if (keyTile.Key == key)
+            {
+                transform.position = keyTile.Position;
+                return true;
+            }
         }
+        return false;
     }
 
-    private bool CanMove(Vector2 direction)
+    private IEnumerator DoNextFrame(Action action)
     {
-        var gridPosition = _pathTiles.WorldToCell(transform.position + (Vector3)direction);
+        yield return null;
 
-        return _pathTiles.HasTile(gridPosition);
+        action();
     }
 }

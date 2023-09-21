@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Linq;
-using TMPro;
 
-public class LevelTiles : MonoBehaviour
+public partial class LevelTiles : MonoBehaviour
 {
     [SerializeField] private Tilemap _pathTiles;
     [SerializeField] private GameObject _keyIconPrefab;
@@ -19,8 +18,21 @@ public class LevelTiles : MonoBehaviour
 
         _keyTilesByPosition = InstantiateKeyTilesByPosition();
     }
+
     public static LevelTiles Instance { get; private set; }
 
+    public IEnumerable<KeyTile> GetNeighboursOf(Vector3Int position)
+    {
+        if (_keyTilesByPosition.TryGetValue(position + Vector3Int.up, out KeyTile upTile))
+            yield return upTile;
+        if (_keyTilesByPosition.TryGetValue(position + Vector3Int.down, out KeyTile downTile))
+            yield return downTile;
+        if (_keyTilesByPosition.TryGetValue(position + Vector3Int.left, out KeyTile leftTile))
+            yield return leftTile;
+        if (_keyTilesByPosition.TryGetValue(position + Vector3Int.right, out KeyTile rightTile))
+            yield return rightTile;
+    }
+        
     private Dictionary<Vector3Int, KeyTile> InstantiateKeyTilesByPosition()
     {
         var keyTilesByPosition = new Dictionary<Vector3Int, KeyTile>();
@@ -35,39 +47,5 @@ public class LevelTiles : MonoBehaviour
             keyTilesByPosition.Add(position, keyTile);
         }
         return keyTilesByPosition;
-    }
-
-
-    private class KeyTile
-    {
-        private readonly GameObject _icon;
-
-        private KeyTile(GameObject icon, Vector3Int position, char key)
-        {
-            _icon = icon;
-            Key = key;
-            Position = position;
-        }
-
-        public char Key { get; }
-        public Vector3Int Position { get; }
-
-        public static KeyTile Instantiate(GameObject iconPrefab, Vector3Int position, GameObject parent)
-        {
-            var key = RandomKey();
-            var icon = Object.Instantiate(original: iconPrefab, position: position, rotation: Quaternion.identity, parent: parent.transform);
-            var iconText = icon.GetComponentInChildren<TextMeshProUGUI>();
-            iconText.text = $"{key}";
-
-            return new KeyTile(icon, position, key);
-        }
-
-        // TODO make this clever
-        private static char RandomKey()
-        {
-            const string Keys = "abcdefghijklmnopqrstuvwxyz";
-
-            return Keys[Random.Range(0, Keys.Length)];
-        }
     }
 }
