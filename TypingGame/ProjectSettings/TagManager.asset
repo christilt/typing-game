@@ -41,7 +41,7 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Player
+  - name: Characters
     uniqueID: 177567387
     locked: 0
   - name: Icons
