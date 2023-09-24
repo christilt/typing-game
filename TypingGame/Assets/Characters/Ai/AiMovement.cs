@@ -12,15 +12,17 @@ public class AiMovement : MonoBehaviour
 
     private HashSet<Vector2Int> _allowedPositions;
 
-    private float _secondsSinceLastMove;
+    private float _secondsUntilNextMove;
     private float _secondsBetweenMoves;
 
     private Vector2Int[] _lastDirectionOptions;
     private Vector2Int _lastDirection = Vector2Int.up;
     private Vector2Int _direction = Vector2Int.up;
 
-    private Vector3Int _cellPosition3;
-    private Vector2Int _cellPosition2;
+    private Vector2Int _moveFromPosition;
+    private Vector2Int _moveToPosition;
+    private Vector3 _lerpFromPosition;
+    private Vector3 _lerpToPosition;
 
     private Vector2Int LastDirectionOpposite => _lastDirection * -1;
 
@@ -28,19 +30,28 @@ public class AiMovement : MonoBehaviour
     {
         _secondsBetweenMoves = 1f / _movesPerSecond;
         _allowedPositions = new HashSet<Vector2Int>(_allowedTiles.GetPositions());
+        var initialMoveFromPosition = (Vector2Int)_allowedTiles.WorldToCell(transform.position);
+        _moveFromPosition = initialMoveFromPosition;
+        _moveToPosition = initialMoveFromPosition;
     }
+
+    private float SecondsSinceLastMove => _secondsBetweenMoves - _secondsUntilNextMove;
 
     private void Update()
     {
-        _cellPosition3 = _allowedTiles.WorldToCell(transform.position);
-        _cellPosition2 = (Vector2Int)_cellPosition3;
-        _secondsSinceLastMove += Time.deltaTime;
-        if (_secondsSinceLastMove > _secondsBetweenMoves)
+        // TODO: if (_secondsUntilNextMove <= 0) - assumes will always reach destination at this time - work by distance, not time
+        // TODO: _moveFromPosition = _moveToPosition - assumes will always reach destination - what about collisions?
+        _secondsUntilNextMove -= Time.deltaTime;
+        if (_secondsUntilNextMove <= 0)
         {
+            _moveFromPosition = _moveToPosition; 
+            _lerpFromPosition = new Vector3(_moveFromPosition.x, _moveFromPosition.y);
             UpdateDirections();
-            transform.position += new Vector3(_direction.x, _direction.y);
-            _secondsSinceLastMove = 0;
+            _moveToPosition = _moveFromPosition + _direction;
+            _lerpToPosition = new Vector3(_moveToPosition.x, _moveToPosition.y);
+            _secondsUntilNextMove = _secondsBetweenMoves;
         }
+        transform.position = Vector2.Lerp(_lerpFromPosition, _lerpToPosition, SecondsSinceLastMove);
     }
 
     private void UpdateDirections()
@@ -61,7 +72,7 @@ public class AiMovement : MonoBehaviour
 
     private Vector2Int[] GetDirectionOptions()
     {
-        return GetNeighboursOf(_cellPosition2)
+        return GetNeighboursOf(_moveFromPosition)
             .Select(MapPositionToDirection)
             .Where(d => d != LastDirectionOpposite)
             .ToArray();
@@ -75,7 +86,7 @@ public class AiMovement : MonoBehaviour
         return directionOptions[Random.Range(0, directionOptions.Length)];
     }
 
-    private Vector2Int MapPositionToDirection(Vector2Int position) => position - _cellPosition2;
+    private Vector2Int MapPositionToDirection(Vector2Int position) => position - _moveFromPosition;
 
     private bool IsLastDirectionAvailable(Vector2Int[] directionOptions) => directionOptions.Contains(_lastDirection);
     private bool IsNewDirectionAvailable(Vector2Int[] directionOptions) => _lastDirectionOptions is null || directionOptions.Except(_lastDirectionOptions).Any();
