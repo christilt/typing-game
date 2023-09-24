@@ -12,7 +12,6 @@ public class PlayerMovement : MonoBehaviour
 {
     private PlayerInput _input;
 
-    [SerializeField] private Tilemap _pathTiles;
     private InputField _inputField;
 
     private void Awake()
@@ -47,8 +46,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool TryMoveToKey(char key)
     {
-        var position = _pathTiles.WorldToCell(transform.position);
-        foreach(var keyTile in LevelTiles.Instance.GetNeighboursOf(position))
+        foreach(var keyTile in LevelTiles.Instance.GetNeighboursOf(transform.position))
         {
             if (keyTile.Key == key)
             {
