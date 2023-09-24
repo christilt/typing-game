@@ -1,10 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 // TODO: Make this clever
-// TODO: Movement should be smooth
 public class AiMovement : MonoBehaviour
 {
     [SerializeField] private float _movesPerSecond; // TODO: Have this in WPM
@@ -12,85 +12,68 @@ public class AiMovement : MonoBehaviour
 
     private HashSet<Vector2Int> _allowedPositions;
 
-    private float _secondsUntilNextMove;
-    private float _secondsBetweenMoves;
+    private Vector2[] _previousDirectionOptions;
+    private Vector2 _previousDirection = Vector2.up;
+    private Vector2 _direction = Vector2.up;
 
-    private Vector2Int[] _lastDirectionOptions;
-    private Vector2Int _lastDirection = Vector2Int.up;
-    private Vector2Int _direction = Vector2Int.up;
+    private Movement? _movement;
 
-    private Vector2Int _moveFromPosition;
-    private Vector2Int _moveToPosition;
-    private Vector3 _lerpFromPosition;
-    private Vector3 _lerpToPosition;
-
-    private Vector2Int LastDirectionOpposite => _lastDirection * -1;
+    private Vector2Int CellPosition => ToVector2Int(transform.position);
+    private Vector2 PreviousDirectionOpposite => _previousDirection * -1;
 
     void Awake()
     {
-        _secondsBetweenMoves = 1f / _movesPerSecond;
         _allowedPositions = new HashSet<Vector2Int>(_allowedTiles.GetPositions());
-        var initialMoveFromPosition = (Vector2Int)_allowedTiles.WorldToCell(transform.position);
-        _moveFromPosition = initialMoveFromPosition;
-        _moveToPosition = initialMoveFromPosition;
     }
-
-    private float SecondsSinceLastMove => _secondsBetweenMoves - _secondsUntilNextMove;
 
     private void Update()
     {
-        // TODO: if (_secondsUntilNextMove <= 0) - assumes will always reach destination at this time - work by distance, not time
-        // TODO: _moveFromPosition = _moveToPosition - assumes will always reach destination - what about collisions?
-        _secondsUntilNextMove -= Time.deltaTime;
-        if (_secondsUntilNextMove <= 0)
+        if (_movement is null || _movement.Value.IsExceededBy(transform.position))
         {
-            _moveFromPosition = _moveToPosition; 
-            _lerpFromPosition = new Vector3(_moveFromPosition.x, _moveFromPosition.y);
             UpdateDirections();
-            _moveToPosition = _moveFromPosition + _direction;
-            _lerpToPosition = new Vector3(_moveToPosition.x, _moveToPosition.y);
-            _secondsUntilNextMove = _secondsBetweenMoves;
+            var nextMovePosition2 = CellPosition + _direction;
+            _movement = new Movement(transform.position, nextMovePosition2);
         }
-        transform.position = Vector2.Lerp(_lerpFromPosition, _lerpToPosition, SecondsSinceLastMove);
+        transform.position += (_movement.Value.Direction * Time.deltaTime * _movesPerSecond);
     }
 
     private void UpdateDirections()
     {
-        Vector2Int[] directionOptions = GetDirectionOptions();
-        var shouldChooseDirection = !IsLastDirectionAvailable(directionOptions) || IsNewDirectionAvailable(directionOptions);
+        Vector2[] directionOptions = GetDirectionOptions();
+        var shouldChooseDirection = !IsPreviousDirectionAvailable(directionOptions) || IsNewDirectionAvailable(directionOptions);
         if (shouldChooseDirection)
         {
-            _lastDirectionOptions = directionOptions;
+            _previousDirectionOptions = directionOptions;
             _direction = ChooseDirection(directionOptions);
-            _lastDirection = _direction;
+            _previousDirection = _direction;
         }
         else
         {
-            _direction = _lastDirection;
+            _direction = _previousDirection;
         }
     }
 
-    private Vector2Int[] GetDirectionOptions()
+    private Vector2[] GetDirectionOptions()
     {
-        return GetNeighboursOf(_moveFromPosition)
+        return GetNeighboursOf(ToVector2Int(transform.position))
             .Select(MapPositionToDirection)
-            .Where(d => d != LastDirectionOpposite)
+            .Where(d => d != PreviousDirectionOpposite)
             .ToArray();
     }
 
-    private Vector2Int ChooseDirection(Vector2Int[] directionOptions)
+    private Vector2 ChooseDirection(Vector2[] directionOptions)
     {
         if (!directionOptions.Any())
-            return LastDirectionOpposite;
+            return PreviousDirectionOpposite;
 
-        return directionOptions[Random.Range(0, directionOptions.Length)];
+        return directionOptions[UnityEngine.Random.Range(0, directionOptions.Length)];
     }
 
-    private Vector2Int MapPositionToDirection(Vector2Int position) => position - _moveFromPosition;
+    private Vector2 MapPositionToDirection(Vector2 position) => position - CellPosition;
 
-    private bool IsLastDirectionAvailable(Vector2Int[] directionOptions) => directionOptions.Contains(_lastDirection);
-    private bool IsNewDirectionAvailable(Vector2Int[] directionOptions) => _lastDirectionOptions is null || directionOptions.Except(_lastDirectionOptions).Any();
-    private IEnumerable<Vector2Int> GetNeighboursOf(Vector2Int position)
+    private bool IsPreviousDirectionAvailable(Vector2[] directionOptions) => directionOptions.Contains(_previousDirection);
+    private bool IsNewDirectionAvailable(Vector2[] directionOptions) => _previousDirectionOptions is null || directionOptions.Except(_previousDirectionOptions).Any();
+    private IEnumerable<Vector2> GetNeighboursOf(Vector2Int position)
     {
         if (_allowedPositions.TryGetValue(position + Vector2Int.up, out Vector2Int upPosition))
             yield return upPosition;
@@ -100,5 +83,23 @@ public class AiMovement : MonoBehaviour
             yield return leftPosition;
         if (_allowedPositions.TryGetValue(position + Vector2Int.right, out Vector2Int rightPosition))
             yield return rightPosition;
+    }
+
+    // WorldToCell appears to not give the right answer here
+    private Vector2Int ToVector2Int(Vector3 position) => new Vector2Int((int)Mathf.Round(position.x), (int)Mathf.Round(position.y));
+
+    [Serializable]
+    private struct Movement
+    {
+        public Movement(Vector3 from, Vector3 to)
+        {
+            From = from;
+            To = to;
+        }
+
+        public Vector3 From { get; }
+        public Vector3 To { get; }
+        public Vector3 Direction => (To - From).normalized;
+        public bool IsExceededBy(Vector3 position) => (position - From).magnitude > (To - From).magnitude;
     }
 }
