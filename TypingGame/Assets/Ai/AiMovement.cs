@@ -5,16 +5,21 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 // TODO: Make this clever
+// TODO: Bug: sometimes cutting corners (use waypoints?)
+// TODO: Bug: sometimes changing direction when colliding in same direction
+// TODO: Bug: occasionally overlapping when trapped
 public class AiMovement : MonoBehaviour
 {
     [SerializeField] private float _movesPerSecond; // TODO: Have this in WPM
     [SerializeField] private Tilemap _allowedTiles;
+    [SerializeField] private LayerMask _colliderLayers;
 
     private HashSet<Vector2Int> _allowedPositions;
 
     private Vector2[] _previousDirectionOptions;
-    private Vector2 _previousDirection = Vector2.up;
-    private Vector2 _direction = Vector2.up;
+    private Vector2 _previousDirection = Vector2.zero;
+    private Vector2 _direction = Vector2.zero;
+    private HashSet<Vector2> _collisionDirections = new();
 
     private Movement? _worldMovement;
 
@@ -28,13 +33,24 @@ public class AiMovement : MonoBehaviour
 
     private void Update()
     {
-        if (_worldMovement is null || _worldMovement.Value.IsExceededBy(transform.position))
+        if (_worldMovement is null || _worldMovement.Value.IsExceededBy(transform.position) || _collisionDirections.Count > 0)
         {
             UpdateDirections();
             var nextMovePosition2 = CellPosition + _direction;
             _worldMovement = new Movement(transform.position, nextMovePosition2);
         }
         transform.position += (_worldMovement.Value.Direction * Time.deltaTime * _movesPerSecond);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        var otherLayer = collision.gameObject.layer;
+        if (!_colliderLayers.HasLayer(otherLayer))
+            return;
+
+        _collisionDirections.Add(_direction);
+        var colliderDirection = MapPositionToDirection(collision.gameObject.transform.position);
+        _collisionDirections.Add(colliderDirection);
     }
 
     private void UpdateDirections()
@@ -51,6 +67,7 @@ public class AiMovement : MonoBehaviour
         {
             _direction = _previousDirection;
         }
+        _collisionDirections.Clear();
     }
 
     private Vector2[] GetDirectionOptions()
@@ -58,6 +75,7 @@ public class AiMovement : MonoBehaviour
         return GetNeighboursOf(ToVector2Int(transform.position))
             .Select(MapPositionToDirection)
             .Where(d => d != PreviousDirectionOpposite)
+            .Except(_collisionDirections)
             .ToArray();
     }
 
