@@ -16,7 +16,7 @@ public class AiMovement : MonoBehaviour
     private Vector2 _previousDirection = Vector2.up;
     private Vector2 _direction = Vector2.up;
 
-    private Movement? _movement;
+    private Movement? _worldMovement;
 
     private Vector2Int CellPosition => ToVector2Int(transform.position);
     private Vector2 PreviousDirectionOpposite => _previousDirection * -1;
@@ -28,13 +28,13 @@ public class AiMovement : MonoBehaviour
 
     private void Update()
     {
-        if (_movement is null || _movement.Value.IsExceededBy(transform.position))
+        if (_worldMovement is null || _worldMovement.Value.IsExceededBy(transform.position))
         {
             UpdateDirections();
             var nextMovePosition2 = CellPosition + _direction;
-            _movement = new Movement(transform.position, nextMovePosition2);
+            _worldMovement = new Movement(transform.position, nextMovePosition2);
         }
-        transform.position += (_movement.Value.Direction * Time.deltaTime * _movesPerSecond);
+        transform.position += (_worldMovement.Value.Direction * Time.deltaTime * _movesPerSecond);
     }
 
     private void UpdateDirections()
