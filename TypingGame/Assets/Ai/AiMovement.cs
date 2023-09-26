@@ -10,6 +10,8 @@ using UnityEngine.Tilemaps;
 // TODO: Bug: occasionally overlapping when trapped
 public class AiMovement : MonoBehaviour
 {
+    private const float CornerCuttingDistanceTolerated = 0.25f;
+
     [SerializeField] private float _movesPerSecond; // TODO: Have this in WPM
     [SerializeField] private Tilemap _allowedTiles;
     [SerializeField] private LayerMask _colliderLayers;
@@ -39,6 +41,7 @@ public class AiMovement : MonoBehaviour
             UpdateDirections();
             if (!TryGetNeighbourCell(CellPosition, _direction, out var neighbourCell))
             {
+                // TODO: Understand why this happens
                 Debug.LogError($"Could not get neighbour of cell {CellPosition} in direction {_direction}!");
                 return;
             }
@@ -53,9 +56,9 @@ public class AiMovement : MonoBehaviour
         if (!_colliderLayers.HasLayer(otherLayer))
             return;
 
+        // TODO ignore collision from behind - maybe using interface for object collided with
+
         _collisionDirections.Add(_direction);
-        var colliderDirection = GetDirectionToPosition(collision.gameObject.transform.position);
-        _collisionDirections.Add(colliderDirection);
     }
 
     private void UpdateDirections()
@@ -77,6 +80,9 @@ public class AiMovement : MonoBehaviour
 
     private Vector2Int[] GetDirectionOptions()
     {
+        if (_collisionDirections.Count > 0 && !_centreMovement.Value.IsAlmostExceededBy(_centre.position, CornerCuttingDistanceTolerated))
+            return Array.Empty<Vector2Int>();
+
         return GetNeighbourCells(_centre.position)
             .Select(GetDirectionToCell)
             .Where(d => d != PreviousDirectionOpposite)
@@ -95,7 +101,6 @@ public class AiMovement : MonoBehaviour
 
     private bool IsPreviousDirectionAvailable(Vector2Int[] directionOptions) => directionOptions.Contains(_previousDirection);
     private bool IsNewDirectionAvailable(Vector2Int[] directionOptions) => _previousDirectionOptions is null || directionOptions.Except(_previousDirectionOptions).Any();
-    private Vector2Int GetDirectionToPosition(Vector3 position) => GetDirectionToCell(GetCell(position));
     private Vector2Int GetDirectionToCell(Vector2Int cell) => cell - CellPosition;
     private IEnumerable<Vector2Int> GetNeighbourCells(Vector3 position) => GetNeighbourCells(GetCell(position));
     private IEnumerable<Vector2Int> GetNeighbourCells(Vector2Int cell)
@@ -114,10 +119,8 @@ public class AiMovement : MonoBehaviour
         return _allowedPositions.TryGetValue(cell + direction, out neighbourCell);
     }
 
-    // TODO
-    // WorldToCell appears to not give the right answer here
-    //private Vector2Int GetCell(Vector3 position) => new Vector2Int((int)Mathf.Round(position.x), (int)Mathf.Round(position.y));
     private Vector2Int GetCell(Vector3 position) => (Vector2Int)_allowedTiles.WorldToCell(position);
+    private Vector3 GetCentre(Vector3 position) => position + _centre.localPosition;
     private Vector3 GetCellCentre(Vector2Int cell) => new Vector3(cell.x, cell.y, 0) + _centre.localPosition;
 
 
@@ -133,6 +136,7 @@ public class AiMovement : MonoBehaviour
         public Vector3 From { get; }
         public Vector3 To { get; }
         public Vector3 Direction => (To - From).normalized;
+        public bool IsAlmostExceededBy(Vector3 position, float distanceTolerated) => ((position - From).magnitude + distanceTolerated) > (To - From).magnitude;
         public bool IsExceededBy(Vector3 position) => (position - From).magnitude > (To - From).magnitude;
     }
 }

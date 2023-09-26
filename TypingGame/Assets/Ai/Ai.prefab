@@ -244,6 +244,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _movesPerSecond: 2
+  _cornerCuttingDistanceTolerated: 0.25
   _allowedTiles: {fileID: 0}
   _colliderLayers:
     serializedVersion: 2
