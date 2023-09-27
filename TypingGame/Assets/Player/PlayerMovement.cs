@@ -10,21 +10,16 @@ using UnityEngine.UI;
 [RequireComponent(typeof(InputField))]
 public class PlayerMovement : MonoBehaviour
 {
-    private PlayerInput _input;
-
     private InputField _inputField;
 
-    private void Awake()
-    {
-        _input = new();
-    }
-
-    private void OnEnable()
+    private void Start()
     {
         _inputField = GetComponent<InputField>();
         _inputField.Select();
         _inputField.onValueChanged.AddListener(value =>
         {
+            Debug.Log("onvaluechanged");// TODO remove
+
             if (value == "")
                 return;
 
@@ -36,12 +31,6 @@ public class PlayerMovement : MonoBehaviour
         {
             StartCoroutine(DoNextFrame(() => _inputField.Select()));
         });
-        _input.Enable();
-    }
-
-    private void OnDisable()
-    {
-        _input.Disable();
     }
 
     private bool TryMoveToKey(char key)
