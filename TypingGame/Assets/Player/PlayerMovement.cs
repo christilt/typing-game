@@ -18,8 +18,6 @@ public class PlayerMovement : MonoBehaviour
         _inputField.Select();
         _inputField.onValueChanged.AddListener(value =>
         {
-            Debug.Log("onvaluechanged");// TODO remove
-
             if (value == "")
                 return;
 

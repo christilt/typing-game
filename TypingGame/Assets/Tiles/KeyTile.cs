@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using TMPro;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 public class KeyTile
 {
-    private readonly GameObject _icon;
-
-    private KeyTile(GameObject icon, Vector3Int position, char key)
+    private KeyTile(Vector3Int position, char key)
     {
-        _icon = icon;
         Key = key;
         Position = position;
     }
@@ -15,21 +15,23 @@ public class KeyTile
     public char Key { get; }
     public Vector3Int Position { get; }
 
-    public static KeyTile Instantiate(GameObject iconPrefab, Vector3Int position, GameObject parent)
+    public static KeyTile Instantiate(GameObject iconPrefab, Vector3Int position, GameObject parent, IEnumerable<char> deniedKeys)
     {
-        var key = RandomKey();
+        var key = RandomKey(deniedKeys);
+
         var icon = Object.Instantiate(original: iconPrefab, position: position, rotation: Quaternion.identity, parent: parent.transform);
         var iconText = icon.GetComponentInChildren<TextMeshProUGUI>();
         iconText.text = $"{key}";
 
-        return new KeyTile(icon, position, key);
+        return new KeyTile(position, key);
     }
 
     // TODO make this clever
-    private static char RandomKey()
+    private static char RandomKey(IEnumerable<char> deniedKeys)
     {
         const string Keys = "abcdefghijklmnopqrstuvwxyz";
+        var allowedKeys = Keys.Except(deniedKeys).ToArray();
 
-        return Keys[Random.Range(0, Keys.Length)];
+        return allowedKeys[Random.Range(0, allowedKeys.Length)];
     }
 }

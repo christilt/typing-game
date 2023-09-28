@@ -40,13 +40,36 @@ public class LevelTiles : MonoBehaviour
             yield return rightTile;
     }
 
-    // TODO avoid tiles like these: qaq
+    // Naive approach to ensuring uniqueness - could be more efficient
     private Dictionary<Vector2Int, KeyTile> InstantiateKeyTilesByPosition()
     {
         var positions = _pathTiles.GetPositions();
-        return positions.
-            ToDictionary(
-                p => p, 
-                p => KeyTile.Instantiate(_keyIconPrefab, (Vector3Int)p, this.gameObject));
+        var keyTilesByPosition = new Dictionary<Vector2Int, KeyTile>();
+        foreach (var position in positions)
+        {
+            var uniqueKeyBounds = new BoundsInt(
+                xMin: position.x - 2,
+                yMin: position.y - 2,
+                zMin: 0,
+                sizeX: 5,
+                sizeY: 5,
+                sizeZ: 1);
+
+            var keysThatWouldBeDuplicates = new List<char>();
+            foreach(var uniqueKeyBoundsPosition in uniqueKeyBounds.allPositionsWithin)
+            {
+                if (keyTilesByPosition.TryGetValue((Vector2Int) uniqueKeyBoundsPosition, out KeyTile keyTile))
+                    keysThatWouldBeDuplicates.Add(keyTile.Key);
+            }
+
+            keyTilesByPosition.Add(
+                position,
+                KeyTile.Instantiate(
+                    _keyIconPrefab, 
+                    (Vector3Int)position, 
+                    this.gameObject, 
+                    deniedKeys: keysThatWouldBeDuplicates));
+        }
+        return keyTilesByPosition;
     }
 }
