@@ -5,9 +5,8 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 // TODO: Make this clever
-// TODO: Bug: sometimes cutting corners (use waypoints?)
-// TODO: Bug: sometimes changing direction when colliding in same direction
 // TODO: Bug: occasionally overlapping when trapped
+// TODO: Simplify using rotation (needed for animation anyway)
 [RequireComponent(typeof(Rigidbody2D))]
 public class AiMovement : MonoBehaviour
 {
