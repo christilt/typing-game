@@ -330,10 +330,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _movesPerSecond: 2
   _allowedTiles: {fileID: 0}
-  _colliderLayers:
+  _deflectFromCollisionsInLayers:
     serializedVersion: 2
     m_Bits: 384
   _centre: {fileID: 4648561822870921576}
+  _mode: 0
 --- !u!50 &7314303493707378015
 Rigidbody2D:
   serializedVersion: 4

@@ -13,8 +13,9 @@ public class AiMovement : MonoBehaviour
 
     [SerializeField] private float _movesPerSecond; // TODO: Have this in WPM
     [SerializeField] private Tilemap _allowedTiles;
-    [SerializeField] private LayerMask _colliderLayers;
+    [SerializeField] private LayerMask _deflectFromCollisionsInLayers;
     [SerializeField] private Transform _centre;
+    [SerializeField] private Mode _mode; // TODO
 
     private Rigidbody2D _rigidbody;
 
@@ -23,7 +24,7 @@ public class AiMovement : MonoBehaviour
     private Vector2Int[] _previousDirectionOptions;
     private Vector2Int _previousDirection = Vector2Int.zero;
     private Vector2Int _direction = Vector2Int.zero;
-    private HashSet<Vector2Int> _collisionPushDirections = new();
+    private HashSet<Vector2Int> _deflectedFromDirections = new();
 
     private Movement? _centreMovement;
 
@@ -38,7 +39,7 @@ public class AiMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_centreMovement is null || _centreMovement.Value.IsExceededBy(_centre.position) || _collisionPushDirections.Count > 0)
+        if (_centreMovement is null || _centreMovement.Value.IsExceededBy(_centre.position) || _deflectedFromDirections.Count > 0)
         {
             UpdateDirections();
             if (!TryGetNeighbourCell(CellPosition, _direction, out var neighbourCell))
@@ -60,14 +61,14 @@ public class AiMovement : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         var otherLayer = collision.gameObject.layer;
-        if (!_colliderLayers.HasLayer(otherLayer))
+        if (!_deflectFromCollisionsInLayers.HasLayer(otherLayer))
             return;
 
         var otherDirection = (collision.gameObject.transform.position - transform.position).normalized;
         var otherGridDirection = Round(otherDirection);
         var otherStrictGridDirections = GetStrictGridDirectionsTo(otherGridDirection);
         foreach (var direction in otherStrictGridDirections)
-            _collisionPushDirections.Add(direction * -1);
+            _deflectedFromDirections.Add(direction);
 
         // TODO remove
         //Debug.Log($"[{name}]:otherDirection: {otherDirection}; relative velocity magnitude: {collision.relativeVelocity.magnitude}; _collisionPushDirections: {string.Join(", ", _collisionPushDirections)}");
@@ -100,25 +101,25 @@ public class AiMovement : MonoBehaviour
         {
             _direction = _previousDirection;
         }
-        _collisionPushDirections.Clear();
+        _deflectedFromDirections.Clear();
     }
 
     private Vector2Int[] GetDirectionOptions()
     {
-        if (_collisionPushDirections.Count > 0 && !_centreMovement.Value.IsAlmostExceededBy(_centre.position, CornerCuttingDistanceTolerated))
+        if (_deflectedFromDirections.Count > 0 && !_centreMovement.Value.IsAlmostExceededBy(_centre.position, CornerCuttingDistanceTolerated))
         {
+            var deflectedToDirections = _deflectedFromDirections.Select(d => d * -1);
+
             return GetNeighbourCells(_centre.position)
                 .Select(GetDirectionToCell)
-                .Intersect(_collisionPushDirections)
+                .Intersect(deflectedToDirections)
                 .ToArray();
         }
-
-        var collisionOriginDirections = _collisionPushDirections.Select(d => d * -1);
 
         return GetNeighbourCells(_centre.position)
             .Select(GetDirectionToCell)
             .Where(d => d != PreviousDirectionOpposite)
-            .Except(collisionOriginDirections)
+            .Except(_deflectedFromDirections)
             .ToArray();
     }
 
@@ -170,5 +171,12 @@ public class AiMovement : MonoBehaviour
         public Vector3 Direction => (To - From).normalized;
         public bool IsAlmostExceededBy(Vector3 position, float distanceTolerated) => ((position - From).magnitude + distanceTolerated) > (To - From).magnitude;
         public bool IsExceededBy(Vector3 position) => (position - From).magnitude > (To - From).magnitude;
+    }
+
+    private enum Mode
+    {
+        Random,
+        Chase,
+        Evade
     }
 }
