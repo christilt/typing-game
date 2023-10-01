@@ -8,6 +8,7 @@ using UnityEngine.Tilemaps;
 // TODO: Bug: sometimes cutting corners (use waypoints?)
 // TODO: Bug: sometimes changing direction when colliding in same direction
 // TODO: Bug: occasionally overlapping when trapped
+[RequireComponent(typeof(Rigidbody2D))]
 public class AiMovement : MonoBehaviour
 {
     private const float CornerCuttingDistanceTolerated = 0.25f;
@@ -17,12 +18,14 @@ public class AiMovement : MonoBehaviour
     [SerializeField] private LayerMask _colliderLayers;
     [SerializeField] private Transform _centre;
 
+    private Rigidbody2D _rigidbody;
+
     private HashSet<Vector2Int> _allowedPositions;
 
     private Vector2Int[] _previousDirectionOptions;
     private Vector2Int _previousDirection = Vector2Int.zero;
     private Vector2Int _direction = Vector2Int.zero;
-    private HashSet<Vector2Int> _collisionDirections = new();
+    private HashSet<Vector2Int> _collisionPushDirections = new();
 
     private Movement? _centreMovement;
 
@@ -32,11 +35,12 @@ public class AiMovement : MonoBehaviour
     void Awake()
     {
         _allowedPositions = new HashSet<Vector2Int>(_allowedTiles.GetPositions());
+        _rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (_centreMovement is null || _centreMovement.Value.IsExceededBy(_centre.position) || _collisionDirections.Count > 0)
+        if (_centreMovement is null || _centreMovement.Value.IsExceededBy(_centre.position) || _collisionPushDirections.Count > 0)
         {
             UpdateDirections();
             if (!TryGetNeighbourCell(CellPosition, _direction, out var neighbourCell))
@@ -47,7 +51,12 @@ public class AiMovement : MonoBehaviour
             }
             _centreMovement = new Movement(_centre.position, GetCellCentre(neighbourCell));
         }
-        transform.position += (_centreMovement.Value.Direction * Time.deltaTime * _movesPerSecond);
+
+        if (_centreMovement is null)
+            return;
+
+        var newPosition = transform.position + (_centreMovement.Value.Direction * Time.deltaTime * _movesPerSecond);
+        _rigidbody.MovePosition(newPosition);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -56,10 +65,28 @@ public class AiMovement : MonoBehaviour
         if (!_colliderLayers.HasLayer(otherLayer))
             return;
 
-        // TODO ignore collision from behind - maybe using interface for object collided with
+        var otherDirection = (collision.gameObject.transform.position - transform.position).normalized;
+        var otherGridDirection = Round(otherDirection);
+        var otherStrictGridDirections = GetStrictGridDirectionsTo(otherGridDirection);
+        foreach (var direction in otherStrictGridDirections)
+            _collisionPushDirections.Add(direction * -1);
 
-        _collisionDirections.Add(_direction);
+        // TODO remove
+        //Debug.Log($"[{name}]:otherDirection: {otherDirection}; relative velocity magnitude: {collision.relativeVelocity.magnitude}; _collisionPushDirections: {string.Join(", ", _collisionPushDirections)}");
     }
+    private static Vector2Int Round(Vector2 velocity) => new Vector2Int((int)Math.Round(velocity.x), (int)Math.Round(velocity.y));
+    private static IEnumerable<Vector2Int> GetStrictGridDirectionsTo(Vector2Int direction)
+    {
+        if (HasAnyMatchingComponent(direction, Vector2Int.up))
+            yield return Vector2Int.up;
+        if (HasAnyMatchingComponent(direction, Vector2Int.down))
+            yield return Vector2Int.down;
+        if (HasAnyMatchingComponent(direction, Vector2Int.left))
+            yield return Vector2Int.left;
+        if (HasAnyMatchingComponent(direction, Vector2Int.right))
+            yield return Vector2Int.right;
+    }
+    private static bool HasAnyMatchingComponent(Vector2Int a, Vector2Int b) => (a.x != 0 && a.x == b.x) ||( a.y != 0 && a.y == b.y);
 
     private void UpdateDirections()
     {
@@ -75,18 +102,25 @@ public class AiMovement : MonoBehaviour
         {
             _direction = _previousDirection;
         }
-        _collisionDirections.Clear();
+        _collisionPushDirections.Clear();
     }
 
     private Vector2Int[] GetDirectionOptions()
     {
-        if (_collisionDirections.Count > 0 && !_centreMovement.Value.IsAlmostExceededBy(_centre.position, CornerCuttingDistanceTolerated))
-            return Array.Empty<Vector2Int>();
+        if (_collisionPushDirections.Count > 0 && !_centreMovement.Value.IsAlmostExceededBy(_centre.position, CornerCuttingDistanceTolerated))
+        {
+            return GetNeighbourCells(_centre.position)
+                .Select(GetDirectionToCell)
+                .Intersect(_collisionPushDirections)
+                .ToArray();
+        }
+
+        var collisionOriginDirections = _collisionPushDirections.Select(d => d * -1);
 
         return GetNeighbourCells(_centre.position)
             .Select(GetDirectionToCell)
             .Where(d => d != PreviousDirectionOpposite)
-            .Except(_collisionDirections)
+            .Except(collisionOriginDirections)
             .ToArray();
     }
 
