@@ -10,6 +10,8 @@ using UnityEngine.UI;
 [RequireComponent(typeof(InputField))]
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private GameObject _visual;
+
     private InputField _inputField;
 
     private void Start()
@@ -37,11 +39,19 @@ public class PlayerMovement : MonoBehaviour
         {
             if (keyTile.Key == key)
             {
+                _visual.transform.eulerAngles = GetEulerAnglesTowards(keyTile.Position);
                 transform.position = keyTile.Position;
                 return true;
             }
         }
         return false;
+    }
+
+    private Vector3 GetEulerAnglesTowards(Vector3 worldPosition)
+    {
+        var direction = (worldPosition -  transform.position).normalized;
+        var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        return new Vector3(0, 0, angle);
     }
 
     private IEnumerator DoNextFrame(Action action)

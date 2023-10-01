@@ -6,7 +6,6 @@ using UnityEngine.Tilemaps;
 
 // TODO: Make this clever
 // TODO: Bug: occasionally overlapping when trapped
-// TODO: Simplify using rotation (needed for animation anyway)
 [RequireComponent(typeof(Rigidbody2D))]
 public class AiMovement : MonoBehaviour
 {
