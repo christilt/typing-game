@@ -521,7 +521,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 712078239508968797, guid: 2bd7de96867a5b94b86320838c4df6fd, type: 3}
       propertyPath: m_Name
-      value: Enemy 1
+      value: Enemy1
       objectReference: {fileID: 0}
     - target: {fileID: 1797157369037569156, guid: 2bd7de96867a5b94b86320838c4df6fd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -586,7 +586,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 712078239508968797, guid: 2bd7de96867a5b94b86320838c4df6fd, type: 3}
       propertyPath: m_Name
-      value: Enemy 2
+      value: Enemy2
       objectReference: {fileID: 0}
     - target: {fileID: 1797157369037569156, guid: 2bd7de96867a5b94b86320838c4df6fd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -655,7 +655,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 719926438917200436, guid: 17c0940ab09ba974db781441cddde25c, type: 3}
       propertyPath: m_Name
-      value: Collectable 2
+      value: Collectable2
       objectReference: {fileID: 0}
     - target: {fileID: 1796011768281060333, guid: 17c0940ab09ba974db781441cddde25c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -728,7 +728,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 719926438917200436, guid: 17c0940ab09ba974db781441cddde25c, type: 3}
       propertyPath: m_Name
-      value: Collectable 1
+      value: Collectable1
       objectReference: {fileID: 0}
     - target: {fileID: 1796011768281060333, guid: 17c0940ab09ba974db781441cddde25c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2793,7 +2793,7 @@ GameObject:
   - component: {fileID: 1713699359}
   - component: {fileID: 1713699358}
   m_Layer: 0
-  m_Name: Player Virtual Camera
+  m_Name: PlayerVCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
