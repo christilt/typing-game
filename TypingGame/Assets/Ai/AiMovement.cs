@@ -23,15 +23,15 @@ public class AiMovement : MonoBehaviour
 
     private Vector2Int[] _previousDirectionOptions;
     private Vector2Int _previousDirection = Vector2Int.zero;
-    private Vector2Int _direction = Vector2Int.zero;
     private HashSet<Vector2Int> _deflectedFromDirections = new();
 
     private Movement? _centreMovement;
 
+    public Vector2Int Direction { get; private set; } = Vector2Int.zero;
     private Vector2Int CellPosition => GetCell(_centre.position);
     private Vector2Int PreviousDirectionOpposite => _previousDirection * -1;
 
-    void Awake()
+    private void Awake()
     {
         _allowedPositions = new HashSet<Vector2Int>(_allowedTiles.GetPositions());
         _rigidbody = GetComponent<Rigidbody2D>();
@@ -42,10 +42,10 @@ public class AiMovement : MonoBehaviour
         if (_centreMovement is null || _centreMovement.Value.IsExceededBy(_centre.position) || _deflectedFromDirections.Count > 0)
         {
             UpdateDirections();
-            if (!TryGetNeighbourCell(CellPosition, _direction, out var neighbourCell))
+            if (!TryGetNeighbourCell(CellPosition, Direction, out var neighbourCell))
             {
                 // TODO: Understand why this happens
-                Debug.LogError($"Could not get neighbour of cell {CellPosition} in direction {_direction}!");
+                Debug.LogError($"Could not get neighbour of cell {CellPosition} in direction {Direction}!");
                 return;
             }
             _centreMovement = new Movement(_centre.position, GetCellCentre(neighbourCell));
@@ -94,12 +94,12 @@ public class AiMovement : MonoBehaviour
         if (shouldChooseDirection)
         {
             _previousDirectionOptions = directionOptions;
-            _direction = ChooseDirection(directionOptions);
-            _previousDirection = _direction;
+            Direction = ChooseDirection(directionOptions);
+            _previousDirection = Direction;
         }
         else
         {
-            _direction = _previousDirection;
+            Direction = _previousDirection;
         }
         _deflectedFromDirections.Clear();
     }

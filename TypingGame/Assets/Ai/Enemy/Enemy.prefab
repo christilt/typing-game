@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5850422365770866613}
   - component: {fileID: 5125853941839301014}
   m_Layer: 0
-  m_Name: Ghost_Red
+  m_Name: Ghost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,12 +74,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 315987879, guid: f049a02938819a34faf585892461dab4, type: 3}
+  m_Sprite: {fileID: 574551604, guid: f049a02938819a34faf585892461dab4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.16, y: 0.16}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -190,8 +190,41 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2578258177341667412, guid: 6628dbcfb4f2ffb4c8b01afe578f0fcd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2945316568407815780}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6037277648614989335, guid: 6628dbcfb4f2ffb4c8b01afe578f0fcd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6279949851714437955}
   m_SourcePrefab: {fileID: 100100000, guid: 6628dbcfb4f2ffb4c8b01afe578f0fcd, type: 3}
+--- !u!1 &712078239508968797 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6037277648614989335, guid: 6628dbcfb4f2ffb4c8b01afe578f0fcd, type: 3}
+  m_PrefabInstance: {fileID: 6496855234846763850}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6279949851714437955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712078239508968797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d581fc6eda852d46a405cbe6bcf7490, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyMovement: {fileID: 4066626009934926358}
+  _animator: {fileID: 5125853941839301014}
+--- !u!114 &4066626009934926358 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7081621952940783964, guid: 6628dbcfb4f2ffb4c8b01afe578f0fcd, type: 3}
+  m_PrefabInstance: {fileID: 6496855234846763850}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712078239508968797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56691c97c83835f47899b73c0f711a5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &8786143871691100958 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2578258177341667412, guid: 6628dbcfb4f2ffb4c8b01afe578f0fcd, type: 3}
