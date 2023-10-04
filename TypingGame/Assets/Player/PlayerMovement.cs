@@ -14,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
 
     private InputField _inputField;
 
+    public Vector2 Direction { get; private set; }
+
     private void Start()
     {
         _inputField = GetComponent<InputField>();
@@ -39,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (keyTile.Key == key)
             {
+                Direction = (Vector2)(keyTile.Position - transform.position).normalized;
                 _visual.transform.eulerAngles = GetEulerAnglesTowards(keyTile.Position);
                 transform.position = keyTile.Position;
                 return true;
