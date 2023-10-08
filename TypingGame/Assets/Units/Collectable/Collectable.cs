@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class CollectableCollisions : MonoBehaviour
+public class Collectable : MonoBehaviour
 {
     public void DestroySelf()
     {

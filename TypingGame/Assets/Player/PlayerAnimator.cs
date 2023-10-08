@@ -3,7 +3,7 @@
 // TODO: Unused: Remove?
 public class PlayerAnimator : MonoBehaviour
 {
-    [SerializeField] private PlayerMovement _playerMovement;
+    [SerializeField] private PlayerTypingMovement _playerMovement;
 
     [SerializeField] private Animator _animator;
 

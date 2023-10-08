@@ -3,15 +3,10 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    public event Action<GameState> StateChanging;
-    public event Action<GameState> StateChanged;
+    public event Action<GameState> OnStateChanging;
+    public event Action<GameState> OnStateChanged;
 
     public GameState State { get; private set; }
-
-    protected override void Awake()
-    {
-        base.Awake();
-    }
 
     private void Start()
     {
@@ -23,27 +18,46 @@ public class GameManager : Singleton<GameManager>
         if (State == state && State != default) 
             return false;
 
-        StateChanging?.Invoke(state);
+        if (!Enum.IsDefined(typeof(GameState), state))
+            throw new ArgumentOutOfRangeException(nameof(state), state, null);
 
+        Debug.Log($"State changing to: {state}");
+        OnStateChanging?.Invoke(state);
+
+        HandleNewState(state);
+
+        Debug.Log($"State changed to: {state}");
+        OnStateChanged?.Invoke(state);
+
+        return true;
+    }
+
+    private void HandleNewState(GameState state)
+    {
         State = state;
-        Debug.Log($"New state: {state}");
         switch (state)
         {
             case GameState.LevelStarting:
-                UnitsManager.Instance.SpawnUnits();
-                TryChangeState(GameState.LevelPlaying);
+                HandleLevelStarting();
                 break;
             case GameState.LevelPlaying:
+                HandleLevelPlaying();
                 break;
             default:
-                Debug.LogWarning($"Unknown state rejected: {state}");
-                return false;
+                throw new ArgumentOutOfRangeException(nameof(state), state, null);
         }
+    }
 
-        StateChanged?.Invoke(state);
+    private void HandleLevelStarting()
+    {
+        // TODO
+        PauseManager.Instance.Pause();
+        this.DoAfterSecondsRealtime(3, () => TryChangeState(GameState.LevelPlaying));
+    }
 
-
-        return true;
+    private void HandleLevelPlaying()
+    {
+        PauseManager.Instance.Unpause();
     }
 }
 

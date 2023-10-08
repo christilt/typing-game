@@ -1,14 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(InputField))]
-public class PlayerMovement : MonoBehaviour
+public class PlayerTypingMovement : MonoBehaviour
 {
     [SerializeField] private GameObject _visual;
 
@@ -16,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
 
     public Vector2 Direction { get; private set; }
 
-    private void Start()
+    public void EnableComponent()
     {
         _inputField = GetComponent<InputField>();
         _inputField.Select();
@@ -31,8 +25,14 @@ public class PlayerMovement : MonoBehaviour
         });
         _inputField.onEndEdit.AddListener(value =>
         {
-            StartCoroutine(DoNextFrame(() => _inputField.Select()));
+            this.DoNextFrame(() => _inputField.Select());
         });
+    }
+
+    public void DisableComponent()
+    {
+        _inputField?.onValueChanged.RemoveAllListeners();
+        _inputField?.onEndEdit.RemoveAllListeners();
     }
 
     private bool TryMoveToKey(char key)
@@ -55,12 +55,5 @@ public class PlayerMovement : MonoBehaviour
         var direction = (worldPosition -  transform.position).normalized;
         var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         return new Vector3(0, 0, angle);
-    }
-
-    private IEnumerator DoNextFrame(Action action)
-    {
-        yield return null;
-
-        action();
     }
 }
