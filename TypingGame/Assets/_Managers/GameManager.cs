@@ -21,12 +21,12 @@ public class GameManager : Singleton<GameManager>
         if (!Enum.IsDefined(typeof(GameState), state))
             throw new ArgumentOutOfRangeException(nameof(state), state, null);
 
-        Debug.Log($"State changing to: {state}");
+        Debug.Log($"Game state changing to: {state}");
         OnStateChanging?.Invoke(state);
 
         HandleNewState(state);
 
-        Debug.Log($"State changed to: {state}");
+        Debug.Log($"Game state changed to: {state}");
         OnStateChanged?.Invoke(state);
 
         return true;

@@ -11,6 +11,7 @@ public class PauseManager : Singleton<PauseManager>
     {
         OnPauseChanging?.Invoke(true);
         Time.timeScale = 0;
+        Debug.Log("Paused");
         OnPauseChanged?.Invoke(true);
     }
 
@@ -18,6 +19,7 @@ public class PauseManager : Singleton<PauseManager>
     {
         OnPauseChanging?.Invoke(false);
         Time.timeScale = 1;
+        Debug.Log("Unpaused");
         OnPauseChanged?.Invoke(false);
     }
 }

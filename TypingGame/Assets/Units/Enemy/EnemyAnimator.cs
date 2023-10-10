@@ -1,14 +1,40 @@
 ﻿using UnityEngine;
 
+// TODO unsubscribe any events ondestroy
 public class EnemyAnimator : MonoBehaviour
 {
+    [SerializeField] private Enemy _enemy;
     [SerializeField] private AiMovement _enemyMovement;
 
     [SerializeField] private Animator _animator;
 
+    private void Start()
+    {
+        SetAnimatorIsInvincible(_enemy.State);
+        _enemy.OnStateChanging += OnEnemyStateChanging;
+    }
+
     private void Update()
     {
-        _animator.SetFloat("x", _enemyMovement.Direction.x);
-        _animator.SetFloat("y", _enemyMovement.Direction.y);
+        // TODO check velocity also
+        _animator.SetFloat("X", _enemyMovement.Direction.x);
+        _animator.SetFloat("Y", _enemyMovement.Direction.y);
+    }
+    private void OnDestroy()
+    {
+        _enemy.OnStateChanging -= OnEnemyStateChanging;
+    }
+
+    private void OnEnemyStateChanging(EnemyState state)
+    {
+        SetAnimatorIsInvincible(state);
+    }
+
+    private void SetAnimatorIsInvincible(EnemyState state)
+    {
+        var isInvincible = state == EnemyState.Spawning;
+        // TODO remove
+        Debug.Log($"IsInvincible {isInvincible}");
+        _animator.SetBool("IsInvincible", isInvincible);
     }
 }

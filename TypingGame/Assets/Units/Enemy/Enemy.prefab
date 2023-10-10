@@ -194,6 +194,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6037277648614989335, guid: 6628dbcfb4f2ffb4c8b01afe578f0fcd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6279949851714437955}
+    - targetCorrespondingSourceObject: {fileID: 6037277648614989335, guid: 6628dbcfb4f2ffb4c8b01afe578f0fcd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2072145250326823006}
   m_SourcePrefab: {fileID: 100100000, guid: 6628dbcfb4f2ffb4c8b01afe578f0fcd, type: 3}
 --- !u!1 &712078239508968797 stripped
 GameObject:
@@ -212,8 +215,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d581fc6eda852d46a405cbe6bcf7490, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemy: {fileID: 2072145250326823006}
   _enemyMovement: {fileID: 4066626009934926358}
   _animator: {fileID: 5125853941839301014}
+--- !u!114 &2072145250326823006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712078239508968797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ecbc2bef4aa5ac478404ac509a34ce4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _collider: {fileID: 7934070647986149725}
+  _aiMovement: {fileID: 4066626009934926358}
+  _spawningSeconds: 2
 --- !u!114 &4066626009934926358 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7081621952940783964, guid: 6628dbcfb4f2ffb4c8b01afe578f0fcd, type: 3}
@@ -225,6 +244,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56691c97c83835f47899b73c0f711a5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!58 &7934070647986149725 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 3761082235772269079, guid: 6628dbcfb4f2ffb4c8b01afe578f0fcd, type: 3}
+  m_PrefabInstance: {fileID: 6496855234846763850}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8786143871691100958 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2578258177341667412, guid: 6628dbcfb4f2ffb4c8b01afe578f0fcd, type: 3}
