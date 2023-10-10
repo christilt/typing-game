@@ -12,13 +12,7 @@ public class Player : MonoBehaviour
     public class CollectableCollectedEventArgs : EventArgs { public string Name; }
     private void Start()
     {
-        PauseManager.Instance.OnPauseChanging += paused =>
-        {
-            if (paused)
-                _typingMovement.DisableComponent();
-            else
-                _typingMovement.EnableComponent();
-        };
+        PauseManager.Instance.OnPauseChanging += HandlePauseChanging;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -31,5 +25,23 @@ public class Player : MonoBehaviour
             collectable.DestroySelf();
             OnCollectableCollected?.Invoke(this, new CollectableCollectedEventArgs { Name = collectable.name });
         }
+
+        if (collision.gameObject.TryGetComponent<Enemy>(out var enemy))
+        {
+            GameManager.Instance.PlayerDying();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        PauseManager.Instance.OnPauseChanging -= HandlePauseChanging;
+    }
+
+    private void HandlePauseChanging(bool paused)
+    {
+        if (paused)
+            _typingMovement.DisableComponent();
+        else
+            _typingMovement.EnableComponent();
     }
 }

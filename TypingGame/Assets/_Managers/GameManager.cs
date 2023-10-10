@@ -8,9 +8,31 @@ public class GameManager : Singleton<GameManager>
 
     public GameState State { get; private set; }
 
+    public void PlayerDying()
+    {
+        TryChangeState(GameState.PlayerDying);
+    }
+
     private void Start()
     {
         TryChangeState(GameState.LevelStarting);
+    }
+
+    private void Update()
+    {
+        switch (State)
+        {
+            case GameState.LevelStarting:
+                if (Input.anyKeyDown)
+                {
+                    TryChangeState(GameState.LevelPlaying);
+                }
+                break;
+            case GameState.LevelPlaying:
+                break;
+            default:
+                break;
+        }
     }
 
     private bool TryChangeState(GameState state)
@@ -26,7 +48,6 @@ public class GameManager : Singleton<GameManager>
 
         HandleNewState(state);
 
-        Debug.Log($"Game state changed to: {state}");
         OnStateChanged?.Invoke(state);
 
         return true;
@@ -43,6 +64,12 @@ public class GameManager : Singleton<GameManager>
             case GameState.LevelPlaying:
                 HandleLevelPlaying();
                 break;
+            case GameState.LevelComplete:
+                HandleLevelComplete();
+                break;
+            case GameState.PlayerDying:
+                HandlePlayerDying();
+                break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(state), state, null);
         }
@@ -50,19 +77,29 @@ public class GameManager : Singleton<GameManager>
 
     private void HandleLevelStarting()
     {
-        // TODO
         PauseManager.Instance.Pause();
-        this.DoAfterSecondsRealtime(3, () => TryChangeState(GameState.LevelPlaying));
     }
 
     private void HandleLevelPlaying()
     {
         PauseManager.Instance.Unpause();
     }
+
+    private void HandleLevelComplete()
+    {
+        PauseManager.Instance.Pause();
+    }
+
+    private void HandlePlayerDying()
+    {
+        PauseManager.Instance.Pause();
+    }
 }
 
 public enum GameState
 {
     LevelStarting,
-    LevelPlaying
+    LevelPlaying,
+    LevelComplete,
+    PlayerDying
 }

@@ -9,17 +9,17 @@ public class PauseManager : Singleton<PauseManager>
 
     public void Pause()
     {
+        Debug.Log("Pausing");
         OnPauseChanging?.Invoke(true);
         Time.timeScale = 0;
-        Debug.Log("Paused");
         OnPauseChanged?.Invoke(true);
     }
 
     public void Unpause()
     {
+        Debug.Log("Unpausing");
         OnPauseChanging?.Invoke(false);
         Time.timeScale = 1;
-        Debug.Log("Unpaused");
         OnPauseChanged?.Invoke(false);
     }
 }

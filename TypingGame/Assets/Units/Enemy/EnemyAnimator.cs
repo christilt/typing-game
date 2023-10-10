@@ -32,9 +32,6 @@ public class EnemyAnimator : MonoBehaviour
 
     private void SetAnimatorIsInvincible(EnemyState state)
     {
-        var isInvincible = state == EnemyState.Spawning;
-        // TODO remove
-        Debug.Log($"IsInvincible {isInvincible}");
-        _animator.SetBool("IsInvincible", isInvincible);
+        _animator.SetBool("IsInvincible", state == EnemyState.Spawning);
     }
 }
