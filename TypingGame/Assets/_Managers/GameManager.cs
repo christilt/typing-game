@@ -64,8 +64,8 @@ public class GameManager : Singleton<GameManager>
             case GameState.LevelPlaying:
                 HandleLevelPlaying();
                 break;
-            case GameState.LevelComplete:
-                HandleLevelComplete();
+            case GameState.LevelCompleting:
+                HandleLevelCompleting();
                 break;
             case GameState.PlayerDying:
                 HandlePlayerDying();
@@ -85,7 +85,7 @@ public class GameManager : Singleton<GameManager>
         PauseManager.Instance.Unpause();
     }
 
-    private void HandleLevelComplete()
+    private void HandleLevelCompleting()
     {
         PauseManager.Instance.Pause();
     }
@@ -100,6 +100,6 @@ public enum GameState
 {
     LevelStarting,
     LevelPlaying,
-    LevelComplete,
+    LevelCompleting,
     PlayerDying
 }

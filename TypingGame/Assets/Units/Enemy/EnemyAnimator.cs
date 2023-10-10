@@ -16,13 +16,13 @@ public class EnemyAnimator : MonoBehaviour
 
     private void Update()
     {
-        // TODO check velocity also
         _animator.SetFloat("X", _enemyMovement.Direction.x);
         _animator.SetFloat("Y", _enemyMovement.Direction.y);
     }
     private void OnDestroy()
     {
-        _enemy.OnStateChanging -= OnEnemyStateChanging;
+        if (_enemy != null)
+            _enemy.OnStateChanging -= OnEnemyStateChanging;
     }
 
     private void OnEnemyStateChanging(EnemyState state)

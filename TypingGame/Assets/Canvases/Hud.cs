@@ -13,7 +13,8 @@ public class Hud : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameManager.Instance.OnStateChanging -= UpdateTextForState;
+        if (PauseManager.Instance != null)
+            GameManager.Instance.OnStateChanging -= UpdateTextForState;
     }
 
     private void UpdateTextForState(GameState state)
@@ -26,7 +27,7 @@ public class Hud : MonoBehaviour
             case GameState.LevelPlaying:
                 _text.text = string.Empty;
                 break;
-            case GameState.LevelComplete:
+            case GameState.LevelCompleting:
                 _text.text = "Level complete";
                 break;
             case GameState.PlayerDying:

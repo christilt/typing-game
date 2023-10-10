@@ -34,7 +34,8 @@ public class Player : MonoBehaviour
 
     private void OnDestroy()
     {
-        PauseManager.Instance.OnPauseChanging -= HandlePauseChanging;
+        if (PauseManager.Instance != null)
+            PauseManager.Instance.OnPauseChanging -= HandlePauseChanging;
     }
 
     private void HandlePauseChanging(bool paused)
