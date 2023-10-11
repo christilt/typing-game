@@ -30,6 +30,15 @@ public class GameManager : Singleton<GameManager>
                 break;
             case GameState.LevelPlaying:
                 break;
+            case GameState.LevelCompleting:
+                break;
+            case GameState.PlayerDying:
+                // TODO
+                if (Input.anyKeyDown)
+                {
+                    LevelManager.Instance.ReloadScene();
+                }
+                break;
             default:
                 break;
         }
