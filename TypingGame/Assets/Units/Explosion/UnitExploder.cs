@@ -24,7 +24,7 @@ public class UnitExploder : MonoBehaviour
     {
         // TODO make manager parent
         transform.parent = null; // Ensure exploder not destroyed in explosion
-        this.DestroyWithChildren(_target);
+        Destroy(_target);
         _target = null;
     }
 
@@ -38,6 +38,6 @@ public class UnitExploder : MonoBehaviour
     private void DestroyExploder(UnitExplosionPart part)
     {
         part.OnDistanceReached -= DestroyExploder;
-        this.DestroyWithChildren(gameObject);
+        Destroy(gameObject);
     }
 }

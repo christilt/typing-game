@@ -38,4 +38,18 @@ public static class MonoBehaviourExtensions
             action();
         }
     }
+
+    public static void DestroyChildren(this MonoBehaviour monoBehaviour, GameObject target)
+    {
+        monoBehaviour.StartCoroutine(DestroyChildrenCoroutine());
+
+        IEnumerator DestroyChildrenCoroutine()
+        {
+            while (target.transform.childCount > 0)
+            {
+                GameObject.Destroy(target.transform.GetChild(0).gameObject);
+                yield return null;
+            }
+        }
+    }
 }
