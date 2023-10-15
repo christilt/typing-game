@@ -410,6 +410,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _typingMovement: {fileID: 2979496603171898421}
+  _collider: {fileID: 6176550253247425463}
 --- !u!114 &2979496603171898421
 MonoBehaviour:
   m_ObjectHideFlags: 0

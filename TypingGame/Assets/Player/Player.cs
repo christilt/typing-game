@@ -7,26 +7,22 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private PlayerTypingMovement _typingMovement;
+    [SerializeField] private Collider2D _collider;
 
-    public event EventHandler<CollectableCollectedEventArgs> OnCollectableCollected;
-    public class CollectableCollectedEventArgs : EventArgs { public string Name; }
     private void Start()
     {
-        PauseManager.Instance.OnPauseChanging += HandlePauseChanging;
+        GameManager.Instance.OnStateChanging += HandleGameStateChanging;
+        PauseManager.Instance.OnPauseChanging += HandlePauseStateChanging;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // TODO
-        Debug.Log($"Player Hit {collision.gameObject.name}");
-
-        if (collision.gameObject.TryGetComponent<Collectable>(out var collectable))
+        if (collision.TryGetRigidbodyComponent<Collectable>(out var collectable))
         {
-            OnCollectableCollected?.Invoke(this, new CollectableCollectedEventArgs { Name = collectable.name });
             collectable.DestroySelf();
         }
 
-        if (collision.gameObject.TryGetComponent<Enemy>(out var enemy))
+        if (collision.TryGetRigidbodyComponent<Enemy>(out var enemy))
         {
             GameManager.Instance.PlayerDying();
         }
@@ -34,15 +30,25 @@ public class Player : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (GameManager.Instance != null)
+            GameManager.Instance.OnStateChanging -= HandleGameStateChanging;
         if (PauseManager.Instance != null)
-            PauseManager.Instance.OnPauseChanging -= HandlePauseChanging;
+            PauseManager.Instance.OnPauseChanging -= HandlePauseStateChanging;
     }
 
-    private void HandlePauseChanging(bool paused)
+    private void HandleGameStateChanging(GameState state)
     {
-        if (paused)
-            _typingMovement.DisableComponent();
+        if (state == GameState.LevelPlaying)
+            _collider.enabled = true;
         else
+            _collider.enabled = false;
+    }
+
+    private void HandlePauseStateChanging(PauseState pauseState)
+    {
+        if (pauseState == PauseState.Unpaused)
             _typingMovement.EnableComponent();
+        else
+            _typingMovement.DisableComponent();
     }
 }

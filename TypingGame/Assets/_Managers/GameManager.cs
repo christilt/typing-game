@@ -8,6 +8,12 @@ public class GameManager : Singleton<GameManager>
 
     public GameState State { get; private set; }
 
+    public void LevelCompleting()
+    {
+        // TODO different objectives?
+        TryChangeState(GameState.LevelCompleting);
+    }
+
     public void PlayerDying()
     {
         TryChangeState(GameState.PlayerDying);
@@ -31,6 +37,11 @@ public class GameManager : Singleton<GameManager>
             case GameState.LevelPlaying:
                 break;
             case GameState.LevelCompleting:
+                // TODO
+                if (Input.anyKeyDown)
+                {
+                    LevelManager.Instance.ReloadScene();
+                }
                 break;
             case GameState.PlayerDying:
                 // TODO
@@ -96,12 +107,12 @@ public class GameManager : Singleton<GameManager>
 
     private void HandleLevelCompleting()
     {
-        PauseManager.Instance.Pause();
+        PauseManager.Instance.Slow();
     }
 
     private void HandlePlayerDying()
     {
-        PauseManager.Instance.Pause();
+        PauseManager.Instance.Slow();
     }
 }
 
