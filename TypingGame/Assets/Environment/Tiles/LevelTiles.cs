@@ -22,6 +22,36 @@ public class LevelTiles : MonoBehaviour
         Positions = _keyTilesByPosition.Keys.ToList();
     }
 
+    private void Start()
+    {
+        GameManager.Instance.OnStateChanging += OnGameStateChanging;
+    }
+
+    private void OnDestroy()
+    {
+        if (GameManager.Instance != null)
+            GameManager.Instance.OnStateChanging -= OnGameStateChanging;
+    }
+
+    private void OnGameStateChanging(GameState state)
+    {
+        switch (state)
+        {
+            case GameState.LevelStarting:
+                gameObject.SetActive(true);
+                break;
+            case GameState.LevelPlaying:
+                gameObject.SetActive(true);
+                break;
+            case GameState.LevelCompleting:
+                gameObject.SetActive(false);
+                break;
+            case GameState.PlayerDying:
+                gameObject.SetActive(false);
+                break;
+        }
+    }
+
     public static LevelTiles Instance { get; private set; }
 
     public IReadOnlyCollection<Vector2Int> Positions { get; private set; }
