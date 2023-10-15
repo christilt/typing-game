@@ -22,8 +22,8 @@ public class Player : MonoBehaviour
 
         if (collision.gameObject.TryGetComponent<Collectable>(out var collectable))
         {
-            collectable.DestroySelf();
             OnCollectableCollected?.Invoke(this, new CollectableCollectedEventArgs { Name = collectable.name });
+            collectable.DestroySelf();
         }
 
         if (collision.gameObject.TryGetComponent<Enemy>(out var enemy))

@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Collectable : MonoBehaviour
 {
+    [SerializeField] private UnitExploder _exploder;
+
     public void DestroySelf()
     {
-        GameObject.Destroy(gameObject);
+        _exploder.Explode();
     }
 }

@@ -5,6 +5,7 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private Collider2D _collider;
     [SerializeField] private AiMovement _aiMovement;
+    [SerializeField] private UnitExploder _exploder;
     [SerializeField] private float _spawningSeconds;
 
     public event Action<EnemyState> OnStateChanging;
