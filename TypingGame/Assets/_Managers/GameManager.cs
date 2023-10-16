@@ -40,14 +40,14 @@ public class GameManager : Singleton<GameManager>
                 // TODO
                 if (Input.anyKeyDown)
                 {
-                    LevelManager.Instance.ReloadScene();
+                    LevelManager.Instance.ReloadLevel();
                 }
                 break;
             case GameState.PlayerDying:
                 // TODO
                 if (Input.anyKeyDown)
                 {
-                    LevelManager.Instance.ReloadScene();
+                    LevelManager.Instance.ReloadLevel();
                 }
                 break;
             default:
@@ -107,7 +107,9 @@ public class GameManager : Singleton<GameManager>
 
     private void HandleLevelCompleting()
     {
+        // TODO centralise this a little?
         PauseManager.Instance.Slow();
+        LevelManager.Instance.CompleteLevel();
     }
 
     private void HandlePlayerDying()

@@ -12,7 +12,6 @@ public class Player : MonoBehaviour
     private void Start()
     {
         GameManager.Instance.OnStateChanging += HandleGameStateChanging;
-        PauseManager.Instance.OnPauseChanging += HandlePauseStateChanging;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -32,23 +31,19 @@ public class Player : MonoBehaviour
     {
         if (GameManager.Instance != null)
             GameManager.Instance.OnStateChanging -= HandleGameStateChanging;
-        if (PauseManager.Instance != null)
-            PauseManager.Instance.OnPauseChanging -= HandlePauseStateChanging;
     }
 
     private void HandleGameStateChanging(GameState state)
     {
         if (state == GameState.LevelPlaying)
-            _collider.enabled = true;
-        else
-            _collider.enabled = false;
-    }
-
-    private void HandlePauseStateChanging(PauseState pauseState)
-    {
-        if (pauseState == PauseState.Unpaused)
+        {
             _typingMovement.EnableComponent();
+            _collider.enabled = true;
+        }
         else
+        {
             _typingMovement.DisableComponent();
+            _collider.enabled = false;
+        }
     }
 }
