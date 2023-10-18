@@ -4,10 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Player : MonoBehaviour
+public class Player : Singleton<Player>
 {
     [SerializeField] private PlayerTypingMovement _typingMovement;
     [SerializeField] private Collider2D _collider;
+    [SerializeField] private GameObject _visual;
+
+    public Transform VisualTransform => _visual.transform;
 
     private void Start()
     {

@@ -1,11 +1,10 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class LevelHider : MonoBehaviour
+public class Hider : MonoBehaviour
 {
-    [SerializeField] SpriteRenderer _opaqueSprite;
+    [SerializeField] SpriteRenderer _hiderSprite;
 
-    // TODO maybe do with DoTween and just expose alpha?
     public void Hide(float duration)
     {
         StartCoroutine(HideCoroutine());
@@ -13,13 +12,13 @@ public class LevelHider : MonoBehaviour
         IEnumerator HideCoroutine()
         {
             var time = 0f;
-            var color = _opaqueSprite.color;
+            var color = _hiderSprite.color;
             while (time < duration)
             {
                 time += Time.unscaledDeltaTime;
                 var lerp = time / duration;
                 color.a = Mathf.Lerp(0, 1, lerp);
-                _opaqueSprite.color = color;
+                _hiderSprite.color = color;
                 yield return null;
             }
         }

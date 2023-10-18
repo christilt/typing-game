@@ -1,8 +1,7 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.UIElements.Experimental;
 
-public class PauseManager : Singleton<PauseManager>
+public class PauseHelper
 {
     public event Action<PauseState> OnPauseChanging;
     public event Action<PauseState> OnPauseChanged;

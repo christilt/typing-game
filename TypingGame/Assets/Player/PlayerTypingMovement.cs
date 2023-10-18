@@ -4,6 +4,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(InputField))]
 public class PlayerTypingMovement : MonoBehaviour
 {
+    // TODO centralise Player
     [SerializeField] private GameObject _visual;
 
     private InputField _inputField;

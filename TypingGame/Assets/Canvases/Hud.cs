@@ -13,7 +13,7 @@ public class Hud : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (PauseManager.Instance != null)
+        if (GameManager.Instance != null)
             GameManager.Instance.OnStateChanging -= UpdateTextForState;
     }
 

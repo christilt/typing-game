@@ -3,6 +3,12 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
+    [SerializeField] private LevelCompletingSequence _levelCompletingSequence;
+
+    [SerializeField] private SceneTransitionManager _sceneTransitionManager;
+
+    private PauseHelper _pauseHelper;
+
     public event Action<GameState> OnStateChanging;
     public event Action<GameState> OnStateChanged;
 
@@ -21,6 +27,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
+        _pauseHelper = new();
         TryChangeState(GameState.LevelStarting);
     }
 
@@ -40,14 +47,14 @@ public class GameManager : Singleton<GameManager>
                 // TODO
                 if (Input.anyKeyDown)
                 {
-                    LevelManager.Instance.ReloadLevel();
+                    _sceneTransitionManager.ReloadLevel();
                 }
                 break;
             case GameState.PlayerDying:
                 // TODO
                 if (Input.anyKeyDown)
                 {
-                    LevelManager.Instance.ReloadLevel();
+                    _sceneTransitionManager.ReloadLevel();
                 }
                 break;
             default:
@@ -97,24 +104,24 @@ public class GameManager : Singleton<GameManager>
 
     private void HandleLevelStarting()
     {
-        PauseManager.Instance.Pause();
+        _pauseHelper.Pause();
     }
 
     private void HandleLevelPlaying()
     {
-        PauseManager.Instance.Unpause();
+        _pauseHelper.Unpause();
     }
 
     private void HandleLevelCompleting()
     {
         // TODO centralise this a little?
-        PauseManager.Instance.Slow();
-        LevelManager.Instance.CompleteLevel();
+        _pauseHelper.Slow();
+        _levelCompletingSequence.Play();
     }
 
     private void HandlePlayerDying()
     {
-        PauseManager.Instance.Slow();
+        _pauseHelper.Slow();
     }
 }
 
