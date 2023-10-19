@@ -4,6 +4,7 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] private LevelCompletingSequence _levelCompletingSequence;
+    [SerializeField] private PlayerDyingSequence _playerDyingSequence;
 
     [SerializeField] private SceneTransitionManager _sceneTransitionManager;
 
@@ -122,6 +123,7 @@ public class GameManager : Singleton<GameManager>
     private void HandlePlayerDying()
     {
         _pauseHelper.Slow();
+        _playerDyingSequence.Play();
     }
 }
 

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class LevelCompletingSequence : MonoBehaviour
 {
     [SerializeField] private CinemachineVirtualCamera _sequenceCamera;
-    [SerializeField] private Hider _hider;
+    [SerializeField] private Hider _levelHider;
 
     private void Start()
     {
@@ -14,7 +14,7 @@ public class LevelCompletingSequence : MonoBehaviour
 
     public void Play()
     {
-        _sequenceCamera.gameObject.SetActive(true);
-        _hider.Hide(2);
+        _sequenceCamera.Priority = 110;
+        _levelHider.Hide(2);
     }
 }

@@ -10,13 +10,14 @@ GameObject:
   m_Component:
   - component: {fileID: 2493234027474595061}
   - component: {fileID: 6580006337402837342}
+  - component: {fileID: 9099668485507128611}
   m_Layer: 0
   m_Name: PlayerNotPlayingVCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2493234027474595061
 Transform:
   m_ObjectHideFlags: 0
@@ -49,7 +50,7 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 110
+  m_Priority: 90
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
@@ -72,6 +73,18 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 5722438025504858698}
+--- !u!114 &9099668485507128611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1928829293950023364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c45c19994687e6044ba037074c59d988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2862257244653861450
 GameObject:
   m_ObjectHideFlags: 0
@@ -84,6 +97,7 @@ GameObject:
   - component: {fileID: 6809606245858531005}
   - component: {fileID: 6782811465789669227}
   - component: {fileID: 444218918238427270}
+  - component: {fileID: 8599009893519494711}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -167,3 +181,20 @@ MonoBehaviour:
   m_YawDamping: 0
   m_RollDamping: 0
   m_AngularDamping: 0
+--- !u!114 &8599009893519494711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2862257244653861450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NoiseProfile: {fileID: 0}
+  m_PivotOffset: {x: 0, y: 0, z: 0}
+  m_AmplitudeGain: 1
+  m_FrequencyGain: 1
+  mNoiseOffsets: {x: 0, y: 0, z: 0}
