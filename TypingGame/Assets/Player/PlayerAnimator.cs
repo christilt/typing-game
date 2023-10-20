@@ -1,15 +1,25 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-// TODO: Unused: Remove?
 public class PlayerAnimator : MonoBehaviour
 {
-    [SerializeField] private PlayerTypingMovement _playerMovement;
-
     [SerializeField] private Animator _animator;
 
-    private void Update()
+    public event Action OnPacmanExploding;
+    public event Action OnPacmanExploded;
+
+    public void PacmanDie()
     {
-        _animator.SetFloat("x", _playerMovement.Direction.x);
-        _animator.SetFloat("y", _playerMovement.Direction.y);
+        _animator.Play("Pacman_Die", -1, 0);
+    }
+
+    public void OnAnimationPacmanExploding()
+    {
+        OnPacmanExploding?.Invoke();
+    }
+
+    public void OnAnimationPacmanExploded()
+    {
+        OnPacmanExploded?.Invoke();
     }
 }

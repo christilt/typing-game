@@ -325,6 +325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db28d26affbe0aa49b571296de9cf23c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animator: {fileID: 448691857956466017}
   _typingMovement: {fileID: 2979496603171898421}
   _collider: {fileID: 6176550253247425463}
   _visual: {fileID: 6036842454388901638}
@@ -398,6 +399,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fca169eaf50750d46844eede79de4df6, type: 3}
+--- !u!114 &448691857956466017 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7300725834033686518, guid: fca169eaf50750d46844eede79de4df6, type: 3}
+  m_PrefabInstance: {fileID: 7163944602976815767}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1723be7a686bb34089e1dff40473920, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6036842454388901638 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3507281096995474833, guid: fca169eaf50750d46844eede79de4df6, type: 3}

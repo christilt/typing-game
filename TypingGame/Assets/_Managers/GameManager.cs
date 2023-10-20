@@ -26,6 +26,11 @@ public class GameManager : Singleton<GameManager>
         TryChangeState(GameState.PlayerDying);
     }
 
+    public void PlayerExplode()
+    {
+        _playerDyingSequence.PacmanExplode();
+    }
+
     private void Start()
     {
         _pauseHelper = new();

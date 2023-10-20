@@ -6,6 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : Singleton<Player>
 {
+    [SerializeField] private PlayerAnimator _animator;
     [SerializeField] private PlayerTypingMovement _typingMovement;
     [SerializeField] private Collider2D _collider;
     [SerializeField] private GameObject _visual;
@@ -15,6 +16,8 @@ public class Player : Singleton<Player>
     private void Start()
     {
         GameManager.Instance.OnStateChanging += HandleGameStateChanging;
+        _animator.OnPacmanExploding += HandlePacmanExploding;
+        _animator.OnPacmanExploded += HandlePacmanExploded;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -26,6 +29,7 @@ public class Player : Singleton<Player>
 
         if (collision.TryGetRigidbodyComponent<Enemy>(out var enemy))
         {
+            _animator.PacmanDie();
             GameManager.Instance.PlayerDying();
         }
     }
@@ -34,6 +38,8 @@ public class Player : Singleton<Player>
     {
         if (GameManager.Instance != null)
             GameManager.Instance.OnStateChanging -= HandleGameStateChanging;
+        if (_animator != null)
+            _animator.OnPacmanExploding -= HandlePacmanExploding;
     }
 
     private void HandleGameStateChanging(GameState state)
@@ -48,5 +54,15 @@ public class Player : Singleton<Player>
             _typingMovement.DisableComponent();
             _collider.enabled = false;
         }
+    }
+
+    private void HandlePacmanExploding()
+    {
+        GameManager.Instance.PlayerExplode();
+    }
+
+    private void HandlePacmanExploded()
+    {
+        gameObject.SetActive(false);
     }
 }

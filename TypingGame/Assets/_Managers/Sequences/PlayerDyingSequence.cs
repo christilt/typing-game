@@ -13,7 +13,11 @@ public class PlayerDyingSequence : MonoBehaviour
     public void Play()
     {
         _sequenceCamera.Camera.Priority = 110;
-        _levelHider.Hide(2);
-        this.DoAfterSecondsRealtime(2, () => _sequenceCamera.QuickShake());
+        _levelHider.Hide(4);
+    }
+
+    public void PacmanExplode()
+    {
+        _sequenceCamera.QuickShake();
     }
 }
