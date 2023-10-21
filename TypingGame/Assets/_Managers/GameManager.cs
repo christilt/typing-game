@@ -25,11 +25,11 @@ public class GameManager : Singleton<GameManager>
         TryChangeState(GameState.PlayerDying);
     }
 
-    public void PlayerExplode()
+    public void PlayerExploding()
     {
         if (State != GameState.PlayerDying)
         {
-            Debug.LogError($"Invalid to call {nameof(PlayerExplode)} when State is {State}");
+            Debug.LogError($"Invalid to call {nameof(PlayerExploding)} when State is {State}");
             return;
         }
 

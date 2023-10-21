@@ -47,7 +47,7 @@ AnimationClip:
     - time: 0.6666667
       value: {fileID: -568286630, guid: f049a02938819a34faf585892461dab4, type: 3}
     attribute: m_Sprite
-    path: 
+    path: Pacman
     classID: 212
     script: {fileID: 0}
     flags: 2
@@ -59,7 +59,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 0
+      path: 2792284558
       attribute: 0
       script: {fileID: 0}
       typeID: 212

@@ -8,7 +8,7 @@ public class VCameraFollowPlayer : MonoBehaviour
 
     private void Start()
     {
-        Camera.Follow = Player.Instance.VisualTransform;
+        Player.Instance.SetAsFollow(Camera);
     }
 
     private void Awake()

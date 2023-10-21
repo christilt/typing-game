@@ -11,7 +11,7 @@ public class Hider : MonoBehaviour
         _hiderCanvas.worldCamera = Camera.main;
     }
 
-    public void Hide(float duration)
+    public void Hide(float duration, bool unscaled = false)
     {
         StartCoroutine(HideCoroutine());
 
@@ -21,7 +21,7 @@ public class Hider : MonoBehaviour
             var color = _hiderSprite.color;
             while (time < duration)
             {
-                time += Time.unscaledDeltaTime;
+                time += unscaled ? Time.unscaledDeltaTime : Time.deltaTime;
                 var lerp = time / duration;
                 color.a = Mathf.Lerp(0, 1, lerp);
                 _hiderSprite.color = color;

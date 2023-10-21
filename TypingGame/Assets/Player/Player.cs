@@ -1,23 +1,22 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : Singleton<Player>
 {
-    [SerializeField] private PlayerAnimator _animator;
+    [SerializeField] private PlayerVisual _visual;
     [SerializeField] private PlayerTypingMovement _typingMovement;
     [SerializeField] private Collider2D _collider;
-    [SerializeField] private GameObject _visual;
 
-    public Transform VisualTransform => _visual.transform;
+    public void SetAsFollow(CinemachineVirtualCamera camera) => camera.Follow = _visual.transform;
+
+    public void Celebrate() => _visual.PacmanCelebrate();
 
     private void Start()
     {
         GameManager.Instance.OnStateChanging += HandleGameStateChanging;
-        _animator.OnPacmanExploding += HandlePacmanExploding;
-        _animator.OnPacmanExploded += HandlePacmanExploded;
+        _visual.OnPacmanExploding += HandlePacmanExploding;
+        _visual.OnPacmanExploded += HandlePacmanExploded;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -29,7 +28,7 @@ public class Player : Singleton<Player>
 
         if (collision.TryGetRigidbodyComponent<Enemy>(out var enemy))
         {
-            _animator.PacmanDie();
+            _visual.PacmanDie();
             GameManager.Instance.PlayerDying();
         }
     }
@@ -38,8 +37,8 @@ public class Player : Singleton<Player>
     {
         if (GameManager.Instance != null)
             GameManager.Instance.OnStateChanging -= HandleGameStateChanging;
-        if (_animator != null)
-            _animator.OnPacmanExploding -= HandlePacmanExploding;
+        if (_visual != null)
+            _visual.OnPacmanExploding -= HandlePacmanExploding;
     }
 
     private void HandleGameStateChanging(GameState state)
@@ -54,11 +53,16 @@ public class Player : Singleton<Player>
             _typingMovement.DisableComponent();
             _collider.enabled = false;
         }
+
+        if (state == GameState.LevelCompleting)
+        {
+            _visual.PacmanCelebrate();
+        }
     }
 
     private void HandlePacmanExploding()
     {
-        GameManager.Instance.PlayerExplode();
+        GameManager.Instance.PlayerExploding();
     }
 
     private void HandlePacmanExploded()
