@@ -1,7 +1,7 @@
 using Cinemachine;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
+//[RequireComponent(typeof(Rigidbody2D))]
 public class Player : Singleton<Player>
 {
     [SerializeField] private PlayerVisual _visual;

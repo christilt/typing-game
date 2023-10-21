@@ -16,6 +16,8 @@ public class PlayerVisual : MonoBehaviour
     public void PacmanCelebrate()
     {
         _celebrationParticles.Play();
+        _animator.enabled = false; // Otherwise rotation is prevented...
+
         // TODO was working, now not working.  Maybe to do with rigidbody?  https://forum.unity.com/threads/transform-rotation-not-working.1168475/
         StartCoroutine(SpinCoroutine());
 
@@ -27,7 +29,7 @@ public class PlayerVisual : MonoBehaviour
             {
                 var delta = Time.unscaledDeltaTime;
                 var angle = delta * _celebrationSpinSpeed * SPIN_DIRECTION;
-                _pacmanSprite.transform.Rotate(new Vector3(0, 0, angle));
+                _pacmanSprite.transform.eulerAngles += new Vector3(0, 0, angle);
                 yield return null;
             }
         }
