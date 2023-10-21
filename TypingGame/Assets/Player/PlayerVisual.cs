@@ -5,15 +5,17 @@ using UnityEngine;
 public class PlayerVisual : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
+    [SerializeField] private ParticleSystem _celebrationParticles;
+    [SerializeField] private SpriteRenderer _pacmanSprite;
 
-    [SerializeField] private float _rotateSpeed;
+    [SerializeField] private float _celebrationSpinSpeed;
 
     public event Action OnPacmanExploding;
     public event Action OnPacmanExploded;
 
     public void PacmanCelebrate()
     {
-        // TODO particles
+        _celebrationParticles.Play();
         StartCoroutine(SpinCoroutine());
 
         IEnumerator SpinCoroutine()
@@ -23,8 +25,8 @@ public class PlayerVisual : MonoBehaviour
             while (true)
             {
                 var delta = Time.unscaledDeltaTime;
-                var angle = delta * _rotateSpeed * SPIN_DIRECTION;
-                transform.Rotate(new Vector3(0, 0, angle));
+                var angle = delta * _celebrationSpinSpeed * SPIN_DIRECTION;
+                _pacmanSprite.transform.Rotate(new Vector3(0, 0, angle));
                 yield return null;
             }
         }
