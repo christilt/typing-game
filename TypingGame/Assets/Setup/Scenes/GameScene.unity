@@ -352,7 +352,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.4999995, y: -0.5000003, z: -10}
+  m_LocalPosition: {x: 0.5, y: 0.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2902,11 +2902,6 @@ Transform:
   - {fileID: 1525222494}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1670410251 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6086901580476396623, guid: 4027ab85223ce774ba8a36737cb40311, type: 3}
-  m_PrefabInstance: {fileID: 8616128887607390162}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1670583253
 GameObject:
   m_ObjectHideFlags: 0
@@ -3373,17 +3368,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4437190387285524868, guid: 526889e4b89cb1244a4d98c046252de9, type: 3}
-      propertyPath: m_Follow
-      value: 
-      objectReference: {fileID: 1670410251}
     - target: {fileID: 8299598607568349873, guid: 526889e4b89cb1244a4d98c046252de9, type: 3}
       propertyPath: m_Name
       value: PlayerPlayingVCamera
-      objectReference: {fileID: 0}
-    - target: {fileID: 8299598607568349873, guid: 526889e4b89cb1244a4d98c046252de9, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

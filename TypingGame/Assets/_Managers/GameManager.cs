@@ -3,10 +3,9 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    [SerializeField] private LevelCompletingSequence _levelCompletingSequence;
-    [SerializeField] private PlayerDyingSequence _playerDyingSequence;
+    [SerializeField] private SequenceManager _sequenceManager;
 
-    [SerializeField] private SceneTransitionManager _sceneTransitionManager;
+    [SerializeField] private ScenesManager _scenesManager;
 
     private PauseHelper _pauseHelper;
 
@@ -28,7 +27,13 @@ public class GameManager : Singleton<GameManager>
 
     public void PlayerExplode()
     {
-        _playerDyingSequence.PacmanExplode();
+        if (State != GameState.PlayerDying)
+        {
+            Debug.LogError($"Invalid to call {nameof(PlayerExplode)} when State is {State}");
+            return;
+        }
+
+        _sequenceManager.PlayerExploding();
     }
 
     private void Start()
@@ -53,14 +58,14 @@ public class GameManager : Singleton<GameManager>
                 // TODO
                 if (Input.anyKeyDown)
                 {
-                    _sceneTransitionManager.ReloadLevel();
+                    _scenesManager.ReloadLevel();
                 }
                 break;
             case GameState.PlayerDying:
                 // TODO
                 if (Input.anyKeyDown)
                 {
-                    _sceneTransitionManager.ReloadLevel();
+                    _scenesManager.ReloadLevel();
                 }
                 break;
             default:
@@ -122,13 +127,13 @@ public class GameManager : Singleton<GameManager>
     {
         // TODO centralise this a little?
         _pauseHelper.Slow();
-        _levelCompletingSequence.Play();
+        _sequenceManager.LevelCompleting();
     }
 
     private void HandlePlayerDying()
     {
         _pauseHelper.Slow();
-        _playerDyingSequence.Play();
+        _sequenceManager.PlayerDying();
     }
 }
 

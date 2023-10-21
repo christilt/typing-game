@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 2493234027474595061}
   - component: {fileID: 6580006337402837342}
   - component: {fileID: 9099668485507128611}
+  - component: {fileID: 7912965123489353874}
   m_Layer: 0
-  m_Name: PlayerNotPlayingVCamera
+  m_Name: SequenceVCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 1928829293950023364}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0.5, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -53,7 +54,7 @@ MonoBehaviour:
   m_Priority: 90
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 3968362958279261912, guid: fca169eaf50750d46844eede79de4df6, type: 3}
+  m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 34
     OrthographicSize: 10
@@ -83,6 +84,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c45c19994687e6044ba037074c59d988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7912965123489353874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1928829293950023364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e975ea4943f99ac4a987c0a81f455fa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2862257244653861450

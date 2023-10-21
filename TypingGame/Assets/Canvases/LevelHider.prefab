@@ -134,6 +134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hiderSprite: {fileID: 4079844802228001300}
+  _hiderCanvas: {fileID: 1067916481277051117}
 --- !u!1 &9177052777795576866
 GameObject:
   m_ObjectHideFlags: 0

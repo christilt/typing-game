@@ -4,6 +4,12 @@ using UnityEngine;
 public class Hider : MonoBehaviour
 {
     [SerializeField] SpriteRenderer _hiderSprite;
+    [SerializeField] Canvas _hiderCanvas;
+
+    private void Start()
+    {
+        _hiderCanvas.worldCamera = Camera.main;
+    }
 
     public void Hide(float duration)
     {

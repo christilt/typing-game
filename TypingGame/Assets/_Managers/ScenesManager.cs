@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneTransitionManager : MonoBehaviour
+public class ScenesManager : MonoBehaviour
 {
     public void ReloadLevel()
     {
