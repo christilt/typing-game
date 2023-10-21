@@ -128,6 +128,8 @@ public class AiMovement : MonoBehaviour
         if (!directionOptions.Any())
             return PreviousDirectionOpposite;
 
+        // TODO make this clever
+
         return directionOptions[UnityEngine.Random.Range(0, directionOptions.Length)];
     }
 
@@ -176,7 +178,7 @@ public class AiMovement : MonoBehaviour
     private enum Mode
     {
         Random,
-        Chase,
-        Evade
+        ChasePlayer_1Line,
+        EvadePlayer_1Line
     }
 }
