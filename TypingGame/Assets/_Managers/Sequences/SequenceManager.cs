@@ -5,7 +5,7 @@ public class SequenceManager : MonoBehaviour
     [SerializeField] private VCameraWithShake _sequenceCamera;
     [SerializeField] private Hider _levelHider;
 
-    public void LevelCompleting()
+    public void LevelWinning()
     {
         PromoteCamera();
         HideLevel(2);

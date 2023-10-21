@@ -27,11 +27,11 @@ public class Hud : MonoBehaviour
             case GameState.LevelPlaying:
                 _text.text = string.Empty;
                 break;
-            case GameState.LevelCompleting:
-                _text.text = "Level complete";
+            case GameState.LevelWon:
+                _text.text = "WIN";
                 break;
-            case GameState.PlayerDying:
-                _text.text = "Level failed";
+            case GameState.LevelLost:
+                _text.text = "LOSE";
                 break;
             default:
                 _text.text = string.Empty;

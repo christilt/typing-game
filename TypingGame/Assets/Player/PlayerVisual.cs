@@ -16,6 +16,7 @@ public class PlayerVisual : MonoBehaviour
     public void PacmanCelebrate()
     {
         _celebrationParticles.Play();
+        // TODO was working, now not working.  Maybe to do with rigidbody?  https://forum.unity.com/threads/transform-rotation-not-working.1168475/
         StartCoroutine(SpinCoroutine());
 
         IEnumerator SpinCoroutine()

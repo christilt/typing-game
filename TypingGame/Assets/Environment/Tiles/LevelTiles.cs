@@ -43,7 +43,7 @@ public class LevelTiles : MonoBehaviour
             case GameState.LevelPlaying:
                 gameObject.SetActive(true);
                 break;
-            case GameState.LevelCompleting:
+            case GameState.LevelWinning:
                 gameObject.SetActive(false);
                 break;
             case GameState.PlayerDying:

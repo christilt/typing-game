@@ -54,7 +54,7 @@ public class Player : Singleton<Player>
             _collider.enabled = false;
         }
 
-        if (state == GameState.LevelCompleting)
+        if (state == GameState.LevelWinning)
         {
             _visual.PacmanCelebrate();
         }
@@ -67,6 +67,7 @@ public class Player : Singleton<Player>
 
     private void HandlePacmanExploded()
     {
+        GameManager.Instance.PlayerExploded();
         gameObject.SetActive(false);
     }
 }

@@ -14,10 +14,10 @@ public class GameManager : Singleton<GameManager>
 
     public GameState State { get; private set; }
 
-    public void LevelCompleting()
+    public void LevelWinning()
     {
         // TODO different objectives?
-        TryChangeState(GameState.LevelCompleting);
+        TryChangeState(GameState.LevelWinning);
     }
 
     public void PlayerDying()
@@ -27,50 +27,25 @@ public class GameManager : Singleton<GameManager>
 
     public void PlayerExploding()
     {
-        if (State != GameState.PlayerDying)
-        {
-            Debug.LogError($"Invalid to call {nameof(PlayerExploding)} when State is {State}");
+        if (!ValidateOperation(nameof(PlayerExploding), state => state.InvolvesLevelLosing()))
             return;
-        }
 
         _sequenceManager.PlayerExploding();
+        TryChangeState(GameState.LifeLosing);
+    }
+
+    public void PlayerExploded()
+    {
+        if (!ValidateOperation(nameof(PlayerExploded), state => state.InvolvesLevelLosing()))
+            return;
+
+        // TODO
     }
 
     private void Start()
     {
         _pauseHelper = new();
         TryChangeState(GameState.LevelStarting);
-    }
-
-    private void Update()
-    {
-        switch (State)
-        {
-            case GameState.LevelStarting:
-                if (Input.anyKeyDown)
-                {
-                    TryChangeState(GameState.LevelPlaying);
-                }
-                break;
-            case GameState.LevelPlaying:
-                break;
-            case GameState.LevelCompleting:
-                // TODO
-                if (Input.anyKeyDown)
-                {
-                    _scenesManager.ReloadLevel();
-                }
-                break;
-            case GameState.PlayerDying:
-                // TODO
-                if (Input.anyKeyDown)
-                {
-                    _scenesManager.ReloadLevel();
-                }
-                break;
-            default:
-                break;
-        }
     }
 
     private bool TryChangeState(GameState state)
@@ -97,43 +72,82 @@ public class GameManager : Singleton<GameManager>
         switch (state)
         {
             case GameState.LevelStarting:
-                HandleLevelStarting();
+                _pauseHelper.Pause();
                 break;
             case GameState.LevelPlaying:
-                HandleLevelPlaying();
+                _pauseHelper.Unpause();
                 break;
-            case GameState.LevelCompleting:
-                HandleLevelCompleting();
+            case GameState.LevelWinning:
+                _pauseHelper.Slow();
+                _sequenceManager.LevelWinning();
+                // TODO
+                this.DoAfterSecondsRealtime(2, () => TryChangeState(GameState.LevelWon));
                 break;
             case GameState.PlayerDying:
-                HandlePlayerDying();
+                _pauseHelper.Slow();
+                _sequenceManager.PlayerDying();
+                break;
+            case GameState.LifeLosing:
+                // TODO
+                TryChangeState(GameState.LevelLost);
+                break;
+            case GameState.LevelWon:
+                break;
+            case GameState.LevelLosing:
+                break;
+            case GameState.LevelLost:
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(state), state, null);
         }
     }
 
-    private void HandleLevelStarting()
+    private void Update()
     {
-        _pauseHelper.Pause();
+        switch (State)
+        {
+            case GameState.LevelStarting:
+                if (Input.anyKeyDown)
+                {
+                    TryChangeState(GameState.LevelPlaying);
+                }
+                break;
+            case GameState.LevelPlaying:
+                break;
+            case GameState.LevelWinning:
+                break;
+            case GameState.PlayerDying:
+                break;
+            case GameState.LifeLosing:
+                break;
+            case GameState.LevelWon:
+                if (Input.anyKeyDown)
+                {
+                    _scenesManager.ReloadLevel();
+                }
+                break;
+            case GameState.LevelLosing:
+                break;
+            case GameState.LevelLost:
+                if (Input.anyKeyDown)
+                {
+                    _scenesManager.ReloadLevel();
+                }
+                break;
+            default:
+                break;
+        }
     }
 
-    private void HandleLevelPlaying()
+    private bool ValidateOperation(string operationName, Func<GameState, bool> validation)
     {
-        _pauseHelper.Unpause();
-    }
+        if (!validation(State))
+        {
+            Debug.LogError($"Invalid to call {operationName} when State is {State}");
+            return false;
+        }
 
-    private void HandleLevelCompleting()
-    {
-        // TODO centralise this a little?
-        _pauseHelper.Slow();
-        _sequenceManager.LevelCompleting();
-    }
-
-    private void HandlePlayerDying()
-    {
-        _pauseHelper.Slow();
-        _sequenceManager.PlayerDying();
+        return true;
     }
 }
 
@@ -141,6 +155,27 @@ public enum GameState
 {
     LevelStarting,
     LevelPlaying,
-    LevelCompleting,
-    PlayerDying
+    LevelWinning,
+    LevelWon,
+    PlayerDying,
+    LifeLosing,
+    LevelLosing,
+    LevelLost
+}
+
+public static class GameStateExtensions
+{
+    public static bool InvolvesLevelWinning(this GameState state)
+    {
+        return state == GameState.LevelWinning
+            || state == GameState.LevelWon;
+    }
+
+    public static bool InvolvesLevelLosing(this GameState state)
+    {
+        return state == GameState.PlayerDying
+            || state == GameState.LifeLosing
+            || state == GameState.LevelLosing
+            || state == GameState.LevelLost;
+    }
 }
