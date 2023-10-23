@@ -8,6 +8,8 @@ public class Player : Singleton<Player>
     [SerializeField] private PlayerTypingMovement _typingMovement;
     [SerializeField] private Collider2D _collider;
 
+    public Vector2 Centre => _visual.transform.position;
+
     public void SetAsFollow(CinemachineVirtualCamera camera) => camera.Follow = _visual.transform;
 
     public void Celebrate() => _visual.PacmanCelebrate();

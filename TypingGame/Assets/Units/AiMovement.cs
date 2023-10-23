@@ -128,7 +128,7 @@ public class AiMovement : MonoBehaviour
         if (!directionOptions.Any())
             return PreviousDirectionOpposite;
 
-        // TODO make this clever
+
 
         return directionOptions[UnityEngine.Random.Range(0, directionOptions.Length)];
     }
