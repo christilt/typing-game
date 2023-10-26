@@ -1,22 +1,23 @@
+using Pathfinding;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-// TODO: Make this clever
 // TODO: Bug: occasionally overlapping when trapped
-[RequireComponent(typeof(Rigidbody2D))]
+// TODO: Sometimes acting like options haven't changed, when they have
+[RequireComponent(typeof(Rigidbody2D), typeof(AiBrain))]
 public class AiMovement : MonoBehaviour
 {
     private const float CornerCuttingDistanceTolerated = 0.25f;
 
     [SerializeField] private float _movesPerSecond; // TODO: Have this in WPM
-    [SerializeField] private Tilemap _allowedTiles;
+    [SerializeField] private Tilemap _allowedTiles; // TODO: Get this from a singleton to avoid losing references
     [SerializeField] private LayerMask _deflectFromCollisionsInLayers;
     [SerializeField] private Transform _centre;
-    [SerializeField] private Mode _mode; // TODO
 
+    private AiBrain _brain;
     private Rigidbody2D _rigidbody;
 
     private HashSet<Vector2Int> _allowedPositions;
@@ -34,6 +35,7 @@ public class AiMovement : MonoBehaviour
     private void Awake()
     {
         _allowedPositions = new HashSet<Vector2Int>(_allowedTiles.GetPositions());
+        _brain = GetComponent<AiBrain>();
         _rigidbody = GetComponent<Rigidbody2D>();
     }
 
@@ -128,11 +130,8 @@ public class AiMovement : MonoBehaviour
         if (!directionOptions.Any())
             return PreviousDirectionOpposite;
 
-
-
-        return directionOptions[UnityEngine.Random.Range(0, directionOptions.Length)];
+        return _brain.ChooseDirection(directionOptions);
     }
-
 
     private bool IsPreviousDirectionAvailable(Vector2Int[] directionOptions) => directionOptions.Contains(_previousDirection);
     private bool IsNewDirectionAvailable(Vector2Int[] directionOptions) => _previousDirectionOptions is null || directionOptions.Except(_previousDirectionOptions).Any();
@@ -173,12 +172,5 @@ public class AiMovement : MonoBehaviour
         public Vector3 Direction => (To - From).normalized;
         public bool IsAlmostExceededBy(Vector3 position, float distanceTolerated) => ((position - From).magnitude + distanceTolerated) > (To - From).magnitude;
         public bool IsExceededBy(Vector3 position) => (position - From).magnitude > (To - From).magnitude;
-    }
-
-    private enum Mode
-    {
-        Random,
-        ChasePlayer_1Line,
-        EvadePlayer_1Line
     }
 }
