@@ -9,13 +9,13 @@ public class AiBrain : MonoBehaviour
     [SerializeField] private Transform _centre;
     [SerializeField] private float _waypointMarginDistance = 0.2f;
     [SerializeField] private Mode _mode;
-    [SerializeField] private int _tenacityInWaypoints; // TODO maybe use range as well (no offscreen chasing)
 
     private Seeker _seeker;
     private Path _path;
     private int _waypointIndex;
     private Vector3 _pathTargetPosition;
     private Vector2? _targetDirection;
+    private bool _playerWithinFieldOfVision;
 
     private Vector3 SourceCentre => _centre.position;
     private Vector3 TargetPosition => Player.Instance.Centre;
@@ -49,11 +49,6 @@ public class AiBrain : MonoBehaviour
 
     private Vector2Int ChooseDirection_ChaseMode(Vector2Int[] directionOptions)
     {
-        if (MaybeChooseRandomDirection_IfTargetTooFar(directionOptions, out var randomDirection))
-        {
-            return randomDirection;
-        }
-
         var directionClosestToTarget = directionOptions
             .OrderBy(d => Vector2.Angle(d, _targetDirection.Value))
             .First();
@@ -64,31 +59,12 @@ public class AiBrain : MonoBehaviour
 
     private Vector2Int ChooseDirection_EvadeMode(Vector2Int[] directionOptions)
     {
-        if (MaybeChooseRandomDirection_IfTargetTooFar(directionOptions, out var randomDirection))
-        {
-            return randomDirection;
-        }
-
         var directionFurthestFromTarget = directionOptions
             .OrderByDescending(d => Vector2.Angle(d, _targetDirection.Value))
             .First();
 
         //Debug.Log($"Direction {directionFurthestFromTarget} is furthest from target of {_targetDirection} - choosing as evade direction");
         return directionFurthestFromTarget;
-    }
-
-    private bool MaybeChooseRandomDirection_IfTargetTooFar(Vector2Int[] directionOptions, out Vector2Int randomDirection)
-    {
-        randomDirection = default;
-
-        if (_path.vectorPath.Count > _tenacityInWaypoints)
-        {
-            //Debug.Log($"Target too far (distance of {_path.vectorPath.Count} is greater than {_tenacityInWaypoints}) - choosing random direction");
-            randomDirection = ChooseDirection_RandomMode(directionOptions);
-            return true;
-        }
-
-        return false;
     }
 
     private Vector2Int ChooseDirection_RandomMode(Vector2Int[] directionOptions)
@@ -104,6 +80,16 @@ public class AiBrain : MonoBehaviour
     // See https://arongranberg.com/astar/documentation/dev_4_1_9_b355d2bd/custom_movement_script.php
     private void Update()
     {
+        if (!_playerWithinFieldOfVision)
+        {
+            return;
+        }
+
+        if (_mode == Mode.Random)
+        {
+            return;
+        }
+
         MaybeRepath();
 
         if (_path == null)
@@ -138,6 +124,23 @@ public class AiBrain : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.TryGetRigidbodyComponent<Player>(out _))
+        {
+            _playerWithinFieldOfVision = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.TryGetRigidbodyComponent<Player>(out _))
+        {
+            _playerWithinFieldOfVision = false;
+            ResetPathAndTargets();
+        }
+    }
+
     private bool MaybeRepath()
     {
         if (_seeker.IsDone() && TargetPosition != _pathTargetPosition)
@@ -158,6 +161,14 @@ public class AiBrain : MonoBehaviour
             _path = path;
             //Debug.Log($"Path updated to {Print(path)}");
         });
+    }
+
+    private void ResetPathAndTargets()
+    {
+        _pathTargetPosition = default;
+        _targetDirection = null;
+        _waypointIndex = 0;
+        _path = null;
     }
 
     private string Print(Path path) => string.Join("; ", path.vectorPath.Select(p => p.ToString()));

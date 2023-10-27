@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 52069968235740942, guid: 2bd7de96867a5b94b86320838c4df6fd, type: 3}
+      propertyPath: m_Radius
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 712078239508968797, guid: 2bd7de96867a5b94b86320838c4df6fd, type: 3}
       propertyPath: m_Name
       value: Ghost_Blue
