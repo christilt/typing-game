@@ -13,7 +13,6 @@ public class AiMovement : MonoBehaviour
     private const float CornerCuttingDistanceTolerated = 0.25f;
 
     [SerializeField] private float _movesPerSecond; // TODO: Have this in WPM
-    [SerializeField] private Tilemap _allowedTiles; // TODO: Get this from a singleton to avoid losing references
     [SerializeField] private LayerMask _deflectFromCollisionsInLayers;
     [SerializeField] private Transform _centre;
 
@@ -34,9 +33,13 @@ public class AiMovement : MonoBehaviour
 
     private void Awake()
     {
-        _allowedPositions = new HashSet<Vector2Int>(_allowedTiles.GetPositions());
         _brain = GetComponent<AiBrain>();
         _rigidbody = GetComponent<Rigidbody2D>();
+    }
+
+    private void Start()
+    {
+        _allowedPositions = new HashSet<Vector2Int>(LevelTiles.Instance.PathTiles.GetPositions());
     }
 
     private void FixedUpdate()
@@ -153,7 +156,7 @@ public class AiMovement : MonoBehaviour
         return _allowedPositions.TryGetValue(cell + direction, out neighbourCell);
     }
 
-    private Vector2Int GetCell(Vector3 position) => (Vector2Int)_allowedTiles.WorldToCell(position);
+    private Vector2Int GetCell(Vector3 position) => (Vector2Int)LevelTiles.Instance.PathTiles.WorldToCell(position);
     private Vector3 GetCentre(Vector3 position) => position + _centre.localPosition;
     private Vector3 GetCellCentre(Vector2Int cell) => new Vector3(cell.x, cell.y, 0) + _centre.localPosition;
 

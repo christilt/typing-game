@@ -6,17 +6,17 @@ using System.Linq;
 using UnityEngine.UIElements;
 using Unity.VisualScripting;
 
-public class LevelTiles : MonoBehaviour
+public class LevelTiles : Singleton<LevelTiles>
 {
     [SerializeField] private Tilemap _pathTiles;
     [SerializeField] private GameObject _keyIconPrefab;
 
     private IReadOnlyDictionary<Vector2Int, KeyTile> _keyTilesByPosition;
 
-
-    private void Awake()
+    public Tilemap PathTiles => _pathTiles;
+    protected override void Awake()
     {
-        Instance = this;
+        base.Awake();
 
         _keyTilesByPosition = InstantiateKeyTilesByPosition();
         Positions = _keyTilesByPosition.Keys.ToList();
@@ -51,8 +51,6 @@ public class LevelTiles : MonoBehaviour
                 break;
         }
     }
-
-    public static LevelTiles Instance { get; private set; }
 
     public IReadOnlyCollection<Vector2Int> Positions { get; private set; }
 

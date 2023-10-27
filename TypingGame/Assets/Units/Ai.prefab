@@ -290,10 +290,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4817090668802873294}
-  - component: {fileID: 7081621952940783964}
   - component: {fileID: 7314303493707378015}
-  - component: {fileID: 6303125168967630250}
+  - component: {fileID: 7081621952940783964}
   - component: {fileID: 1703634273346474713}
+  - component: {fileID: 6303125168967630250}
   m_Layer: 7
   m_Name: Ai
   m_TagString: Untagged
@@ -318,24 +318,6 @@ Transform:
   - {fileID: 4648561822870921576}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7081621952940783964
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6037277648614989335}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56691c97c83835f47899b73c0f711a5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _movesPerSecond: 2
-  _allowedTiles: {fileID: 0}
-  _deflectFromCollisionsInLayers:
-    serializedVersion: 2
-    m_Bits: 384
-  _centre: {fileID: 4648561822870921576}
 --- !u!50 &7314303493707378015
 Rigidbody2D:
   serializedVersion: 4
@@ -363,6 +345,40 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &7081621952940783964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6037277648614989335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56691c97c83835f47899b73c0f711a5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _movesPerSecond: 2
+  _allowedTiles: {fileID: 0}
+  _deflectFromCollisionsInLayers:
+    serializedVersion: 2
+    m_Bits: 384
+  _centre: {fileID: 4648561822870921576}
+--- !u!114 &1703634273346474713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6037277648614989335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e74168800462f3143bee36043525b3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _centre: {fileID: 4648561822870921576}
+  _waypointMarginDistance: 0.2
+  _mode: 0
+  _tenacityInWaypoints: 20
 --- !u!114 &6303125168967630250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -391,19 +407,3 @@ MonoBehaviour:
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   graphMask:
     value: 1
---- !u!114 &1703634273346474713
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6037277648614989335}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e74168800462f3143bee36043525b3ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _centre: {fileID: 4648561822870921576}
-  _waypointMarginDistance: 0.2
-  _mode: 0
-  _tenacityInWaypoints: 20
