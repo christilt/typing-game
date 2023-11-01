@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &968810933232654922
+--- !u!1001 &8025986328607533974
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -8,13 +8,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 52069968235740942, guid: 2bd7de96867a5b94b86320838c4df6fd, type: 3}
-      propertyPath: m_Radius
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 712078239508968797, guid: 2bd7de96867a5b94b86320838c4df6fd, type: 3}
       propertyPath: m_Name
-      value: Ghost_Blue
+      value: Ghost_Pink
       objectReference: {fileID: 0}
     - target: {fileID: 1797157369037569156, guid: 2bd7de96867a5b94b86320838c4df6fd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -56,26 +52,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4066626009934926358, guid: 2bd7de96867a5b94b86320838c4df6fd, type: 3}
-      propertyPath: _movesPerSecond
-      value: 1.25
-      objectReference: {fileID: 0}
     - target: {fileID: 5125853941839301014, guid: 2bd7de96867a5b94b86320838c4df6fd, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 7a1f6d0804236734d87ae9722b1f2896, type: 2}
-    - target: {fileID: 5588387911429192083, guid: 2bd7de96867a5b94b86320838c4df6fd, type: 3}
-      propertyPath: _mode
-      value: 0
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 9100000, guid: 845adffd69840c946ad64a1cc4961342, type: 2}
     - target: {fileID: 5850422365770866613, guid: 2bd7de96867a5b94b86320838c4df6fd, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -645472377, guid: f049a02938819a34faf585892461dab4, type: 3}
+      objectReference: {fileID: -943835517, guid: f049a02938819a34faf585892461dab4, type: 3}
     - target: {fileID: 6535606686939145361, guid: 2bd7de96867a5b94b86320838c4df6fd, type: 3}
       propertyPath: _partPrefab
       value: 
-      objectReference: {fileID: 209325725440781423, guid: 4e09ed4a24701c6408f42560f0c448f4, type: 3}
+      objectReference: {fileID: 8198762035884815276, guid: 048fa2a041e5a124a926d801bbcd60be, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
