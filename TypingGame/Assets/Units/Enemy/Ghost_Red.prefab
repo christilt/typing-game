@@ -8,9 +8,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 52069968235740942, guid: 2bd7de96867a5b94b86320838c4df6fd, type: 3}
+      propertyPath: m_Radius
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 712078239508968797, guid: 2bd7de96867a5b94b86320838c4df6fd, type: 3}
       propertyPath: m_Name
-      value: Enemy
+      value: Ghost_Red
       objectReference: {fileID: 0}
     - target: {fileID: 1797157369037569156, guid: 2bd7de96867a5b94b86320838c4df6fd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -50,6 +54,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1797157369037569156, guid: 2bd7de96867a5b94b86320838c4df6fd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5588387911429192083, guid: 2bd7de96867a5b94b86320838c4df6fd, type: 3}
+      propertyPath: _mode
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
