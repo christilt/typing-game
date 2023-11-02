@@ -151,6 +151,7 @@ public class GameManager : Singleton<GameManager>
     }
 }
 
+// TODO - maybe 2 sets of states, one higher level so other components need to know less
 public enum GameState
 {
     LevelStarting,
@@ -176,6 +177,12 @@ public static class GameStateExtensions
         return state == GameState.PlayerDying
             || state == GameState.LifeLosing
             || state == GameState.LevelLosing
+            || state == GameState.LevelLost;
+    }
+
+    public static bool IsEndOfLevel(this GameState state)
+    {
+        return state == GameState.LevelWon
             || state == GameState.LevelLost;
     }
 }
