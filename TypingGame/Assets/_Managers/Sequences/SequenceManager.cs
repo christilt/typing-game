@@ -14,7 +14,7 @@ public class SequenceManager : MonoBehaviour
     public void PlayerDying()
     {
         PromoteCamera();
-        HideLevel();
+        HideLevel(2);
     }
 
     public void PlayerExploding()
@@ -24,5 +24,5 @@ public class SequenceManager : MonoBehaviour
 
     private void PromoteCamera() => _sequenceCamera.Camera.Priority = 110;
 
-    private void HideLevel(int duration = 4) => _levelHider.Hide(duration, unscaled: true);
+    private void HideLevel(int duration) => _levelHider.Hide(duration, unscaled: true);
 }
