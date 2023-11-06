@@ -12,7 +12,8 @@ public class UnitsManager : Singleton<UnitsManager>
 
     private void OnDestroy()
     {
-        GameManager.Instance.OnStateChanging -= UpdateUnitsForState;
+        if (GameManager.Instance != null)
+            GameManager.Instance.OnStateChanging -= UpdateUnitsForState;
     }
 
     private void UpdateUnitsForState(GameState state)
