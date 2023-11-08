@@ -4,9 +4,9 @@ using UnityEngine;
 public class UnitExploder : MonoBehaviour
 {
     // TODO: object pool these
-    [SerializeField] private UnitExplosionPart _partPrefab;
+    [SerializeField] protected UnitExplosionPart _partPrefab;
 
-    [SerializeField] private GameObject _target;
+    [SerializeField] protected GameObject _target;
 
     public void Explode()
     {
@@ -14,13 +14,13 @@ public class UnitExploder : MonoBehaviour
             throw new InvalidOperationException("Target already destroyed");
 
         DestroyTarget();
-        SetUpPart(_partPrefab, new Vector3(0, 0, -45), DestroyExploder);
-        SetUpPart(_partPrefab, new Vector3(0, 0, 45));
-        SetUpPart(_partPrefab, new Vector3(0, 0, -135));
-        SetUpPart(_partPrefab, new Vector3(0, 0, -225));
+        SetUpPart(new Vector3(0, 0, -45), DestroyExploder);
+        SetUpPart(new Vector3(0, 0, 45));
+        SetUpPart(new Vector3(0, 0, -135));
+        SetUpPart(new Vector3(0, 0, -225));
     }
 
-    private void DestroyTarget()
+    protected virtual void DestroyTarget()
     {
         // TODO make manager parent
         transform.parent = null; // Ensure exploder not destroyed in explosion
@@ -28,14 +28,14 @@ public class UnitExploder : MonoBehaviour
         _target = null;
     }
 
-    private void SetUpPart(UnitExplosionPart explosionPartPrefab, Vector3 eulerAngles, Action<UnitExplosionPart> onDistanceReached = null)
+    protected virtual void SetUpPart(Vector3 eulerAngles, Action<UnitExplosionPart> onDistanceReached = null)
     {
-        var obj = Instantiate(explosionPartPrefab, this.transform.position, Quaternion.Euler(eulerAngles), this.transform);
+        var obj = Instantiate(_partPrefab, this.transform.position, Quaternion.Euler(eulerAngles), this.transform);
         if (onDistanceReached != null)
             obj.OnDistanceReached += onDistanceReached;
     }
 
-    private void DestroyExploder(UnitExplosionPart part)
+    protected virtual void DestroyExploder(UnitExplosionPart part)
     {
         part.OnDistanceReached -= DestroyExploder;
         Destroy(gameObject);
