@@ -9,4 +9,9 @@ public class Collectable : MonoBehaviour
     {
         _exploder.Explode();
     }
+
+    public virtual void PlayerCollect()
+    {
+        DestroySelf();
+    }
 }

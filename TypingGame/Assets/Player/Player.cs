@@ -25,7 +25,7 @@ public class Player : Singleton<Player>
     {
         if (collision.TryGetRigidbodyComponent<Collectable>(out var collectable))
         {
-            collectable.DestroySelf();
+            collectable.PlayerCollect();
         }
 
         if (collision.TryGetRigidbodyComponent<Enemy>(out var enemy))
