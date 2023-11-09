@@ -12,7 +12,7 @@
 
     public int Id { get; protected set; }
 
-    public override void PlayerCollect()
+    public override void BeCollected()
     {
         GoalManager.Instance.Complete(this);
         DestroySelf();

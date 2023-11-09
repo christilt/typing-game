@@ -10,8 +10,16 @@ public class Collectable : MonoBehaviour
         _exploder.Explode();
     }
 
-    public virtual void PlayerCollect()
+    public virtual void BeCollected()
     {
         DestroySelf();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.TryGetRigidbodyComponent<Player>(out var player))
+        {
+            BeCollected();
+        }
     }
 }

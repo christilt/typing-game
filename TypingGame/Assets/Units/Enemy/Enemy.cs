@@ -17,6 +17,14 @@ public class Enemy : MonoBehaviour
         TryChangeState(EnemyState.Spawning);
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.TryGetRigidbodyComponent<Player>(out var player))
+        {
+            player.BeKilled();
+        }
+    }
+
     // TODO could be OTT
     private bool TryChangeState(EnemyState state)
     {

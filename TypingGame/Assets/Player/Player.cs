@@ -21,26 +21,18 @@ public class Player : Singleton<Player>
         _visual.OnPacmanExploded += HandlePacmanExploded;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.TryGetRigidbodyComponent<Collectable>(out var collectable))
-        {
-            collectable.PlayerCollect();
-        }
-
-        if (collision.TryGetRigidbodyComponent<Enemy>(out var enemy))
-        {
-            _visual.PacmanDie();
-            GameManager.Instance.PlayerDying();
-        }
-    }
-
     private void OnDestroy()
     {
         if (GameManager.Instance != null)
             GameManager.Instance.OnStateChanging -= HandleGameStateChanging;
         if (_visual != null)
             _visual.OnPacmanExploding -= HandlePacmanExploding;
+    }
+
+    public void BeKilled()
+    {
+        _visual.PacmanDie();
+        GameManager.Instance.PlayerDying();
     }
 
     private void HandleGameStateChanging(GameState state)
