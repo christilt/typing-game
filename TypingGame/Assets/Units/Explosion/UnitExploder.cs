@@ -6,6 +6,7 @@ public class UnitExploder : MonoBehaviour
     // TODO: object pool these
     [SerializeField] protected UnitExplosionPart _partPrefab;
 
+    [SerializeField] private Sprite _partPrefabSprite;
     [SerializeField] protected GameObject _target;
 
     public void Explode()
@@ -30,7 +31,7 @@ public class UnitExploder : MonoBehaviour
 
     protected virtual void SetUpPart(Vector3 eulerAngles, Action<UnitExplosionPart> onDistanceReached = null)
     {
-        var obj = Instantiate(_partPrefab, this.transform.position, Quaternion.Euler(eulerAngles), this.transform);
+        var obj = UnitExplosionPart.Instantiate(_partPrefab, this.transform.position, Quaternion.Euler(eulerAngles), this.transform, _partPrefabSprite);
         if (onDistanceReached != null)
             obj.OnDistanceReached += onDistanceReached;
     }

@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2842678671924758482}
-  - component: {fileID: 4243551729095811411}
   - component: {fileID: 2865678817286563523}
+  - component: {fileID: 7554157760836880752}
   m_Layer: 7
   m_Name: UnitExploder
   m_TagString: Untagged
@@ -33,23 +33,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4243551729095811411
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5806970423844439451}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f12dd01c90ceb24db072da3f298955d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _upPrefab: {fileID: 1567011328428092635, guid: 1f589faaaabdab041a3406ba6ff4f809, type: 3}
-  _downPrefab: {fileID: 6081144243646036393, guid: 168e0977a867d1b4693c4d5a6ad9335f, type: 3}
-  _leftPrefab: {fileID: 5347149898147899918, guid: 4aacacc41288a6240afb47d7b696cfb8, type: 3}
-  _rightPrefab: {fileID: 1731213782761024778, guid: e35992b4675f7a24086ef9fd31cb1d71, type: 3}
-  _target: {fileID: 0}
 --- !u!210 &2865678817286563523
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -62,3 +45,18 @@ SortingGroup:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_SortAtRoot: 0
+--- !u!114 &7554157760836880752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5806970423844439451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f79969357f78fe24d9959f15064df3c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _partPrefab: {fileID: 3677354577644754419, guid: 2e0930a1b912a7b4ca348d84f1fd04ad, type: 3}
+  _target: {fileID: 0}
+  _prefabSprite: {fileID: 0}

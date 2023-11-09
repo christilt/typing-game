@@ -20,7 +20,6 @@ public class UnitExplosionPart : MonoBehaviour
         prefab.gameObject.SetActive(false);
         var obj = Instantiate(prefab, position, euler, parent);
         var spriteRenderer = obj.gameObject.AddComponent<SpriteRenderer>();
-        // TODO: PPtr cast failed when dereferencing! Casting from SpriteRenderer to Sprite
         spriteRenderer.sprite = prefabSprite;
         obj.SpriteRenderer = spriteRenderer;
         obj.gameObject.SetActive(true);
