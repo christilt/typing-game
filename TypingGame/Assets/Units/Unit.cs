@@ -8,17 +8,20 @@ public class Unit : MonoBehaviour
     [SerializeField] protected UnitMovement _movement;
     [SerializeField] protected UnitExploder _exploder;
     [SerializeField] protected float _spawningSeconds;
-    [SerializeField] protected float _destroyedSeconds;
 
-    protected Vector3 _startPosition;
+    protected UnitRespawner _optionalRespawner;
 
     public event Action<UnitState> OnStateChanging;
     public event Action<UnitState> OnStateChanged;
     public UnitState State { get; protected set; }
 
+    protected virtual void Awake()
+    {
+        _optionalRespawner = GetComponent<UnitRespawner>();
+    }
+
     protected virtual void Start()
     {
-        _startPosition = transform.position;
         TryChangeState(UnitState.Spawning);
     }
 
@@ -28,6 +31,11 @@ public class Unit : MonoBehaviour
         {
             _exploder.Explode();
         }
+    }
+
+    public virtual void BeSpawned()
+    {
+        TryChangeState(UnitState.Spawning);
     }
 
     public virtual void ChangeSpeed(float multiplier, float durationSeconds)
@@ -47,19 +55,21 @@ public class Unit : MonoBehaviour
 
         OnStateChanging?.Invoke(state);
 
+        StopPendingStateChanges();
+
         State = state;
         switch (state)
         {
             case UnitState.Spawning:
-                SetComponentsEnabled(false);
+                SetMoveableAndCollidable(false);
                 this.DoAfterSeconds(_spawningSeconds, () => TryChangeState(UnitState.Normal));
                 break;
             case UnitState.Normal:
-                SetComponentsEnabled(true);
+                SetMoveableAndCollidable(true);
                 break;
             case UnitState.Destroyed:
-                SetComponentsEnabled(false);
-                this.DoAfterSeconds(_destroyedSeconds, () => Respawn());
+                SetMoveableAndCollidable(false);
+                _optionalRespawner?.RespawnLater();
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(state), state, null);
@@ -70,18 +80,18 @@ public class Unit : MonoBehaviour
         return true;
     }
 
-    protected virtual void Respawn()
-    {
-        transform.position = _startPosition;
-        TryChangeState(UnitState.Spawning);
-    }
-
     protected virtual void ResetSpeed()
     {
         _movement.SpeedMultiplier = 1;
     }
 
-    protected virtual void SetComponentsEnabled(bool enabled)
+    protected virtual void StopPendingStateChanges()
+    {
+        StopAllCoroutines();
+        _optionalRespawner?.Stop();
+    }
+
+    protected virtual void SetMoveableAndCollidable(bool enabled)
     {
         _movement.enabled = enabled;
         _collider.enabled = enabled;

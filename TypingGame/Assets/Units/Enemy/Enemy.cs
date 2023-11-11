@@ -5,8 +5,8 @@ public class Enemy : Unit
 {
     protected override void Start()
     {
-        UnitManager.Instance.TryRegister(this);
         base.Start();
+        UnitManager.Instance.TryRegister(this);
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)

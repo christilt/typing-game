@@ -5,15 +5,16 @@ public class Collectable : Unit
 {
     private CollectableEffect[] _effects;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _effects = GetComponents<CollectableEffect>();
     }
 
     protected override void Start()
     {
-        UnitManager.Instance.TryRegister(this);
         base.Start();
+        UnitManager.Instance.TryRegister(this);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
