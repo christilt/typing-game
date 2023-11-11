@@ -2,7 +2,7 @@
 
 public class CollectableVisual : UnitVisual
 {
-    [SerializeField] private AiMovement _movement;
+    [SerializeField] private UnitMovement _movement;
 
     protected void FixedUpdate()
     {

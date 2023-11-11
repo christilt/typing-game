@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public class CollectableKillsEnemies : CollectableEffect
+﻿public class CollectableKillsEnemies : CollectableEffect
 {
     public override void RunCollectionEffect()
     {

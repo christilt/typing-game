@@ -235,10 +235,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _collider: {fileID: 7928311292097771060}
-  _aiMovement: {fileID: 4067859757378895231}
-  _spawningSeconds: 2
-  _destroyedSeconds: 15
+  _movement: {fileID: 4067859757378895231}
   _exploder: {fileID: 1540055648228245945}
+  _spawningSeconds: 2
+  _destroyedSeconds: 10
 --- !u!114 &3107124790110949690
 MonoBehaviour:
   m_ObjectHideFlags: 0

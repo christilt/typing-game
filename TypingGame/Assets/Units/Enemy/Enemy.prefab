@@ -320,10 +320,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _collider: {fileID: 7934070647986149725}
-  _aiMovement: {fileID: 4066626009934926358}
-  _spawningSeconds: 2
-  _destroyedSeconds: 15
+  _movement: {fileID: 4066626009934926358}
   _exploder: {fileID: 7104000279157000432}
+  _spawningSeconds: 2
+  _destroyedSeconds: 10
 --- !u!4 &1797157369037569156 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4817090668802873294, guid: 6628dbcfb4f2ffb4c8b01afe578f0fcd, type: 3}

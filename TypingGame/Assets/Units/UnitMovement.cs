@@ -7,8 +7,8 @@ using UnityEngine.Tilemaps;
 
 // TODO: Bug: occasionally overlapping when trapped
 // TODO: Sometimes acting like options haven't changed, when they have
-[RequireComponent(typeof(Rigidbody2D), typeof(AiBrain))]
-public class AiMovement : MonoBehaviour
+[RequireComponent(typeof(Rigidbody2D), typeof(UnitBrain))]
+public class UnitMovement : MonoBehaviour
 {
     private const float CornerCuttingDistanceTolerated = 0.25f;
 
@@ -16,7 +16,7 @@ public class AiMovement : MonoBehaviour
     [SerializeField] private LayerMask _deflectFromCollisionsInLayers;
     [SerializeField] private Transform _centre;
 
-    private AiBrain _brain;
+    private UnitBrain _brain;
     private Rigidbody2D _rigidbody;
 
     private HashSet<Vector2Int> _allowedPositions;
@@ -27,13 +27,14 @@ public class AiMovement : MonoBehaviour
 
     private Movement? _centreMovement;
 
+    public float SpeedMultiplier { get; set; } = 1;
     public Vector2Int Direction { get; private set; } = Vector2Int.zero;
     private Vector2Int CellPosition => GetCell(_centre.position);
     private Vector2Int PreviousDirectionOpposite => _previousDirection * -1;
 
     private void Awake()
     {
-        _brain = GetComponent<AiBrain>();
+        _brain = GetComponent<UnitBrain>();
         _rigidbody = GetComponent<Rigidbody2D>();
     }
 
@@ -59,7 +60,7 @@ public class AiMovement : MonoBehaviour
         if (_centreMovement is null)
             return;
 
-        var newPosition = transform.position + (_centreMovement.Value.Direction * Time.deltaTime * _movesPerSecond);
+        var newPosition = transform.position + (_centreMovement.Value.Direction * Time.deltaTime * _movesPerSecond * SpeedMultiplier);
         _rigidbody.MovePosition(newPosition);
     }
 

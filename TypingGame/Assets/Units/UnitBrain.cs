@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(Seeker))]
-public class AiBrain : MonoBehaviour
+public class UnitBrain : MonoBehaviour
 {
     [SerializeField] private Transform _centre;
     [SerializeField] private float _waypointMarginDistance = 0.2f;
@@ -20,6 +20,10 @@ public class AiBrain : MonoBehaviour
     private Vector3 SourceCentre => _centre.position;
     private Vector3 TargetPosition => Player.Instance.Centre;
 
+    private void Awake()
+    {
+        _seeker = GetComponent<Seeker>();
+    }
 
     public Vector2Int ChooseDirection(Vector2Int[] directionOptions)
     {
@@ -70,11 +74,6 @@ public class AiBrain : MonoBehaviour
     private Vector2Int ChooseDirection_RandomMode(Vector2Int[] directionOptions)
     {
         return directionOptions[UnityEngine.Random.Range(0, directionOptions.Length)];
-    }
-
-    private void Awake()
-    {
-        _seeker = GetComponent<Seeker>();
     }
 
     // See https://arongranberg.com/astar/documentation/dev_4_1_9_b355d2bd/custom_movement_script.php

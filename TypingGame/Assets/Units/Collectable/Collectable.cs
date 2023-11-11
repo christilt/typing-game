@@ -10,6 +10,12 @@ public class Collectable : Unit
         _effects = GetComponents<CollectableEffect>();
     }
 
+    protected override void Start()
+    {
+        UnitManager.Instance.TryRegister(this);
+        base.Start();
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.TryGetRigidbodyComponent<Player>(out var player))

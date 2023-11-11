@@ -3,7 +3,7 @@
 // TODO unsubscribe any events ondestroy
 public class EnemyVisual : UnitVisual
 {
-    [SerializeField] private AiMovement _enemyMovement;
+    [SerializeField] private UnitMovement _enemyMovement;
 
     private void Update()
     {

@@ -1,16 +1,28 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class UnitManager : Singleton<UnitManager>
 {
     [SerializeField] private GameObject _unitsHolder;
 
+    private readonly HashSet<Collectable> _collectables = new();
     private readonly HashSet<Enemy> _enemies = new();
 
     private void Start()
     {
         GameManager.Instance.OnStateChanging += UpdateUnitsForState;
+    }
+
+    public bool TryRegister(Collectable collectable)
+    {
+        if (_collectables.Contains(collectable))
+            return false;
+
+        _collectables.Add(collectable);
+        return true;
     }
 
     public bool TryRegister(Enemy enemy)
@@ -22,17 +34,19 @@ public class UnitManager : Singleton<UnitManager>
         return true;
     }
 
-    public bool KillAllEnemies()
+    public void KillAllEnemies()
     {
-        if (_enemies.Count == 0) 
-            return false;
-
-        foreach(var enemy in _enemies) 
-        {
+        foreach(var enemy in _enemies)
             enemy.BeDestroyed();
-        }
+    }
 
-        return true;
+    public void ChangeUnitSpeed(float multiplier, float durationSeconds)
+    {
+        foreach (var collectable in _collectables)
+            collectable.ChangeSpeed(multiplier, durationSeconds);
+
+        foreach (var enemy in _enemies)
+            enemy.ChangeSpeed(multiplier, durationSeconds);
     }
 
     private void OnDestroy()

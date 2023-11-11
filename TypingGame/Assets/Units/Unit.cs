@@ -5,10 +5,10 @@ using UnityEngine;
 public class Unit : MonoBehaviour
 {
     [SerializeField] protected Collider2D _collider;
-    [SerializeField] protected AiMovement _aiMovement;
+    [SerializeField] protected UnitMovement _movement;
+    [SerializeField] protected UnitExploder _exploder;
     [SerializeField] protected float _spawningSeconds;
     [SerializeField] protected float _destroyedSeconds;
-    [SerializeField] protected UnitExploder _exploder;
 
     protected Vector3 _startPosition;
 
@@ -24,11 +24,17 @@ public class Unit : MonoBehaviour
 
     public virtual void BeDestroyed()
     {
-        if (State == UnitState.Destroyed)
-            return;
+        if (TryChangeState(UnitState.Destroyed))
+        {
+            _exploder.Explode();
+        }
+    }
 
-        TryChangeState(UnitState.Destroyed);
-        _exploder.Explode();
+    public virtual void ChangeSpeed(float multiplier, float durationSeconds)
+    {
+        CancelInvoke(nameof(ResetSpeed));
+        _movement.SpeedMultiplier = multiplier;
+        Invoke(nameof(ResetSpeed), durationSeconds); // Use invoke so not interrupted by changing state
     }
 
     protected virtual bool TryChangeState(UnitState state)
@@ -70,9 +76,14 @@ public class Unit : MonoBehaviour
         TryChangeState(UnitState.Spawning);
     }
 
+    protected virtual void ResetSpeed()
+    {
+        _movement.SpeedMultiplier = 1;
+    }
+
     protected virtual void SetComponentsEnabled(bool enabled)
     {
-        _aiMovement.enabled = enabled;
+        _movement.enabled = enabled;
         _collider.enabled = enabled;
     }
 }
