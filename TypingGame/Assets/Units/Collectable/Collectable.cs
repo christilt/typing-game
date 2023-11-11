@@ -1,17 +1,24 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Collectable : Unit
 {
-    public virtual void BeCollected()
+    private CollectableEffect[] _effects;
+
+    private void Awake()
     {
-        BeDestroyed();
+        _effects = GetComponents<CollectableEffect>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.TryGetRigidbodyComponent<Player>(out var player))
         {
-            BeCollected();
+            foreach(var effect in _effects) 
+            {
+                effect.RunCollectionEffect();
+            }
+            BeDestroyed();
         }
     }
 }

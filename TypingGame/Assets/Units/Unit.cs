@@ -45,17 +45,14 @@ public class Unit : MonoBehaviour
         switch (state)
         {
             case UnitState.Spawning:
-                //gameObject.SetActive(true);
                 SetComponentsEnabled(false);
                 this.DoAfterSeconds(_spawningSeconds, () => TryChangeState(UnitState.Normal));
                 break;
             case UnitState.Normal:
-                //gameObject.SetActive(true);
                 SetComponentsEnabled(true);
                 break;
             case UnitState.Destroyed:
                 SetComponentsEnabled(false);
-                //gameObject.SetActive(false);
                 this.DoAfterSeconds(_destroyedSeconds, () => Respawn());
                 break;
             default:

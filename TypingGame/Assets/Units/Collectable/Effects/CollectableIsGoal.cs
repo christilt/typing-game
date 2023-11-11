@@ -1,22 +1,21 @@
-﻿public class CollectableGoal : Collectable, ICollectableGoal
+﻿using UnityEngine;
+
+public class CollectableIsGoal : CollectableEffect, ICollectableGoal
 {
     protected virtual void Awake()
     {
         Id = transform.GetInstanceID();
     }
 
-    protected override void Start()
+    protected virtual void Start()
     {
         GoalManager.Instance.TryRegister(this);
-        base.Start();
     }
 
     public int Id { get; protected set; }
 
-    public override void BeCollected()
+    public override void RunCollectionEffect()
     {
         GoalManager.Instance.Complete(this);
-        BeDestroyed();
     }
-
 }

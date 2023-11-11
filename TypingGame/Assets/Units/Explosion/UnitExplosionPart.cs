@@ -38,7 +38,6 @@ public class UnitExplosionPart : MonoBehaviour
 
     private void UpdateMovement()
     {
-        Debug.Log(transform.up);
         transform.Translate(transform.right * _velocity * Time.deltaTime, Space.World);
 
         _currentDistance = Vector2.Distance(transform.position, _startPosition);
