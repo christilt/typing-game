@@ -15,18 +15,19 @@ public class UnitExploder : MonoBehaviour
             throw new InvalidOperationException("Target already destroyed");
 
         DestroyTarget();
-        SetUpPart(new Vector3(0, 0, -45), DestroyExploder);
-        SetUpPart(new Vector3(0, 0, 45));
-        SetUpPart(new Vector3(0, 0, -135));
-        SetUpPart(new Vector3(0, 0, -225));
+        SetUpPart(new Vector3(0, 0, -45), DestroyPart);
+        SetUpPart(new Vector3(0, 0, 45), DestroyPart);
+        SetUpPart(new Vector3(0, 0, -135), DestroyPart);
+        SetUpPart(new Vector3(0, 0, -225), DestroyPart);
     }
 
     protected virtual void DestroyTarget()
     {
-        // TODO make manager parent
-        transform.parent = null; // Ensure exploder not destroyed in explosion
-        Destroy(_target);
-        _target = null;
+        // TODO test
+        //// TODO make manager parent
+        //transform.parent = null; // Ensure exploder not destroyed in explosion
+        //Destroy(_target);
+        //_target = null;
     }
 
     protected virtual void SetUpPart(Vector3 eulerAngles, Action<UnitExplosionPart> onDistanceReached = null)
@@ -36,9 +37,9 @@ public class UnitExploder : MonoBehaviour
             obj.OnDistanceReached += onDistanceReached;
     }
 
-    protected virtual void DestroyExploder(UnitExplosionPart part)
+    protected virtual void DestroyPart(UnitExplosionPart part)
     {
-        part.OnDistanceReached -= DestroyExploder;
-        Destroy(gameObject);
+        part.OnDistanceReached -= DestroyPart;
+        Destroy(part.gameObject);
     }
 }

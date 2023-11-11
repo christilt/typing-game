@@ -362,7 +362,7 @@ GameObject:
   - component: {fileID: 1703634273346474713}
   - component: {fileID: 6303125168967630250}
   m_Layer: 7
-  m_Name: Ai
+  m_Name: Unit
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0

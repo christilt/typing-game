@@ -1,18 +1,10 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
-public class Collectable : MonoBehaviour
+public class Collectable : Unit
 {
-    [SerializeField] private UnitExploder _exploder;
-
-    public void DestroySelf()
-    {
-        _exploder.Explode();
-    }
-
     public virtual void BeCollected()
     {
-        DestroySelf();
+        BeDestroyed();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

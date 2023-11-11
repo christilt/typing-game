@@ -234,6 +234,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca6451ad860e3854a8da0842d38f3f58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _collider: {fileID: 7928311292097771060}
+  _aiMovement: {fileID: 4067859757378895231}
+  _spawningSeconds: 2
+  _timeoutSeconds: 15
   _exploder: {fileID: 1540055648228245945}
 --- !u!114 &3107124790110949690
 MonoBehaviour:
@@ -247,8 +251,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f7f2273ff8b9dc41a707f82f155c206, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _movement: {fileID: 4067859757378895231}
+  _unit: {fileID: 2316249958442045723}
+  _sprite: {fileID: 4088692949322632907}
   _animator: {fileID: 4062436451222288264}
+  _movement: {fileID: 4067859757378895231}
 --- !u!4 &1796011768281060333 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4817090668802873294, guid: 6628dbcfb4f2ffb4c8b01afe578f0fcd, type: 3}
@@ -265,6 +271,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56691c97c83835f47899b73c0f711a5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!58 &7928311292097771060 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 3761082235772269079, guid: 6628dbcfb4f2ffb4c8b01afe578f0fcd, type: 3}
+  m_PrefabInstance: {fileID: 6500111811688809507}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8787324855595465847 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2578258177341667412, guid: 6628dbcfb4f2ffb4c8b01afe578f0fcd, type: 3}

@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 
-public class CollectableAnimator : MonoBehaviour
+public class CollectableVisual : UnitVisual
 {
     [SerializeField] private AiMovement _movement;
-    [SerializeField] private Animator _animator;
 
-    private void Update()
+    protected void FixedUpdate()
     {
         _animator.SetBool("IsMoving", _movement.Direction != default);
     }

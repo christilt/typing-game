@@ -4,8 +4,12 @@ using UnityEngine;
 
 public static class MonoBehaviourExtensions
 {
-    public static void DoAfterSeconds(this MonoBehaviour monoBehaviour, float seconds, Action action)
+    public static void DoAfterSeconds(this MonoBehaviour monoBehaviour, float seconds, Action action, bool interruptOtherCoroutines = true)
     {
+        if (interruptOtherCoroutines)
+        {
+            monoBehaviour.StopAllCoroutines();
+        }
         monoBehaviour.StartCoroutine(DoAfterSecondsCoroutine()); 
         
         IEnumerator DoAfterSecondsCoroutine()
@@ -15,8 +19,12 @@ public static class MonoBehaviourExtensions
             action();
         }
     }
-    public static void DoAfterSecondsRealtime(this MonoBehaviour monoBehaviour, float seconds, Action action)
+    public static void DoAfterSecondsRealtime(this MonoBehaviour monoBehaviour, float seconds, Action action, bool interruptOtherCoroutines = true)
     {
+        if (interruptOtherCoroutines)
+        {
+            monoBehaviour.StopAllCoroutines();
+        }
         monoBehaviour.StartCoroutine(DoAfterSecondsRealtimeCoroutine());
 
         IEnumerator DoAfterSecondsRealtimeCoroutine()
