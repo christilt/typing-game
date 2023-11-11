@@ -32,6 +32,7 @@ public class UnitExploder : MonoBehaviour
 
     protected virtual void SetUpPart(Vector3 eulerAngles, Action<UnitExplosionPart> onDistanceReached = null)
     {
+        // TODO why the 2 second delay?
         var obj = UnitExplosionPart.Instantiate(_partPrefab, this.transform.position, Quaternion.Euler(eulerAngles), this.transform, _partPrefabSprite);
         if (onDistanceReached != null)
             obj.OnDistanceReached += onDistanceReached;

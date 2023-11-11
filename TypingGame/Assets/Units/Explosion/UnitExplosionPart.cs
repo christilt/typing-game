@@ -1,13 +1,11 @@
 ﻿using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
 public class UnitExplosionPart : MonoBehaviour
 {
     [SerializeField] private int _velocity;
     [SerializeField] private float _distance;
 
-    private Rigidbody2D _rigidBody;
     private Vector2 _startPosition;
     private float _currentDistance;
 
@@ -26,31 +24,37 @@ public class UnitExplosionPart : MonoBehaviour
         return obj;
     }
 
-    private void Awake()
-    {
-        _rigidBody = GetComponent<Rigidbody2D>();
-    }
-
     private void OnEnable()
     {
         _startPosition = transform.position;
         _currentDistance = 0;
-        _rigidBody.velocity = transform.up * _velocity;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
+        UpdateMovement();
+        UpdateTransparency();
+    }
+
+    private void UpdateMovement()
+    {
+        Debug.Log(transform.up);
+        transform.Translate(transform.right * _velocity * Time.deltaTime, Space.World);
+
         _currentDistance = Vector2.Distance(transform.position, _startPosition);
         if (_currentDistance > _distance)
         {
             OnDistanceReached?.Invoke(this);
         }
+    }
 
+    private void UpdateTransparency()
+    {
         if (SpriteRenderer == null)
             return;
 
         var color = SpriteRenderer.color;
-        color.a =  1f - (_currentDistance / _distance);
+        color.a = 1f - (_currentDistance / _distance);
         SpriteRenderer.color = color;
     }
 }

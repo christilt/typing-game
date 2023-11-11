@@ -96,7 +96,7 @@ MonoBehaviour:
   _collider: {fileID: 5458913183396008519}
   _aiMovement: {fileID: 2140618737707669772}
   _spawningSeconds: 2
-  _timeoutSeconds: 15
+  _destroyedSeconds: 15
   _exploder: {fileID: 3501990648604141002}
 --- !u!114 &3501990648604141002 stripped
 MonoBehaviour:

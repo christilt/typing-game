@@ -237,7 +237,7 @@ MonoBehaviour:
   _collider: {fileID: 7928311292097771060}
   _aiMovement: {fileID: 4067859757378895231}
   _spawningSeconds: 2
-  _timeoutSeconds: 15
+  _destroyedSeconds: 15
   _exploder: {fileID: 1540055648228245945}
 --- !u!114 &3107124790110949690
 MonoBehaviour:

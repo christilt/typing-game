@@ -22,7 +22,7 @@ public class UnitVisual : MonoBehaviour
 
     protected virtual void OnUnitStateChanging(UnitState state)
     {
-        //SetTransparency(state);
+        SetTransparency(state);
         SetAnimation(state);
     }
 

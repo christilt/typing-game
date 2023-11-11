@@ -7,7 +7,7 @@ public class Unit : MonoBehaviour
     [SerializeField] protected Collider2D _collider;
     [SerializeField] protected AiMovement _aiMovement;
     [SerializeField] protected float _spawningSeconds;
-    [SerializeField] protected float _timeoutSeconds;
+    [SerializeField] protected float _destroyedSeconds;
     [SerializeField] protected UnitExploder _exploder;
 
     protected Vector3 _startPosition;
@@ -56,7 +56,7 @@ public class Unit : MonoBehaviour
             case UnitState.Destroyed:
                 SetComponentsEnabled(false);
                 //gameObject.SetActive(false);
-                this.DoAfterSeconds(_spawningSeconds, () => Respawn());
+                this.DoAfterSeconds(_destroyedSeconds, () => Respawn());
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(state), state, null);

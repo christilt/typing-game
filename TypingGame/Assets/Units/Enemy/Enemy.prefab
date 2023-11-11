@@ -322,7 +322,7 @@ MonoBehaviour:
   _collider: {fileID: 7934070647986149725}
   _aiMovement: {fileID: 4066626009934926358}
   _spawningSeconds: 2
-  _timeoutSeconds: 15
+  _destroyedSeconds: 15
   _exploder: {fileID: 7104000279157000432}
 --- !u!4 &1797157369037569156 stripped
 Transform:
