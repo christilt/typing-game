@@ -165,8 +165,71 @@ Transform:
   - {fileID: 380448613}
   - {fileID: 869365530}
   - {fileID: 1293091518}
+  - {fileID: 283417310}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &283417309
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 260955950}
+    m_Modifications:
+    - target: {fileID: 696285620138012720, guid: f241e6cc941f1a64f89e01f3d0724bb6, type: 3}
+      propertyPath: m_Name
+      value: Collectable_KillEnemies
+      objectReference: {fileID: 0}
+    - target: {fileID: 1781369834757159401, guid: f241e6cc941f1a64f89e01f3d0724bb6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1781369834757159401, guid: f241e6cc941f1a64f89e01f3d0724bb6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1781369834757159401, guid: f241e6cc941f1a64f89e01f3d0724bb6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1781369834757159401, guid: f241e6cc941f1a64f89e01f3d0724bb6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1781369834757159401, guid: f241e6cc941f1a64f89e01f3d0724bb6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1781369834757159401, guid: f241e6cc941f1a64f89e01f3d0724bb6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1781369834757159401, guid: f241e6cc941f1a64f89e01f3d0724bb6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1781369834757159401, guid: f241e6cc941f1a64f89e01f3d0724bb6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1781369834757159401, guid: f241e6cc941f1a64f89e01f3d0724bb6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1781369834757159401, guid: f241e6cc941f1a64f89e01f3d0724bb6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f241e6cc941f1a64f89e01f3d0724bb6, type: 3}
+--- !u!4 &283417310 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1781369834757159401, guid: f241e6cc941f1a64f89e01f3d0724bb6, type: 3}
+  m_PrefabInstance: {fileID: 283417309}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &354839694 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1808165313729190171, guid: 073b52c09749d964993e40b3b6699efc, type: 3}
@@ -788,6 +851,10 @@ PrefabInstance:
     - target: {fileID: 1382266889106259429, guid: 54074681f6cef004f8ec0a15cd133854, type: 3}
       propertyPath: m_Name
       value: Collectable_SlowUnits
+      objectReference: {fileID: 0}
+    - target: {fileID: 1382266889106259429, guid: 54074681f6cef004f8ec0a15cd133854, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6941,7 +7008,7 @@ PrefabInstance:
       objectReference: {fileID: 519420031}
     - target: {fileID: 1494256146101069523, guid: 073b52c09749d964993e40b3b6699efc, type: 3}
       propertyPath: m_Name
-      value: ScenesManager
+      value: SceneDirector
       objectReference: {fileID: 0}
     - target: {fileID: 1556784110106063331, guid: 073b52c09749d964993e40b3b6699efc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7062,7 +7129,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1845715520578134887, guid: d4d2744002ecd6c45a42f28412fd3a69, type: 3}
       propertyPath: m_Name
-      value: UnitsManager
+      value: UnitManager
       objectReference: {fileID: 0}
     - target: {fileID: 6851715994301782267, guid: d4d2744002ecd6c45a42f28412fd3a69, type: 3}
       propertyPath: _unitsHolder

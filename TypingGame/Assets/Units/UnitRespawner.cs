@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.UIElements;
 
 public class UnitRespawner : MonoBehaviour
 {
     [SerializeField] private float _respawnSeconds;
     [SerializeField] private Unit _unit;
+    [SerializeField] private RespawnMode _mode;
 
     private bool _isRespawning;
     private float _nextRespawnInSeconds;
@@ -52,9 +54,7 @@ public class UnitRespawner : MonoBehaviour
 
     private void Respawn()
     {
-        // TODO: Get other respawn positions from UnitManager
-        transform.position = _startPosition;
+        transform.position = UnitManager.Instance.GetRespawnPosition(_mode);
         _unit.BeSpawned();
     }
-
 }

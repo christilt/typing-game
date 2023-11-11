@@ -8,12 +8,15 @@ public class Unit : MonoBehaviour
     [SerializeField] protected UnitMovement _movement;
     [SerializeField] protected UnitExploder _exploder;
     [SerializeField] protected float _spawningSeconds;
+    [SerializeField] protected Transform _centre;
 
     protected UnitRespawner _optionalRespawner;
 
     public event Action<UnitState> OnStateChanging;
     public event Action<UnitState> OnStateChanged;
     public UnitState State { get; protected set; }
+    public Vector2 Centre => _centre.position;
+    public PositionWithCentre PositionWithCentre => new PositionWithCentre(transform.position, Centre);
 
     protected virtual void Awake()
     {

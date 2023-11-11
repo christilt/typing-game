@@ -4,12 +4,21 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[RequireComponent(typeof(RespawnPositioner))]
 public class UnitManager : Singleton<UnitManager>
 {
     [SerializeField] private GameObject _unitsHolder;
+    
+    private RespawnPositioner _respawnPositioner;
 
     private readonly HashSet<Collectable> _collectables = new();
     private readonly HashSet<Enemy> _enemies = new();
+
+    protected override void Awake()
+    {
+        base.Awake();
+        _respawnPositioner = GetComponent<RespawnPositioner>();
+    }
 
     private void Start()
     {
@@ -22,6 +31,7 @@ public class UnitManager : Singleton<UnitManager>
             return false;
 
         _collectables.Add(collectable);
+        _respawnPositioner.RegisterStartPosition(collectable);
         return true;
     }
 
@@ -31,6 +41,7 @@ public class UnitManager : Singleton<UnitManager>
             return false;
 
         _enemies.Add(enemy);
+        _respawnPositioner.RegisterStartPosition(enemy);
         return true;
     }
 
@@ -48,6 +59,10 @@ public class UnitManager : Singleton<UnitManager>
         foreach (var enemy in _enemies)
             enemy.ChangeSpeed(multiplier, durationSeconds);
     }
+
+    // TODO
+    //public void GetRespawnPosition(RespawnMode mode, Action<Vector3> onSuccess) => _respawnPositioner.GetRespawnPosition(mode, onSuccess);
+    public Vector3 GetRespawnPosition(RespawnMode mode) => _respawnPositioner.GetRespawnPosition(mode);
 
     private void OnDestroy()
     {

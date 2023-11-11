@@ -3,9 +3,8 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    [SerializeField] private SequenceManager _sequenceManager;
-
-    [SerializeField] private ScenesManager _scenesManager;
+    [SerializeField] private SequenceDirector _sequenceDirector;
+    [SerializeField] private SceneDirector _sceneDirector;
 
     private PauseHelper _pauseHelper;
 
@@ -16,7 +15,6 @@ public class GameManager : Singleton<GameManager>
 
     public void LevelWinning()
     {
-        // TODO different objectives?
         TryChangeState(GameState.LevelWinning);
     }
 
@@ -30,7 +28,7 @@ public class GameManager : Singleton<GameManager>
         if (!ValidateOperation(nameof(PlayerExploding), state => state.InvolvesLevelLosing()))
             return;
 
-        _sequenceManager.PlayerExploding();
+        _sequenceDirector.PlayerExploding();
         TryChangeState(GameState.LifeLosing);
     }
 
@@ -79,13 +77,13 @@ public class GameManager : Singleton<GameManager>
                 break;
             case GameState.LevelWinning:
                 _pauseHelper.Slow();
-                _sequenceManager.LevelWinning();
+                _sequenceDirector.LevelWinning();
                 // TODO
                 this.DoAfterSecondsRealtime(2, () => TryChangeState(GameState.LevelWon));
                 break;
             case GameState.PlayerDying:
                 _pauseHelper.Slow();
-                _sequenceManager.PlayerDying();
+                _sequenceDirector.PlayerDying();
                 break;
             case GameState.LifeLosing:
                 // TODO
@@ -123,7 +121,7 @@ public class GameManager : Singleton<GameManager>
             case GameState.LevelWon:
                 if (Input.anyKeyDown)
                 {
-                    _scenesManager.ReloadLevel();
+                    _sceneDirector.ReloadLevel();
                 }
                 break;
             case GameState.LevelLosing:
@@ -131,7 +129,7 @@ public class GameManager : Singleton<GameManager>
             case GameState.LevelLost:
                 if (Input.anyKeyDown)
                 {
-                    _scenesManager.ReloadLevel();
+                    _sceneDirector.ReloadLevel();
                 }
                 break;
             default:

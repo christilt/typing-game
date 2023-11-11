@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class SequenceManager : MonoBehaviour
+public class SequenceDirector : MonoBehaviour
 {
     [SerializeField] private VCameraWithShake _sequenceCamera;
     [SerializeField] private Hider _levelHider;
