@@ -13,7 +13,7 @@ public class Enemy : Unit
     {
         if (collision.TryGetRigidbodyComponent<Player>(out var player))
         {
-            player.BeKilled();
+            player.HitEnemy(this);
         }
     }
 }

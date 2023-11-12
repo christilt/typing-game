@@ -1,13 +1,13 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1102 &-2409970692402112116
+--- !u!1102 &-5816925543026806946
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Pacman_Die2
+  m_Name: Pacman_Invincible
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -20,7 +20,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 278f58dad44376c41a06330bb410cd07, type: 2}
+  m_Motion: {fileID: 7400000, guid: 87c6139a281d4d74fb5c6672d12ba22d, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -100,32 +100,6 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &2871853199458104771
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Pacman_Celebrate
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 132d4c0c2641e2a4aa6d0eba26795bed, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!1107 &7759093919384641389
 AnimatorStateMachine:
   serializedVersion: 6
@@ -142,11 +116,8 @@ AnimatorStateMachine:
     m_State: {fileID: -976384113287607842}
     m_Position: {x: 428.99823, y: 58.28647, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: 2871853199458104771}
-    m_Position: {x: 463.99823, y: 123.28647, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -2409970692402112116}
-    m_Position: {x: 498.99823, y: 188.28647, z: 0}
+    m_State: {fileID: -5816925543026806946}
+    m_Position: {x: 529.5, y: 136, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

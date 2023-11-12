@@ -25,7 +25,7 @@ public class RespawnPositioner : MonoBehaviour
 
     public Vector3 GetRespawnPosition(RespawnMode mode)
     {
-        lock (_respawnPositionsTakenLock) // Ensure a respawn positions taken synchronously within the same frame
+        lock (_respawnPositionsTakenLock) // Ensure respawn positions taken synchronously within the same frame
         {
             var positionInfo = GetRespawnPositionWithoutLock(mode);
             _startPositionsTaken.Add(positionInfo.Position);

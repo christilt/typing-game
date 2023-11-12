@@ -56,9 +56,9 @@ public class Unit : MonoBehaviour
         if (!Enum.IsDefined(typeof(UnitState), state))
             throw new ArgumentOutOfRangeException(nameof(state), state, null);
 
-        OnStateChanging?.Invoke(state);
-
         StopPendingStateChanges();
+
+        OnStateChanging?.Invoke(state);
 
         State = state;
         switch (state)
