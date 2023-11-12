@@ -1,14 +1,16 @@
 ﻿using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(UnitMovement), typeof(UnitBrain))]
 public class Unit : MonoBehaviour
 {
     [SerializeField] protected Collider2D _collider;
-    [SerializeField] protected UnitMovement _movement;
     [SerializeField] protected UnitExploder _exploder;
     [SerializeField] protected float _spawningSeconds;
     [SerializeField] protected Transform _centre;
+
+    protected UnitMovement _movement;
+    protected UnitBrain _brain;
 
     protected UnitRespawner _optionalRespawner;
 
@@ -21,6 +23,8 @@ public class Unit : MonoBehaviour
     protected virtual void Awake()
     {
         _optionalRespawner = GetComponent<UnitRespawner>();
+        _movement = GetComponent<UnitMovement>();
+        _brain = GetComponent<UnitBrain>();
     }
 
     protected virtual void Start()
@@ -48,13 +52,21 @@ public class Unit : MonoBehaviour
         Invoke(nameof(ResetSpeed), durationSeconds); // Use invoke so not interrupted by changing state
     }
 
-    protected virtual bool TryChangeState(UnitState state)
+    public virtual void FearPlayer(float durationSeconds)
+    {
+        TryChangeState(UnitState.FearPlayer, durationSeconds);
+    }
+
+    protected virtual bool TryChangeState(UnitState state, float? revertAfterSeconds = null)
     {
         if (State == state && State != default)
             return false;
 
         if (!Enum.IsDefined(typeof(UnitState), state))
             throw new ArgumentOutOfRangeException(nameof(state), state, null);
+
+        if (revertAfterSeconds.HasValue && !state.IsRevertable())
+            throw new ArgumentException($"Cannot specify {nameof(revertAfterSeconds)} with state {state} as not revertable");
 
         StopPendingStateChanges();
 
@@ -65,10 +77,16 @@ public class Unit : MonoBehaviour
         {
             case UnitState.Spawning:
                 SetMoveableAndCollidable(false);
+                _brain.SetInitialMode();
                 this.DoAfterSeconds(_spawningSeconds, () => TryChangeState(UnitState.Normal));
                 break;
             case UnitState.Normal:
                 SetMoveableAndCollidable(true);
+                _brain.SetInitialMode();
+                break;
+            case UnitState.FearPlayer:
+                SetMoveableAndCollidable(true);
+                _brain.MaybeEvadePlayer();
                 break;
             case UnitState.Destroyed:
                 SetMoveableAndCollidable(false);
@@ -77,6 +95,9 @@ public class Unit : MonoBehaviour
             default:
                 throw new ArgumentOutOfRangeException(nameof(state), state, null);
         }
+
+        if (revertAfterSeconds.HasValue)
+            this.DoAfterSeconds(revertAfterSeconds.Value, () => TryChangeState(UnitState.Normal));
 
         OnStateChanged?.Invoke(state);
 
@@ -104,5 +125,14 @@ public enum UnitState
 {
     Spawning,
     Normal,
+    FearPlayer,
     Destroyed
+}
+
+public static class UnitStateExtensions
+{
+    public static bool IsRevertable(this UnitState state)
+    {
+        return state == UnitState.FearPlayer;
+    }
 }

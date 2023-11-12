@@ -25,9 +25,13 @@ public class Player : Singleton<Player>
 
     public void SetAsFollow(CinemachineVirtualCamera camera) => camera.Follow = _visual.transform;
 
-    public void BecomeInvincible(float duration)
+    public void BecomeInvincible(float durationSeconds)
     {
-        TryChangeState(PlayerState.Invincible, duration);
+        TryChangeState(PlayerState.Invincible, durationSeconds);
+    }
+    public void BecomeGreedy(float durationSeconds)
+    {
+        TryChangeState(PlayerState.Greedy, durationSeconds);
     }
 
     public void HitEnemy(Enemy enemy)
@@ -49,7 +53,7 @@ public class Player : Singleton<Player>
         }
     }
 
-    public void Celebrate()
+    private void Celebrate()
     {
         TryChangeState(PlayerState.Celebrating);
     }
@@ -63,7 +67,7 @@ public class Player : Singleton<Player>
             throw new ArgumentOutOfRangeException(nameof(state), state, null);
 
         if (revertAfterSeconds.HasValue && !state.IsRevertable())
-            throw new ArgumentException($"Cannot specify {nameof(revertAfterSeconds)} when state is not reverable");
+            throw new ArgumentException($"Cannot specify {nameof(revertAfterSeconds)} with state {state} as not revertable");
 
         StopPendingStateChanges();
 

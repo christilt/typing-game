@@ -2,6 +2,6 @@
 {
     public override void RunCollectionEffect()
     {
-        UnitManager.Instance.KillAllEnemies();
+        UnitManager.Instance.KillEnemies();
     }
 }

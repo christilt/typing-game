@@ -47,6 +47,7 @@ public class PlayerVisual : MonoBehaviour
                 PacmanInvincible();
                 break;
             case PlayerState.Greedy:
+                PacmanIdle();
                 break;
             default:
                 break;

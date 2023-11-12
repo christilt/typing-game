@@ -203,6 +203,10 @@ PrefabInstance:
       propertyPath: _mode
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3761082235772269079, guid: 6628dbcfb4f2ffb4c8b01afe578f0fcd, type: 3}
+      propertyPath: m_Radius
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 4817090668802873294, guid: 6628dbcfb4f2ffb4c8b01afe578f0fcd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

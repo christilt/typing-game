@@ -8,7 +8,7 @@ public class UnitBrain : MonoBehaviour
 {
     [SerializeField] private Transform _centre;
     [SerializeField] private float _waypointMarginDistance = 0.2f;
-    [SerializeField] private Mode _mode;
+    [SerializeField] private UnitBrainMode _mode;
 
     private Seeker _seeker;
     private Path _path;
@@ -16,6 +16,7 @@ public class UnitBrain : MonoBehaviour
     private Vector3 _pathTargetPosition;
     private Vector2? _targetDirection;
     private bool _playerWithinFieldOfVision;
+    private UnitBrainMode _currentMode;
 
     private Vector3 SourceCentre => _centre.position;
     private Vector3 TargetPosition => Player.Instance.Centre;
@@ -23,6 +24,7 @@ public class UnitBrain : MonoBehaviour
     private void Awake()
     {
         _seeker = GetComponent<Seeker>();
+        _currentMode = _mode;
     }
 
     public Vector2Int ChooseDirection(Vector2Int[] directionOptions)
@@ -36,18 +38,31 @@ public class UnitBrain : MonoBehaviour
             return ChooseDirection_RandomMode(directionOptions);
         }
 
-        switch (_mode)
+        switch (_currentMode)
         {
-            case Mode.Random:
+            case UnitBrainMode.Random:
                 return ChooseDirection_RandomMode(directionOptions);
-            case Mode.ChasePlayer:
+            case UnitBrainMode.ChasePlayer:
                 return ChooseDirection_ChaseMode(directionOptions);
-            case Mode.EvadePlayer:
+            case UnitBrainMode.EvadePlayer:
                 return ChooseDirection_EvadeMode(directionOptions);
             default:
-                //Debug.LogError($"Mode {_mode} not implemented - choosing random direction");
+                //Debug.LogError($"Mode {_currentMode} not implemented - choosing random direction");
                 return ChooseDirection_RandomMode(directionOptions);
         }
+    }
+
+    public void MaybeEvadePlayer()
+    {
+        if (!_mode.IsIntelligent())
+            return;
+
+        _currentMode = UnitBrainMode.EvadePlayer;
+    }
+
+    public void SetInitialMode()
+    {
+        _currentMode = _mode;
     }
 
 
@@ -84,7 +99,7 @@ public class UnitBrain : MonoBehaviour
             return;
         }
 
-        if (_mode == Mode.Random)
+        if (_currentMode == UnitBrainMode.Random)
         {
             return;
         }
@@ -172,10 +187,19 @@ public class UnitBrain : MonoBehaviour
 
     private string Print(Path path) => string.Join("; ", path.vectorPath.Select(p => p.ToString()));
 
-    private enum Mode
+}
+
+public enum UnitBrainMode
+{
+    Random,
+    ChasePlayer,
+    EvadePlayer
+}
+
+public static class ModeExtensions
+{
+    public static bool IsIntelligent(this UnitBrainMode mode)
     {
-        Random,
-        ChasePlayer,
-        EvadePlayer
+        return mode != UnitBrainMode.Random;
     }
 }

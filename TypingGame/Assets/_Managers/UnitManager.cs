@@ -45,10 +45,16 @@ public class UnitManager : Singleton<UnitManager>
         return true;
     }
 
-    public void KillAllEnemies()
+    public void KillEnemies()
     {
         foreach(var enemy in _enemies)
             enemy.BeDestroyed();
+    }
+
+    public void FrightenEnemies(float durationSeconds)
+    {
+        foreach (var enemy in _enemies)
+            enemy.FearPlayer(durationSeconds);
     }
 
     public void ChangeUnitSpeed(float multiplier, float durationSeconds)
