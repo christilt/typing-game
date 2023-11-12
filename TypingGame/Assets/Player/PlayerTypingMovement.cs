@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class PlayerTypingMovement : MonoBehaviour
 {
     // TODO centralise Player
-    [SerializeField] private GameObject _visual;
+    [SerializeField] private GameObject _centre;
 
     private InputField _inputField;
 
@@ -43,7 +43,9 @@ public class PlayerTypingMovement : MonoBehaviour
             if (keyTile.Key == key)
             {
                 Direction = (Vector2)(keyTile.Position - transform.position).normalized;
-                _visual.transform.eulerAngles = GetEulerAnglesTowards(keyTile.Position);
+                // TODO
+                //_visual.transform.eulerAngles = GetEulerAnglesTowards(keyTile.Position);
+                _centre.transform.eulerAngles = GetEulerAnglesTowards(keyTile.Position);
                 transform.position = keyTile.Position;
                 return true;
             }

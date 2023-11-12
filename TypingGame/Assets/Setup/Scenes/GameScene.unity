@@ -376,6 +376,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Collectable_Goal_Cherries
       objectReference: {fileID: 0}
+    - target: {fileID: 5203521945849987568, guid: 4596e74a673e3c1479b57a632ef04ddd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6424272562692589609, guid: 4596e74a673e3c1479b57a632ef04ddd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 9
@@ -820,11 +824,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2407707591765404317, guid: 6032c17e58728cc40a4afbf405095f3f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 2407707591765404317, guid: 6032c17e58728cc40a4afbf405095f3f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 2407707591765404317, guid: 6032c17e58728cc40a4afbf405095f3f, type: 3}
       propertyPath: m_LocalPosition.z

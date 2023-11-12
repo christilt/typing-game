@@ -8,7 +8,6 @@ public class Player : Singleton<Player>
     [SerializeField] private PlayerVisual _visual;
     [SerializeField] private PlayerTypingMovement _typingMovement;
     [SerializeField] private Collider2D _collider;
-    [SerializeField] private float _invincibleSeconds;
 
     private void Start()
     {
@@ -20,11 +19,7 @@ public class Player : Singleton<Player>
     public event Action<PlayerState> OnStateChanging;
     public event Action<PlayerState> OnStateChanged;
 
-    public event Action<PlayerEffect?> OnEffectChanging;
-    public event Action<PlayerEffect?> OnEffectChanged;
-
     public PlayerState State { get; private set; }
-    public PlayerEffect? Effect { get; private set; }
 
     public Vector2 Centre => _visual.transform.position;
 
@@ -32,17 +27,17 @@ public class Player : Singleton<Player>
 
     public void BecomeInvincible(float duration)
     {
-        TryChangeEffect(PlayerEffect.Invincible, duration);
+        TryChangeState(PlayerState.Invincible, duration);
     }
 
     public void HitEnemy(Enemy enemy)
     {
-        if (Effect == PlayerEffect.Invincible)
+        if (State == PlayerState.Invincible)
         {
             return;
         }
 
-        if (Effect == PlayerEffect.Greedy)
+        if (State == PlayerState.Greedy)
         {
             enemy.BeDestroyed();
             return;
@@ -59,7 +54,7 @@ public class Player : Singleton<Player>
         TryChangeState(PlayerState.Celebrating);
     }
 
-    private bool TryChangeState(PlayerState state)
+    private bool TryChangeState(PlayerState state, float? revertAfterSeconds = null)
     {
         if (State == state && State != default)
             return false;
@@ -67,7 +62,10 @@ public class Player : Singleton<Player>
         if (!Enum.IsDefined(typeof(PlayerState), state))
             throw new ArgumentOutOfRangeException(nameof(state), state, null);
 
-        StopPendingStateAndEffectChanges();
+        if (revertAfterSeconds.HasValue && !state.IsRevertable())
+            throw new ArgumentException($"Cannot specify {nameof(revertAfterSeconds)} when state is not reverable");
+
+        StopPendingStateChanges();
 
         OnStateChanging?.Invoke(state);
 
@@ -82,61 +80,24 @@ public class Player : Singleton<Player>
                 break;
             case PlayerState.Dying:
                 SetMoveableAndCollidable(false);
-                TryRemoveEffect(stopPendingStateAndEffectChanges: false);
                 break;
             case PlayerState.Celebrating:
                 SetMoveableAndCollidable(false);
-                TryRemoveEffect(stopPendingStateAndEffectChanges: false);
+                break;
+            case PlayerState.Invincible:
+                SetMoveableAndCollidable(true);
+                break;
+            case PlayerState.Greedy:
+                SetMoveableAndCollidable(true);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(state), state, null);
         }
 
+        if (revertAfterSeconds != null)
+            this.DoAfterSeconds(revertAfterSeconds.Value, () => TryChangeState(PlayerState.Normal));
+
         OnStateChanged?.Invoke(state);
-
-        return true;
-    }
-
-    private bool TryChangeEffect(PlayerEffect effect, float duration)
-    {
-        if (State != PlayerState.Normal)
-            return false;
-
-        if (Effect == effect)
-            return false;
-
-        if (!Enum.IsDefined(typeof(PlayerEffect), effect))
-            throw new ArgumentOutOfRangeException(nameof(effect), effect, null);
-
-        StopPendingStateAndEffectChanges();
-
-        OnEffectChanging?.Invoke(effect);
-
-        Effect = effect;
-
-        this.DoAfterSeconds(duration, () => TryRemoveEffect());
-
-        OnEffectChanged?.Invoke(effect);
-
-        return true;
-    }
-
-    private bool TryRemoveEffect(bool stopPendingStateAndEffectChanges = true)
-    {
-        if (Effect == null)
-            return false;
-
-        PlayerEffect? effect = null;
-
-        if (stopPendingStateAndEffectChanges)
-            StopPendingStateAndEffectChanges();
-
-        OnEffectChanging?.Invoke(effect);
-
-        Effect = effect;
-        SetMoveableAndCollidable(true);
-
-        OnEffectChanged?.Invoke(effect);
 
         return true;
     }
@@ -175,7 +136,7 @@ public class Player : Singleton<Player>
         gameObject.SetActive(false);
     }
 
-    private void StopPendingStateAndEffectChanges()
+    private void StopPendingStateChanges()
     {
         StopAllCoroutines();
     }
@@ -200,12 +161,22 @@ public enum PlayerState
 {
     Initial,
     Normal,
+    Invincible,
+    Greedy,
     Dying,
     Celebrating
 }
 
-public enum PlayerEffect
+public static class PlayerStateExtensions
 {
-    Invincible,
-    Greedy
+    public static bool IsEffect(this PlayerState state)
+    {
+        return state == PlayerState.Invincible
+            || state == PlayerState.Greedy;
+    }
+
+    public static bool IsRevertable(this PlayerState state)
+    {
+        return state.IsEffect();  
+    }
 }

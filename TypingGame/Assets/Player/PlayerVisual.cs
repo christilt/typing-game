@@ -17,7 +17,6 @@ public class PlayerVisual : MonoBehaviour
     private void Start()
     {
         _player.OnStateChanging += HandlePlayerStateChanging;
-        _player.OnEffectChanging += HandlePlayerEffectChanging;
     }
 
     private void OnDestroy()
@@ -25,47 +24,38 @@ public class PlayerVisual : MonoBehaviour
         if (_player != null)
         {
             _player.OnStateChanging -= HandlePlayerStateChanging;
-            _player.OnEffectChanging -= HandlePlayerEffectChanging;
         }
     }
 
     private void HandlePlayerStateChanging(PlayerState state)
     {
-        StopAnimations();
-
         switch (state)
         {
             case PlayerState.Initial:
+                PacmanIdle();
                 break;
             case PlayerState.Normal:
+                PacmanIdle();
                 break;
             case PlayerState.Dying:
                 PacmanDie();
                 break;
             case PlayerState.Celebrating:
-                // TODO: Sometimes making player invisible because animation stopping and being disabled before returning to normal
                 PacmanCelebrate();
+                break;
+            case PlayerState.Invincible:
+                PacmanInvincible();
+                break;
+            case PlayerState.Greedy:
                 break;
             default:
                 break;
         }
     }
 
-    private void HandlePlayerEffectChanging(PlayerEffect? effect)
+    private void PacmanIdle()
     {
-        StopAnimations();
-
-        if (effect == null)
-            return;
-
-        switch (effect)
-        {
-            case PlayerEffect.Invincible:
-                PacmanInvincible();
-                break;
-            default:
-                break;
-        }
+        _animator.Play("Initial", -1, 0);
     }
 
     private void PacmanInvincible()
@@ -73,37 +63,15 @@ public class PlayerVisual : MonoBehaviour
         _animator.Play("Pacman_Invincible", -1, 0);
     }
 
-    public void PacmanDie()
+    private void PacmanDie()
     {
         _animator.Play("Pacman_Die", -1, 0);
     }
 
-    public void PacmanCelebrate()
+    private void PacmanCelebrate()
     {
         _celebrationParticles.Play();
-        _animator.enabled = false; // Otherwise rotation is prevented...
-
-        StartCoroutine(SpinCoroutine());
-
-        IEnumerator SpinCoroutine()
-        {
-            const int SPIN_DIRECTION = -1;
-            // TODO - would this ever need cancelling?
-            while (true)
-            {
-                var delta = Time.unscaledDeltaTime;
-                var angle = delta * _celebrationSpinSpeed * SPIN_DIRECTION;
-                _pacmanSprite.transform.eulerAngles += new Vector3(0, 0, angle);
-                yield return null;
-            }
-        }
-    }
-
-    private void StopAnimations(string initialStateName = "Initial")
-    {
-        // TODO: Move to utility function?
-        _animator.StopPlayback();
-        _animator.Play(initialStateName, -1, 0);
+        _animator.Play("Pacman_Celebrate", -1, 0);
     }
 
     public void OnAnimationPacmanExploding()
