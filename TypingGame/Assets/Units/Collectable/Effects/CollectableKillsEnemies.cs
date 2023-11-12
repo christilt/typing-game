@@ -1,6 +1,6 @@
 ﻿public class CollectableKillsEnemies : CollectableEffect
 {
-    public override void RunCollectionEffect()
+    public override void ApplyCollectableEffect()
     {
         UnitManager.Instance.KillEnemies();
     }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Collectable : Unit
 {
-    private CollectableEffect[] _effects;
+    protected CollectableEffect[] _effects;
 
     protected override void Awake()
     {
@@ -23,7 +23,7 @@ public class Collectable : Unit
         {
             foreach(var effect in _effects) 
             {
-                effect.RunCollectionEffect();
+                effect.StartApplication();
             }
             BeDestroyed();
         }

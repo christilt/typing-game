@@ -51,19 +51,34 @@ public class UnitManager : Singleton<UnitManager>
             enemy.BeDestroyed();
     }
 
-    public void FrightenEnemies(float durationSeconds)
+    public void FrightenEnemies()
     {
         foreach (var enemy in _enemies)
-            enemy.FearPlayer(durationSeconds);
+            enemy.FearPlayer();
     }
 
-    public void ChangeUnitSpeed(float multiplier, float durationSeconds)
+    public void EmboldenEnemies()
+    {
+        foreach (var enemy in _enemies)
+            enemy.DoNotFearPlayer();
+    }
+
+    public void ChangeUnitSpeed(float multiplier)
     {
         foreach (var collectable in _collectables)
-            collectable.ChangeSpeed(multiplier, durationSeconds);
+            collectable.ChangeSpeed(multiplier);
 
         foreach (var enemy in _enemies)
-            enemy.ChangeSpeed(multiplier, durationSeconds);
+            enemy.ChangeSpeed(multiplier);
+    }
+
+    public void ResetUnitSpeed()
+    {
+        foreach (var collectable in _collectables)
+            collectable.ResetSpeed();
+
+        foreach (var enemy in _enemies)
+            enemy.ResetSpeed();
     }
 
     // TODO

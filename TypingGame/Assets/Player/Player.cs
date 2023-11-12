@@ -25,14 +25,13 @@ public class Player : Singleton<Player>
 
     public void SetAsFollow(CinemachineVirtualCamera camera) => camera.Follow = _visual.transform;
 
-    public void BecomeInvincible(float durationSeconds)
-    {
-        TryChangeState(PlayerState.Invincible, durationSeconds);
-    }
-    public void BecomeGreedy(float durationSeconds)
-    {
-        TryChangeState(PlayerState.Greedy, durationSeconds);
-    }
+    public void BecomeInvincible() => TryChangeState(PlayerState.Invincible);
+
+    public void BecomeNotInvincible() => BecomeNormalIfStatus(PlayerState.Invincible);
+
+    public void BecomeGreedy() => TryChangeState(PlayerState.Greedy);
+
+    public void BecomeNotGreedy() => BecomeNormalIfStatus(PlayerState.Greedy);
 
     public void HitEnemy(Enemy enemy)
     {
@@ -104,6 +103,14 @@ public class Player : Singleton<Player>
         OnStateChanged?.Invoke(state);
 
         return true;
+    }
+
+    private void BecomeNormalIfStatus(PlayerState status)
+    {
+        if (State != status)
+            return;
+
+        TryChangeState(PlayerState.Normal);
     }
 
     private void OnDestroy()

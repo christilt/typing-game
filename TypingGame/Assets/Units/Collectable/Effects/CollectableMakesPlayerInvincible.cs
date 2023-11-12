@@ -1,11 +1,23 @@
 ﻿using UnityEngine;
 
-public class CollectableMakesPlayerInvincible : CollectableEffect
+public class CollectableMakesPlayerInvincible : CollectableStatusEffect
 {
     [SerializeField] private float _durationSeconds;
 
-    public override void RunCollectionEffect()
+    public override float DurationSeconds => _durationSeconds;
+
+    public override void StartApplication()
     {
-        Player.Instance.BecomeInvincible(_durationSeconds);
+        CollectableEffectManager.Instance.ApplyStatus<CollectableMakesPlayerInvincible>(this);
+    }
+
+    public override void ApplyCollectableEffect()
+    {
+        Player.Instance.BecomeInvincible();
+    }
+
+    public override void RevertCollectableEffect()
+    {
+        Player.Instance.BecomeNotInvincible();
     }
 }

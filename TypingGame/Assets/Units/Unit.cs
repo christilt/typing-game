@@ -45,17 +45,19 @@ public class Unit : MonoBehaviour
         TryChangeState(UnitState.Spawning);
     }
 
-    public virtual void ChangeSpeed(float multiplier, float durationSeconds)
+    public virtual void ChangeSpeed(float multiplier)
     {
-        CancelInvoke(nameof(ResetSpeed));
         _movement.SpeedMultiplier = multiplier;
-        Invoke(nameof(ResetSpeed), durationSeconds); // Use invoke so not interrupted by changing state
     }
 
-    public virtual void FearPlayer(float durationSeconds)
+    public virtual void ResetSpeed()
     {
-        TryChangeState(UnitState.FearPlayer, durationSeconds);
+        _movement.SpeedMultiplier = 1;
     }
+
+    public virtual void FearPlayer() => TryChangeState(UnitState.FearPlayer);
+
+    public virtual void DoNotFearPlayer() => BecomeNormalIfStatus(UnitState.FearPlayer);
 
     protected virtual bool TryChangeState(UnitState state, float? revertAfterSeconds = null)
     {
@@ -104,9 +106,12 @@ public class Unit : MonoBehaviour
         return true;
     }
 
-    protected virtual void ResetSpeed()
+    private void BecomeNormalIfStatus(UnitState status)
     {
-        _movement.SpeedMultiplier = 1;
+        if (State != status)
+            return;
+
+        TryChangeState(UnitState.Normal);
     }
 
     protected virtual void StopPendingStateChanges()
