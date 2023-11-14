@@ -242,7 +242,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _collider: {fileID: 7928311292097771060}
-  _movement: {fileID: 4067859757378895231}
   _exploder: {fileID: 1540055648228245945}
   _spawningSeconds: 2
   _centre: {fileID: 1924738095847155019}
@@ -379,7 +378,11 @@ PrefabInstance:
     - target: {fileID: 7554157760836880752, guid: e499e00a494966843b410dfbc5506988, type: 3}
       propertyPath: _partPrefabSprite
       value: 
-      objectReference: {fileID: 130003757, guid: f049a02938819a34faf585892461dab4, type: 3}
+      objectReference: {fileID: 4088692949322632907}
+    - target: {fileID: 7554157760836880752, guid: e499e00a494966843b410dfbc5506988, type: 3}
+      propertyPath: _partPrefabSpriteRenderer
+      value: 
+      objectReference: {fileID: 4088692949322632907}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

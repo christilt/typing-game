@@ -23,7 +23,7 @@ public class Collectable : Unit
         {
             foreach(var effect in _effects) 
             {
-                effect.StartApplication();
+                effect.Trigger();
             }
             BeDestroyed();
         }

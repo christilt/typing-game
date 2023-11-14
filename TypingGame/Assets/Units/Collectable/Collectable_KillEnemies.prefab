@@ -12,10 +12,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Collectable_KillEnemies
       objectReference: {fileID: 0}
-    - target: {fileID: 1540055648228245945, guid: 17c0940ab09ba974db781441cddde25c, type: 3}
-      propertyPath: _partPrefabSprite
-      value: 
-      objectReference: {fileID: -864080331, guid: 9e2222b1ba9e26442825444cad7fc7a8, type: 3}
     - target: {fileID: 1796011768281060333, guid: 17c0940ab09ba974db781441cddde25c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

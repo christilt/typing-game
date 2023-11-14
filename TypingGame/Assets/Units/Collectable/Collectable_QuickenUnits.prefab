@@ -12,10 +12,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Collectable_QuickenUnits
       objectReference: {fileID: 0}
-    - target: {fileID: 1540055648228245945, guid: 17c0940ab09ba974db781441cddde25c, type: 3}
-      propertyPath: _partPrefabSprite
-      value: 
-      objectReference: {fileID: 1475570256, guid: 9e2222b1ba9e26442825444cad7fc7a8, type: 3}
     - target: {fileID: 1796011768281060333, guid: 17c0940ab09ba974db781441cddde25c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -101,5 +97,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ad6d225e8903c34a94f0419157c91bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  multiplier: 1.5
-  durationSeconds: 10
+  _spriteRenderer: {fileID: 2481071843631507738}
+  _multiplier: 1.5
+  _durationSeconds: 10
+--- !u!212 &2481071843631507738 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 4088692949322632907, guid: 17c0940ab09ba974db781441cddde25c, type: 3}
+  m_PrefabInstance: {fileID: 1933026247200483281}
+  m_PrefabAsset: {fileID: 0}

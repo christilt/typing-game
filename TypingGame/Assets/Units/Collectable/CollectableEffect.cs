@@ -2,9 +2,9 @@
 
 public abstract class CollectableEffect : MonoBehaviour
 {
-    public virtual void StartApplication()
+    public virtual void Trigger()
     {
         CollectableEffectManager.Instance.Apply(this);
     }
-    public abstract void ApplyCollectableEffect();
+    public abstract void ManagerApplyEffect();
 }

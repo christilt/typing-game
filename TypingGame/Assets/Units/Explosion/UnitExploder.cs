@@ -5,8 +5,14 @@ public class UnitExploder : MonoBehaviour
 {
     // TODO: object pool these
     [SerializeField] protected UnitExplosionPart _partPrefab;
+    [SerializeField] private SpriteRenderer _partPrefabSpriteRenderer;
 
-    [SerializeField] private Sprite _partPrefabSprite;
+    private Sprite _partPrefabSprite;
+
+    private void Awake()
+    {
+        _partPrefabSprite = _partPrefabSpriteRenderer.sprite;
+    }
 
     public void Explode()
     {

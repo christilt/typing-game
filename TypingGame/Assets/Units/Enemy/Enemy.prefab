@@ -166,6 +166,10 @@ PrefabInstance:
       propertyPath: _prefabSprite
       value: 
       objectReference: {fileID: -2124035269, guid: f049a02938819a34faf585892461dab4, type: 3}
+    - target: {fileID: 7554157760836880752, guid: e499e00a494966843b410dfbc5506988, type: 3}
+      propertyPath: _partPrefabSpriteRenderer
+      value: 
+      objectReference: {fileID: 5850422365770866613}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -311,7 +315,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _collider: {fileID: 7934070647986149725}
-  _movement: {fileID: 4066626009934926358}
   _exploder: {fileID: 7104000279157000432}
   _spawningSeconds: 2
   _centre: {fileID: 1921477054113794594}

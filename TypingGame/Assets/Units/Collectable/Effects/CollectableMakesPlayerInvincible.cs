@@ -6,17 +6,17 @@ public class CollectableMakesPlayerInvincible : CollectableStatusEffect
 
     public override float DurationSeconds => _durationSeconds;
 
-    public override void StartApplication()
+    public override void Trigger()
     {
         CollectableEffectManager.Instance.ApplyStatus<CollectableMakesPlayerInvincible>(this);
     }
 
-    public override void ApplyCollectableEffect()
+    public override void ManagerApplyEffect()
     {
         Player.Instance.BecomeInvincible();
     }
 
-    public override void RevertCollectableEffect()
+    public override void ManagerRevertEffect()
     {
         Player.Instance.BecomeNotInvincible();
     }

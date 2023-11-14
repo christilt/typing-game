@@ -20,10 +20,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Collectable_Goal_Apple
       objectReference: {fileID: 0}
-    - target: {fileID: 3501990648604141002, guid: bdb219bbedac24f4e9049bd3b486ca98, type: 3}
-      propertyPath: _partPrefabSprite
-      value: 
-      objectReference: {fileID: -1104452598, guid: f049a02938819a34faf585892461dab4, type: 3}
     - target: {fileID: 4407412920399493022, guid: bdb219bbedac24f4e9049bd3b486ca98, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

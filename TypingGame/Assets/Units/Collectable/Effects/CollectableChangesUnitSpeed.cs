@@ -8,17 +8,17 @@ public class CollectableChangesUnitSpeed : CollectableStatusEffect
     public override float DurationSeconds => _durationSeconds;
 
     // TODO: Maybe remove need for these with generics?
-    public override void StartApplication()
+    public override void Trigger()
     {
         CollectableEffectManager.Instance.ApplyStatus<CollectableChangesUnitSpeed>(this);
     }
 
-    public override void ApplyCollectableEffect()
+    public override void ManagerApplyEffect()
     {
         UnitManager.Instance.ChangeUnitSpeed(_multiplier);
     }
 
-    public override void RevertCollectableEffect()
+    public override void ManagerRevertEffect()
     {
         UnitManager.Instance.ResetUnitSpeed();
     }

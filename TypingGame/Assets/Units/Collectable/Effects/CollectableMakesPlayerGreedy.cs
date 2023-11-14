@@ -6,18 +6,18 @@ public class CollectableMakesPlayerGreedy : CollectableStatusEffect
 
     public override float DurationSeconds => _durationSeconds;
 
-    public override void StartApplication()
+    public override void Trigger()
     {
         CollectableEffectManager.Instance.ApplyStatus<CollectableMakesPlayerGreedy>(this);
     }
 
-    public override void ApplyCollectableEffect()
+    public override void ManagerApplyEffect()
     {
         Player.Instance.BecomeGreedy();
         UnitManager.Instance.FrightenEnemies();
     }
 
-    public override void RevertCollectableEffect()
+    public override void ManagerRevertEffect()
     {
         Player.Instance.BecomeNotGreedy();
         UnitManager.Instance.EmboldenEnemies();

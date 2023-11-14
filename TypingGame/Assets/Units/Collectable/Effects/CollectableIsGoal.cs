@@ -14,7 +14,7 @@ public class CollectableIsGoal : CollectableEffect, ICollectableGoal
 
     public int Id { get; protected set; }
 
-    public override void ApplyCollectableEffect()
+    public override void ManagerApplyEffect()
     {
         GoalManager.Instance.Complete(this);
     }
