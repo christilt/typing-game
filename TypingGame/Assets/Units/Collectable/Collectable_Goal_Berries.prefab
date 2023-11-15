@@ -8,9 +8,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2124297215617116856, guid: bdb219bbedac24f4e9049bd3b486ca98, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -2086020253, guid: 9e2222b1ba9e26442825444cad7fc7a8, type: 3}
+    - target: {fileID: 2140618737707669772, guid: bdb219bbedac24f4e9049bd3b486ca98, type: 3}
+      propertyPath: _movesPerSecond
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3187212402825559623, guid: bdb219bbedac24f4e9049bd3b486ca98, type: 3}
       propertyPath: m_Name
-      value: Collectable_Goal_Cherries
+      value: Collectable_Goal_Berries
       objectReference: {fileID: 0}
     - target: {fileID: 4407412920399493022, guid: bdb219bbedac24f4e9049bd3b486ca98, type: 3}
       propertyPath: m_LocalPosition.x
@@ -50,10 +58,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4407412920399493022, guid: bdb219bbedac24f4e9049bd3b486ca98, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7518617309381374601, guid: bdb219bbedac24f4e9049bd3b486ca98, type: 3}
-      propertyPath: _mode
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
