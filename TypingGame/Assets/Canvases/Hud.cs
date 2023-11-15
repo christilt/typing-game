@@ -4,22 +4,45 @@ using UnityEngine;
 public class Hud : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _text;
+    [SerializeField] private UIStatusEffectPanel _statusEffectPanel;
 
     private void Start()
     {
-        UpdateTextForState(GameManager.Instance.State);
-        GameManager.Instance.OnStateChanging += UpdateTextForState;
+        UpdateForGameState(GameManager.Instance.State);
+        GameManager.Instance.OnStateChanging += UpdateForGameState;
 
+        CollectableEffectManager.Instance.OnCollectableEffectAdded += _statusEffectPanel.AddEffect;
+        CollectableEffectManager.Instance.OnCollectableEffectUpdate += _statusEffectPanel.UpdateEffect;
+        CollectableEffectManager.Instance.OnCollectableEffectRemoved += _statusEffectPanel.RemoveEffect;
 
     }
 
     private void OnDestroy()
     {
         if (GameManager.Instance != null)
-            GameManager.Instance.OnStateChanging -= UpdateTextForState;
+        {
+            GameManager.Instance.OnStateChanging -= UpdateForGameState;
+        }
+
+        if (CollectableEffectManager.Instance != null)
+        {
+            CollectableEffectManager.Instance.OnCollectableEffectAdded -= _statusEffectPanel.AddEffect;
+            CollectableEffectManager.Instance.OnCollectableEffectUpdate -= _statusEffectPanel.UpdateEffect;
+            CollectableEffectManager.Instance.OnCollectableEffectRemoved -= _statusEffectPanel.RemoveEffect;
+        }
     }
 
-    private void UpdateTextForState(GameState state)
+    private void UpdateForGameState(GameState state)
+    {
+        UpdateTextForGameState(state);
+
+        if (state.EndsPlayerControl())
+        {
+            _statusEffectPanel.gameObject.SetActive(false);
+        }
+    }
+
+    private void UpdateTextForGameState(GameState state)
     {
         switch (state)
         {

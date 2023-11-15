@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 6415057828098936776}
+  _statusEffectPanel: {fileID: 3643405541028888241}
 --- !u!1 &4255026866161150702
 GameObject:
   m_ObjectHideFlags: 0

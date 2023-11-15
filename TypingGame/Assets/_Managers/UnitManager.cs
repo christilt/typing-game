@@ -81,8 +81,6 @@ public class UnitManager : Singleton<UnitManager>
             enemy.ResetSpeed();
     }
 
-    // TODO
-    //public void GetRespawnPosition(RespawnMode mode, Action<Vector3> onSuccess) => _respawnPositioner.GetRespawnPosition(mode, onSuccess);
     public Vector3 GetRespawnPosition(RespawnMode mode) => _respawnPositioner.GetRespawnPosition(mode);
 
     private void OnDestroy()

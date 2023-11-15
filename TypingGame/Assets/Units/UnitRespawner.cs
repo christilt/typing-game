@@ -20,11 +20,11 @@ public class UnitRespawner : MonoBehaviour
 
     public void RespawnLater()
     {
-        if (_isRespawning)
-        {
-            Debug.LogWarning($"{nameof(RespawnLater)} prevented because already respawning with {_nextRespawnInSeconds}s remaining");
-            return;
-        }
+        //if (_isRespawning)
+        //{
+        //    Debug.LogWarning($"{nameof(RespawnLater)} prevented because already respawning with {_nextRespawnInSeconds}s remaining");
+        //    return;
+        //}
 
         _isRespawning = true;
         _nextRespawnInSeconds = _respawnSeconds;
@@ -32,8 +32,8 @@ public class UnitRespawner : MonoBehaviour
 
     public void Stop()
     {
-        if (_isRespawning) 
-            Debug.Log($"{name} respawning stopped");
+        //if (_isRespawning) 
+        //    Debug.Log($"{name} respawning stopped");
 
         _isRespawning = false;
     }

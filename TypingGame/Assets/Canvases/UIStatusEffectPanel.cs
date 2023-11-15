@@ -11,14 +11,7 @@ public class UIStatusEffectPanel : MonoBehaviour
 
     private Dictionary<Type, UIStatusIcon> _iconsByType = new();
 
-    private void Start()
-    {
-        CollectableEffectManager.Instance.OnCollectableEffectAdded += OnCollectableEffectAdded;
-        CollectableEffectManager.Instance.OnCollectableEffectUpdate += OnCollectableEffectUpdate;
-        CollectableEffectManager.Instance.OnCollectableEffectRemoved += OnCollectableEffectRemoved;
-    }
-
-    private void OnCollectableEffectRemoved(CollectableEffectInfo info)
+    public void RemoveEffect(CollectableEffectInfo info)
     {
         if (!_iconsByType.TryGetValue(info.Type, out var toRemove))
         {
@@ -38,7 +31,7 @@ public class UIStatusEffectPanel : MonoBehaviour
         }
     }
 
-    private void OnCollectableEffectUpdate(CollectableEffectInfo info)
+    public void UpdateEffect(CollectableEffectInfo info)
     {
         if (info.DurationRemainingSeconds <= _blinkIconsWhenBelowSeconds)
         {
@@ -52,7 +45,7 @@ public class UIStatusEffectPanel : MonoBehaviour
         }
     }
 
-    private void OnCollectableEffectAdded(CollectableEffectInfo info)
+    public void AddEffect(CollectableEffectInfo info)
     {
         var nextIndex = _iconsByType.Count;
         var position = PositionForIndex(nextIndex);

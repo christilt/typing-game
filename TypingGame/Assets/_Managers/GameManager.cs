@@ -178,6 +178,12 @@ public static class GameStateExtensions
             || state == GameState.LevelLost;
     }
 
+    public static bool EndsPlayerControl(this GameState state)
+    {
+        return state.InvolvesLevelWinning()
+            || state.InvolvesLevelLosing();
+    }
+
     public static bool IsEndOfLevel(this GameState state)
     {
         return state == GameState.LevelWon

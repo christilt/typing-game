@@ -47,16 +47,17 @@ public class CollectableEffectManager : Singleton<CollectableEffectManager>
     {
         foreach (var typeEffect in _currentEffectsByType)
         {
-            typeEffect.Value.DurationRemainingSeconds -= Time.deltaTime;
-            if (typeEffect.Value.DurationRemainingSeconds <= 0)
+            var effect = typeEffect.Value;
+            effect.DurationRemainingSeconds -= Time.deltaTime;
+            if (effect.DurationRemainingSeconds <= 0)
             {
-                typeEffect.Value.Effect.ManagerRevertEffect();
-                OnCollectableEffectRemoved?.Invoke(typeEffect.Value);
+                effect.Effect.ManagerRevertEffect();
+                OnCollectableEffectRemoved?.Invoke(effect);
             }
-            else if (typeEffect.Value.DurationRemainingSeconds <= (typeEffect.Value.DurationRemainingSecondsOfLastUpdate - _collectableEffectUpdateIntervalSeconds))
+            else if (effect.DurationRemainingSeconds <= (effect.DurationRemainingSecondsOfLastUpdate - _collectableEffectUpdateIntervalSeconds))
             {
-                OnCollectableEffectUpdate?.Invoke(typeEffect.Value);
-                typeEffect.Value.DurationRemainingSecondsOfLastUpdate = typeEffect.Value.DurationRemainingSeconds;
+                OnCollectableEffectUpdate?.Invoke(effect);
+                effect.DurationRemainingSecondsOfLastUpdate = effect.DurationRemainingSeconds;
             }
         }
 
