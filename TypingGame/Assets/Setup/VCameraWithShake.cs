@@ -7,9 +7,10 @@ public class VCameraWithShake : MonoBehaviour
 {
     public CinemachineVirtualCamera Camera { get; private set; }
 
-    public void QuickShake() => Shake(5, 0.1f);
+    public void VeryQuickShake(bool unscaledTime = false) => Shake(4, 0.3f, unscaledTime);
+    public void QuickShake(bool unscaledTime = false) => Shake(5, 0.5f, unscaledTime);
 
-    public void Shake(float intensity, float time)
+    public void Shake(float intensity, float time, bool unscaledTime = false)
     {
         StartCoroutine(ShakeCoroutine());
         
@@ -19,7 +20,7 @@ public class VCameraWithShake : MonoBehaviour
             perlin.m_AmplitudeGain = intensity;
             while (time > 0)
             {
-                time -= Time.deltaTime;
+                time -= unscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
                 yield return null;
             }
             perlin.m_AmplitudeGain = 0;

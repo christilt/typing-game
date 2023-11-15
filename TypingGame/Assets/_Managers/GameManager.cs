@@ -77,17 +77,20 @@ public class GameManager : Singleton<GameManager>
                 break;
             case GameState.LevelWinning:
                 _pauseHelper.Slow();
-                _sequenceDirector.LevelWinning();
-                // TODO
-                this.DoAfterSecondsRealtime(2, () => TryChangeState(GameState.LevelWon));
+                _sequenceDirector.LevelWinning(() =>
+                {
+                    TryChangeState(GameState.LevelWon);
+                });
                 break;
             case GameState.PlayerDying:
                 _pauseHelper.Slow();
-                _sequenceDirector.PlayerDying();
+                _sequenceDirector.PlayerDying(() =>
+                {
+                    TryChangeState(GameState.LevelLost);
+                });
                 break;
             case GameState.LifeLosing:
                 // TODO
-                TryChangeState(GameState.LevelLost);
                 break;
             case GameState.LevelWon:
                 break;

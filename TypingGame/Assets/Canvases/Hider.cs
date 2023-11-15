@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class Hider : MonoBehaviour
@@ -11,7 +12,7 @@ public class Hider : MonoBehaviour
         _hiderCanvas.worldCamera = Camera.main;
     }
 
-    public void Hide(float duration, bool unscaled = false)
+    public void Hide(float duration, Action onComplete, bool unscaled = false)
     {
         StartCoroutine(HideCoroutine());
 
@@ -27,6 +28,7 @@ public class Hider : MonoBehaviour
                 _hiderSprite.color = color;
                 yield return null;
             }
+            onComplete();
         }
     }
 }
