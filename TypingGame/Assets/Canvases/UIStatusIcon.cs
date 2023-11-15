@@ -1,26 +1,24 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Animator))]
 public class UIStatusIcon : MonoBehaviour
 {
-    private Animator _animator;
-
     private string _animatorState;
-
-    private void Awake()
-    {
-        _animator = GetComponent<Animator>();
-    }
+    private Animator _animator;
 
     public static UIStatusIcon Instantiate(UIStatusIcon prefab, Vector3 position, Transform parent, Sprite prefabSprite)
     {
         prefab.gameObject.SetActive(false);
         var added = GameObject.Instantiate(prefab, position, Quaternion.identity, parent);
-        var image = added.GetComponent<Image>();
+        var image = added.GetComponentInChildren<Image>(); // TODO: Getting wrong image - use name/tag like CM?
         image.sprite = prefabSprite;
         added.gameObject.SetActive(true);
         return added;
+    }
+
+    private void Awake()
+    {
+        _animator = GetComponentInChildren<Animator>();
     }
 
     public bool TryStartBlinking() => TryChangeAnimatorState(AnimatorStates.Blinking);
