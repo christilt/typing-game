@@ -269,9 +269,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8330f8c3826cb44b8d51514d79bd58d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _iconPrefab: {fileID: 1548776278334735016, guid: 3f093902bd5e4684cb74fca6a004956d, type: 3}
+  _iconPrefab: {fileID: 1427559241991422848, guid: 3f093902bd5e4684cb74fca6a004956d, type: 3}
   _firstIconPosition: {fileID: 6937629276741147715}
   _xBetweenIcons: 100
+  _blinkIconsWhenBelowSeconds: 2
 --- !u!1 &7044812185493408762
 GameObject:
   m_ObjectHideFlags: 0

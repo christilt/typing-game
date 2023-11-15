@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UIStatusEffectPanel : MonoBehaviour
 {
-    [SerializeField] private GameObject _iconPrefab;
+    [SerializeField] private UIStatusIcon _iconPrefab;
     [SerializeField] private Transform _firstIconPosition;
     [SerializeField] private float _xBetweenIcons;
+    [SerializeField] private float _blinkIconsWhenBelowSeconds;
 
-    private Dictionary<Type, GameObject> _iconsByType = new();
+    private Dictionary<Type, UIStatusIcon> _iconsByType = new();
 
     private void Start()
     {
@@ -23,12 +20,14 @@ public class UIStatusEffectPanel : MonoBehaviour
 
     private void OnCollectableEffectRemoved(CollectableEffectInfo info)
     {
-        var toRemove = _iconsByType[info.Type];
-        if (toRemove == null)
+        if (!_iconsByType.TryGetValue(info.Type, out var toRemove))
+        {
+            Debug.LogWarning($"Not found for removal in {nameof(_iconsByType)}: {info.Type}!");
             return;
+        }
 
         _iconsByType.Remove(info.Type);
-        GameObject.Destroy(toRemove);
+        GameObject.Destroy(toRemove.gameObject);
 
         // Update positions
         var i = 0;
@@ -41,17 +40,23 @@ public class UIStatusEffectPanel : MonoBehaviour
 
     private void OnCollectableEffectUpdate(CollectableEffectInfo info)
     {
-        // TODO - animation when 2s left
+        if (info.DurationRemainingSeconds <= _blinkIconsWhenBelowSeconds)
+        {
+            if (!_iconsByType.TryGetValue(info.Type, out var toBlink))
+            {
+                Debug.LogWarning($"Not found for update in {nameof(_iconsByType)}: {info.Type}!");
+                return;
+            }
+
+            toBlink.TryStartBlinking();
+        }
     }
 
     private void OnCollectableEffectAdded(CollectableEffectInfo info)
     {
         var nextIndex = _iconsByType.Count;
-        _iconPrefab.SetActive(false);
-        var added = GameObject.Instantiate(_iconPrefab, PositionForIndex(nextIndex), Quaternion.identity, this.transform);
-        var image = added.GetComponent<Image>();
-        image.sprite = info.Effect.Sprite;
-        added.SetActive(true);
+        var position = PositionForIndex(nextIndex);
+        var added = UIStatusIcon.Instantiate(_iconPrefab, position, this.transform, info.Effect.Sprite);
         _iconsByType.Add(info.Type, added);
     }
 

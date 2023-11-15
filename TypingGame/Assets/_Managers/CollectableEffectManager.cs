@@ -56,6 +56,7 @@ public class CollectableEffectManager : Singleton<CollectableEffectManager>
             else if (typeEffect.Value.DurationRemainingSeconds <= (typeEffect.Value.DurationRemainingSecondsOfLastUpdate - _collectableEffectUpdateIntervalSeconds))
             {
                 OnCollectableEffectUpdate?.Invoke(typeEffect.Value);
+                typeEffect.Value.DurationRemainingSecondsOfLastUpdate = typeEffect.Value.DurationRemainingSeconds;
             }
         }
 
@@ -70,6 +71,7 @@ public class CollectableEffectInfo
     public CollectableEffectInfo(float durationRemainingSeconds, CollectableStatusEffect effect, Type type)
     {
         DurationRemainingSeconds = durationRemainingSeconds;
+        DurationRemainingSecondsOfLastUpdate = durationRemainingSeconds;
         Effect = effect;
         Type = type;
     }
