@@ -8,6 +8,7 @@ public class Unit : MonoBehaviour
     [SerializeField] protected UnitExploder _exploder;
     [SerializeField] protected float _spawningSeconds;
     [SerializeField] protected Transform _centre;
+    [SerializeField] protected bool _beginDestroyed;
 
     protected UnitMovement _movement;
     protected UnitBrain _brain;
@@ -29,7 +30,8 @@ public class Unit : MonoBehaviour
 
     protected virtual void Start()
     {
-        TryChangeState(UnitState.Spawning);
+        var startState = _beginDestroyed ? UnitState.Destroyed : UnitState.Spawning;
+        TryChangeState(startState);
     }
 
     public virtual void BeDestroyed()

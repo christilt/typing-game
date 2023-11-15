@@ -4,18 +4,16 @@ using UnityEngine.UIElements;
 public class UnitRespawner : MonoBehaviour
 {
     [SerializeField] private float _respawnSeconds;
+    [SerializeField] private float _respawnAdditionalRandomSeconds;
     [SerializeField] private Unit _unit;
     [SerializeField] private RespawnMode _mode;
 
     private bool _isRespawning;
     private float _nextRespawnInSeconds;
 
-    private Vector3 _startPosition;
-
     private void Start()
     {
-        _startPosition = transform.position;
-        _nextRespawnInSeconds = _respawnSeconds;
+        _nextRespawnInSeconds = TotalRespawnSeconds();
     }
 
     public void RespawnLater()
@@ -27,7 +25,7 @@ public class UnitRespawner : MonoBehaviour
         //}
 
         _isRespawning = true;
-        _nextRespawnInSeconds = _respawnSeconds;
+        _nextRespawnInSeconds = TotalRespawnSeconds();
     }
 
     public void Stop()
@@ -57,4 +55,6 @@ public class UnitRespawner : MonoBehaviour
         transform.position = UnitManager.Instance.GetRespawnPosition(_mode);
         _unit.BeSpawned();
     }
+
+    private float TotalRespawnSeconds() => _respawnSeconds + Random.Range(0, _respawnAdditionalRandomSeconds);
 }

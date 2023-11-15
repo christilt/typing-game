@@ -53,6 +53,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2316249958442045723, guid: 17c0940ab09ba974db781441cddde25c, type: 3}
+      propertyPath: _beginDestroyed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2316249958442045723, guid: 17c0940ab09ba974db781441cddde25c, type: 3}
       propertyPath: _spawningSeconds
       value: 2
       objectReference: {fileID: 0}
