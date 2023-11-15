@@ -4,7 +4,6 @@ using UnityEngine;
 public class Hud : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _text;
-    [SerializeField] private Canvas _statusEffectPanel;
 
     private void Start()
     {

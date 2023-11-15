@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class UIStatusEffectPanel : MonoBehaviour
 {
@@ -46,11 +46,12 @@ public class UIStatusEffectPanel : MonoBehaviour
 
     private void OnCollectableEffectAdded(CollectableEffectInfo info)
     {
-        // TODO use image in prefab, and get aspect ratio working correctly...
         var nextIndex = _iconsByType.Count;
+        _iconPrefab.SetActive(false);
         var added = GameObject.Instantiate(_iconPrefab, PositionForIndex(nextIndex), Quaternion.identity, this.transform);
-        var spriteRenderer = added.GetComponent<SpriteRenderer>();
-        spriteRenderer.sprite = info.Effect.Sprite;
+        var image = added.GetComponent<Image>();
+        image.sprite = info.Effect.Sprite;
+        added.SetActive(true);
         _iconsByType.Add(info.Type, added);
     }
 
