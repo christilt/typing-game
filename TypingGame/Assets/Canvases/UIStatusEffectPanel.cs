@@ -11,6 +11,7 @@ public class UIStatusEffectPanel : MonoBehaviour
 
     private Dictionary<Type, UIStatusIcon> _iconsByType = new();
 
+    // TODO: Incorrect when changing from speed up to speed down icons - they need replacing!
     public void RemoveEffect(CollectableEffectInfo info)
     {
         if (!_iconsByType.TryGetValue(info.Type, out var toRemove))

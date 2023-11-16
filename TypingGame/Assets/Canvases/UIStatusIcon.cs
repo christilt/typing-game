@@ -1,8 +1,14 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using UnityEngine.UI;
 
+// TODO: Centre icon images
+// TODO: Make icon background stand out more
+[RequireComponent(typeof(Animator))]
 public class UIStatusIcon : MonoBehaviour
 {
+    private const string IconImageGameObjectName = "Image"; // Bad but necessary
+
     private string _animatorState;
     private Animator _animator;
 
@@ -10,15 +16,22 @@ public class UIStatusIcon : MonoBehaviour
     {
         prefab.gameObject.SetActive(false);
         var added = GameObject.Instantiate(prefab, position, Quaternion.identity, parent);
-        var image = added.GetComponentInChildren<Image>(); // TODO: Getting wrong image - use name/tag like CM?
-        image.sprite = prefabSprite;
+        var image = added.GetComponentsInChildren<Image>().Where(c => c.gameObject.name == IconImageGameObjectName).FirstOrDefault();
+        if (image == null)
+        {
+            Debug.LogWarning($"Did not find image to attach sprite to, with name {IconImageGameObjectName}!");
+        }
+        else
+        {
+            image.sprite = prefabSprite;
+        }
         added.gameObject.SetActive(true);
         return added;
     }
 
     private void Awake()
     {
-        _animator = GetComponentInChildren<Animator>();
+        _animator = GetComponent<Animator>();
     }
 
     public bool TryStartBlinking() => TryChangeAnimatorState(AnimatorStates.Blinking);
