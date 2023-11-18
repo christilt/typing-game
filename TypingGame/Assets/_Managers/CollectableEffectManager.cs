@@ -24,23 +24,17 @@ public class CollectableEffectManager : Singleton<CollectableEffectManager>
     public void ApplyStatus<T>(CollectableStatusEffect effect) where T : CollectableStatusEffect
     {
         var added = new CollectableEffectInfo(effect.DurationSeconds, effect, typeof(T));
-        var isReplacement = _currentEffectsByType.ContainsKey(typeof(T));
+        var isReplacement = _currentEffectsByType.TryGetValue(typeof(T), out var replaced);
         if (isReplacement)
         {
             _currentEffectsByType.Remove(typeof(T));
+            OnCollectableEffectRemoved?.Invoke(replaced);
         }
 
         _currentEffectsByType.Add(typeof(T), added);
 
-        if (isReplacement)
-        {
-            OnCollectableEffectUpdate?.Invoke(added);
-        }
-        else
-        {
-            effect.ManagerApplyEffect();
-            OnCollectableEffectAdded?.Invoke(added);
-        }
+        effect.ManagerApplyEffect();
+        OnCollectableEffectAdded?.Invoke(added);
     }
 
     private void Update()
