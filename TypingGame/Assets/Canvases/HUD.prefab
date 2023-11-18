@@ -272,7 +272,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _iconPrefab: {fileID: 7564833874700699260, guid: ed6ba50292549a940b65136d4e80894e, type: 3}
   _firstIconPosition: {fileID: 6937629276741147715}
-  _xBetweenIcons: 100
+  _xBetweenIcons: 150
   _blinkIconsWhenBelowSeconds: 2
 --- !u!1 &7044812185493408762
 GameObject:
