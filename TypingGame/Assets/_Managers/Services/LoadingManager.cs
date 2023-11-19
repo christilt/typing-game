@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneDirector : MonoBehaviour
+public class LoadingManager : PersistentSingleton<LoadingManager>
 {
     public void ReloadLevel()
     {

@@ -4,7 +4,6 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] private SequenceDirector _sequenceDirector;
-    [SerializeField] private SceneDirector _sceneDirector;
 
     private PauseHelper _pauseHelper;
 
@@ -124,7 +123,7 @@ public class GameManager : Singleton<GameManager>
             case GameState.LevelWon:
                 if (Input.anyKeyDown)
                 {
-                    _sceneDirector.ReloadLevel();
+                    LoadingManager.Instance.ReloadLevel();
                 }
                 break;
             case GameState.LevelLosing:
@@ -132,7 +131,7 @@ public class GameManager : Singleton<GameManager>
             case GameState.LevelLost:
                 if (Input.anyKeyDown)
                 {
-                    _sceneDirector.ReloadLevel();
+                    LoadingManager.Instance.ReloadLevel();
                 }
                 break;
             default:

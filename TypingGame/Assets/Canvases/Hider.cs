@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
+// TODO Make a singleton instance of this and use that everywhere
 public class Hider : MonoBehaviour
 {
     [SerializeField] SpriteRenderer _hiderSprite;
