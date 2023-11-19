@@ -1,10 +1,11 @@
-﻿using TMPro;
+﻿using DG.Tweening;
+using TMPro;
 using UnityEngine;
 
 public class Hud : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _text;
     [SerializeField] private UIStatusEffectPanel _statusEffectPanel;
+    [SerializeField] private UITextOverlay _textOverlay;
 
     private void Start()
     {
@@ -47,19 +48,19 @@ public class Hud : MonoBehaviour
         switch (state)
         {
             case GameState.LevelStarting:
-                _text.text = "Get ready";
+                _textOverlay.ShowIntroText("Get ready");
                 break;
             case GameState.LevelPlaying:
-                _text.text = string.Empty;
+                _textOverlay.HideTextIfShown();
                 break;
             case GameState.LevelWon:
-                _text.text = "WIN";
+                _textOverlay.ShowPositiveText("WIN", useOverlay: false);
                 break;
             case GameState.LevelLost:
-                _text.text = "LOSE";
+                _textOverlay.ShowNegativeText("LOSE", useOverlay: false);
                 break;
             default:
-                _text.text = string.Empty;
+                _textOverlay.HideTextIfShown();
                 break;
         }
     }
