@@ -53,7 +53,6 @@ public class UITextOverlay : MonoBehaviour
         textEase ??= _textShowIntroEase;
         duration ??= _showIntroDuration;
 
-        // TODO
         if (useOverlay)
             LevelHider.Instance.Hider.FadeToStartAlpha(duration.Value, unscaled: unscaledTime);
 

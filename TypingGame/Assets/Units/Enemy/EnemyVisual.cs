@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-// TODO unsubscribe any events ondestroy
 public class EnemyVisual : UnitVisual
 {
     [SerializeField] private UnitMovement _enemyMovement;

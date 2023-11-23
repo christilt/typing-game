@@ -18,8 +18,6 @@ public class Hud : MonoBehaviour
 
     private void Start()
     {
-        // TODO remove
-        Debug.Log("Hud start");
         UpdateForGameState(GameManager.Instance.State);
         GameManager.Instance.OnStateChanging += UpdateForGameState;
 
@@ -56,8 +54,6 @@ public class Hud : MonoBehaviour
 
     private void UpdateTextForGameState(GameState state)
     {
-        // TODO remove
-        Debug.Log($"Hud UpdateTextForGameState {state}");
         switch (state)
         {
             case GameState.LevelStarting:

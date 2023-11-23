@@ -16,16 +16,12 @@ public class Hider : MonoBehaviour
 
     private void Awake()
     {
-        // TODO remove
-        Debug.Log($"{name} start alpha is {_startAlpha}");
         _hiderCanvas.worldCamera = Camera.main;
         _hiderCanvas.sortingLayerID = GetComponent<SortingGroup>().sortingLayerID;
         _startAlphaFloat = _startAlpha / 255f;
         var startColour = Camera.main.backgroundColor;
         startColour.a = _startAlphaFloat;
         _hiderImage.color = startColour;
-        // TODO remove
-        Debug.Log($"{name} start color is {startColour}");
     }
 
     // TODO Show / Hide based on rate rather than duration?
@@ -45,11 +41,8 @@ public class Hider : MonoBehaviour
         Fade(1, duration, onComplete, unscaled);
     }
 
-    // TODO remove
     public void Fade(float alpha, float duration, Action onComplete = null, bool unscaled = false)
     {
-        // TODO remove
-        Debug.Log($"{name} set alpha from {_hiderImage.color.a} to {alpha}");
         if (_hiderImage.color.a == alpha)
             return;
 
@@ -63,26 +56,4 @@ public class Hider : MonoBehaviour
         if (onComplete != null)
             _tween.OnComplete(() => onComplete());
     }
-    //public void Fade(float alpha, float duration, Action onComplete, bool unscaled = false)
-    //{
-    //    StartCoroutine(FadeCoroutine());
-
-    //    IEnumerator FadeCoroutine()
-    //    {
-    //        var time = 0f;
-    //        var color = _hiderImage.color;
-    //        var originalAlpha = color.a;
-    //        while (time < duration)
-    //        {
-    //            time += unscaled ? Time.unscaledDeltaTime : Time.deltaTime;
-    //            var lerp = time / duration;
-    //            color.a = Mathf.Lerp(originalAlpha, alpha, lerp);
-    //            _hiderImage.color = color;
-    //            yield return null;
-    //        }
-
-    //        if (onComplete != null)
-    //            onComplete();
-    //    }
-    //}
 }
