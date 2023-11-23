@@ -25,5 +25,5 @@ public class SequenceDirector : MonoBehaviour
 
     private void PromoteCamera() => _sequenceCamera.Camera.Priority = 110;
 
-    private void HideLevel(float duration, Action onComplete) => _levelHider.Hide(duration, onComplete, unscaled: true);
+    private void HideLevel(float duration, Action onComplete) => _levelHider.HideCompletely(duration, onComplete, unscaled: true);
 }

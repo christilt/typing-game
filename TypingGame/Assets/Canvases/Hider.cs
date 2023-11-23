@@ -1,35 +1,88 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.UI;
 
-// TODO Make a singleton instance of this and use that everywhere
+[RequireComponent(typeof(SortingGroup))]
 public class Hider : MonoBehaviour
 {
-    [SerializeField] SpriteRenderer _hiderSprite;
-    [SerializeField] Canvas _hiderCanvas;
+    [SerializeField] private Image _hiderImage;
+    [SerializeField] private Canvas _hiderCanvas;
+    [SerializeField, Range(0,255)] private int _startAlpha;
+    private float _startAlphaFloat;
+    private Tween _tween;
 
-    private void Start()
+    private void Awake()
     {
+        // TODO remove
+        Debug.Log($"{name} start alpha is {_startAlpha}");
         _hiderCanvas.worldCamera = Camera.main;
+        _hiderCanvas.sortingLayerID = GetComponent<SortingGroup>().sortingLayerID;
+        _startAlphaFloat = _startAlpha / 255f;
+        var startColour = Camera.main.backgroundColor;
+        startColour.a = _startAlphaFloat;
+        _hiderImage.color = startColour;
+        // TODO remove
+        Debug.Log($"{name} start color is {startColour}");
     }
 
-    public void Hide(float duration, Action onComplete, bool unscaled = false)
+    // TODO Show / Hide based on rate rather than duration?
+
+    public void Unhide(float duration, Action onComplete = null, bool unscaled = false)
     {
-        StartCoroutine(HideCoroutine());
-
-        IEnumerator HideCoroutine()
-        {
-            var time = 0f;
-            var color = _hiderSprite.color;
-            while (time < duration)
-            {
-                time += unscaled ? Time.unscaledDeltaTime : Time.deltaTime;
-                var lerp = time / duration;
-                color.a = Mathf.Lerp(0, 1, lerp);
-                _hiderSprite.color = color;
-                yield return null;
-            }
-            onComplete();
-        }
+        Fade(0, duration, onComplete, unscaled);
     }
+
+    public void FadeToStartAlpha(float duration, Action onComplete = null, bool unscaled = false)
+    {
+        Fade(_startAlphaFloat, duration, onComplete, unscaled);
+    }
+
+    public void HideCompletely(float duration, Action onComplete = null, bool unscaled = false)
+    {
+        Fade(1, duration, onComplete, unscaled);
+    }
+
+    // TODO remove
+    public void Fade(float alpha, float duration, Action onComplete = null, bool unscaled = false)
+    {
+        // TODO remove
+        Debug.Log($"{name} set alpha from {_hiderImage.color.a} to {alpha}");
+        if (_hiderImage.color.a == alpha)
+            return;
+
+        if (_tween != null)
+            _tween.Kill();
+
+        _tween = _hiderImage
+            .DOFade(alpha, duration)
+            .SetUpdate(unscaled);
+
+        if (onComplete != null)
+            _tween.OnComplete(() => onComplete());
+    }
+    //public void Fade(float alpha, float duration, Action onComplete, bool unscaled = false)
+    //{
+    //    StartCoroutine(FadeCoroutine());
+
+    //    IEnumerator FadeCoroutine()
+    //    {
+    //        var time = 0f;
+    //        var color = _hiderImage.color;
+    //        var originalAlpha = color.a;
+    //        while (time < duration)
+    //        {
+    //            time += unscaled ? Time.unscaledDeltaTime : Time.deltaTime;
+    //            var lerp = time / duration;
+    //            color.a = Mathf.Lerp(originalAlpha, alpha, lerp);
+    //            _hiderImage.color = color;
+    //            yield return null;
+    //        }
+
+    //        if (onComplete != null)
+    //            onComplete();
+    //    }
+    //}
 }

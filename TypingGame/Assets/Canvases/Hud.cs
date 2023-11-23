@@ -1,14 +1,25 @@
 ﻿using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 
+[RequireComponent(typeof(SortingGroup))]
 public class Hud : MonoBehaviour
 {
     [SerializeField] private UIStatusEffectPanel _statusEffectPanel;
     [SerializeField] private UITextOverlay _textOverlay;
+    [SerializeField] private Canvas _canvas;
+
+    private void Awake()
+    {
+        _canvas.worldCamera = Camera.main;
+        _canvas.sortingLayerID = GetComponent<SortingGroup>().sortingLayerID;
+    }
 
     private void Start()
     {
+        // TODO remove
+        Debug.Log("Hud start");
         UpdateForGameState(GameManager.Instance.State);
         GameManager.Instance.OnStateChanging += UpdateForGameState;
 
@@ -45,6 +56,8 @@ public class Hud : MonoBehaviour
 
     private void UpdateTextForGameState(GameState state)
     {
+        // TODO remove
+        Debug.Log($"Hud UpdateTextForGameState {state}");
         switch (state)
         {
             case GameState.LevelStarting:

@@ -50,3 +50,6 @@ TagManager:
   - name: Icons
     uniqueID: 4034209783
     locked: 0
+  - name: UI
+    uniqueID: 3608429825
+    locked: 0

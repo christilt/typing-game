@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class UITextOverlay : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _text;
-    [SerializeField] private Image _image;
     [SerializeField] private Canvas _screenSpaceCanvas;
     [SerializeField] private Ease _textShowIntroEase;
     [SerializeField] private float _showIntroDuration;
@@ -16,22 +15,22 @@ public class UITextOverlay : MonoBehaviour
     [SerializeField] private float _showNegativeDuration;
     [SerializeField] private float _hideDuration;
     [SerializeField] private Ease _textHideEase;
-    
-    private Color _imageOriginalColor;
 
-    private Vector3 _textStartPosition;
-    private Vector3 _textShownPosition;
-    private Vector3 _textHiddenPosition;
+    private Vector3 _textStartPositionLocal;
+    private Vector3 _textShownPositionLocal;
+    private Vector3 _textHiddenPositionLocal;
 
     private void Awake()
     {
         _screenSpaceCanvas = GetComponent<Canvas>();
-        _imageOriginalColor = _image.color;
+    }
 
-        _textShownPosition = _text.transform.position;
-        _textStartPosition = _text.transform.position + new Vector3(0, _screenSpaceCanvas.pixelRect.yMax, 0);
-        _textHiddenPosition = _text.transform.position - new Vector3(0, _screenSpaceCanvas.pixelRect.yMax, 0);
-        _text.transform.position = _textStartPosition;
+    private void Start()
+    {
+        _textShownPositionLocal = _text.transform.localPosition;
+        _textStartPositionLocal = _text.transform.localPosition + new Vector3(0, _screenSpaceCanvas.pixelRect.yMax, 0);
+        _textHiddenPositionLocal = _text.transform.localPosition - new Vector3(0, _screenSpaceCanvas.pixelRect.yMax, 0);
+        _text.transform.localPosition = _textStartPositionLocal;
     }
 
     public void ShowIntroText(string text, bool useOverlay = true, bool unscaledTime = true)
@@ -54,30 +53,27 @@ public class UITextOverlay : MonoBehaviour
         textEase ??= _textShowIntroEase;
         duration ??= _showIntroDuration;
 
-        if (useOverlay && _image.color.a != _imageOriginalColor.a)
-            FadeInOverlay(unscaledTime);
+        // TODO
+        if (useOverlay)
+            LevelHider.Instance.Hider.FadeToStartAlpha(duration.Value, unscaled: unscaledTime);
 
-        _text.transform.position = _textStartPosition;
+        _text.transform.localPosition = _textStartPositionLocal;
         _text.text = text;
 
-        _text.transform.DOMove(_textShownPosition, duration.Value)
+        _text.transform.DOLocalMove(_textShownPositionLocal, duration.Value)
             .SetEase(textEase.Value)
             .SetUpdate(unscaledTime);
     }
 
     public void HideTextIfShown(bool unscaledTime = true)
     {
-        if (_image.color.a != 0)
-            FadeOutOverlay(unscaledTime);
+        LevelHider.Instance.Hider.Unhide(_hideDuration, unscaled: unscaledTime);
 
-        if (_text.transform.position != _textHiddenPosition)
+        if (_text.transform.position != _textHiddenPositionLocal)
         {
-            _text.transform.DOMove(_textHiddenPosition, _hideDuration)
+            _text.transform.DOLocalMove(_textHiddenPositionLocal, _hideDuration)
                 .SetEase(_textHideEase)
                 .SetUpdate(unscaledTime);
         }
     }
-
-    private void FadeInOverlay(bool unscaledTime) => _image.DOFade(_imageOriginalColor.a, _showIntroDuration).SetUpdate(unscaledTime);
-    private void FadeOutOverlay(bool unscaledTime) => _image.DOFade(0, _hideDuration).SetUpdate(unscaledTime);
 }
