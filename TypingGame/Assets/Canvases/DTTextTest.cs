@@ -5,6 +5,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UIElements;
 
+// TODO remove
 public class DTTextTest : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _text;

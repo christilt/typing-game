@@ -20,7 +20,14 @@ public class PlayerTypingMovement : MonoBehaviour
             if (value == "")
                 return;
 
-            TryMoveToKey(value[0]);
+            if (TryMoveToKey(value[0]))
+            {
+                StatsManager.Instance.Accuracy.LogCorrectKey();
+            }
+            else
+            {
+                StatsManager.Instance.Accuracy.LogIncorrectKey();
+            }
 
             _inputField.text = "";
         });
