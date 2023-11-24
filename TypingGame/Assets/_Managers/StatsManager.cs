@@ -1,52 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class StatsManager : Singleton<StatsManager>
 {
-    public Accuracy Accuracy { get; } = new();
-}
+    [SerializeField] private SpeedRecorder _speedRecorder;
+    private LevelStats _endOfLevelStats = default;
 
-public class Accuracy
-{
-    public int KeysCorrect { get; private set; }
-    public int KeysTyped { get; private set; }
-    public float? Proportion
+    public AccuracyRecorder AccuracyRecorder { get; } = new();
+
+    public LevelStats CalculateEndOfLevelStats()
     {
-        get
+        if (!GameManager.Instance.State.EndsPlayerControl())
         {
-            if (KeysTyped == 0)
-                return null;
-
-            return (float)KeysCorrect/(float)KeysTyped;
+            throw new InvalidOperationException("Not end of level!");
         }
-    }
 
-    public void LogCorrectKey()
-    {
-        KeysCorrect++;
-        KeysTyped++;
+        if (_endOfLevelStats != null)
+        {
+            return _endOfLevelStats;
+        }
 
-        // TODO remove
-        Debug.Log($"Correct: {this}");
-    }
-
-    public void LogIncorrectKey()
-    {
-        KeysTyped++;
-
-        // TODO remove
-        Debug.Log($"Incorrect: {this}");
-    }
-
-    public override string ToString()
-    {
-        if (!Proportion.HasValue)
-            return "-";
-
-        return $"Accuracy: {Proportion:P2} ({KeysCorrect}/{KeysTyped})";
+        _endOfLevelStats = LevelStats.Calculate(AccuracyRecorder, _speedRecorder, SettingsManager.Instance.LevelSettings);
+        return _endOfLevelStats;
     }
 }

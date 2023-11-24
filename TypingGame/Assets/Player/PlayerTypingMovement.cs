@@ -22,11 +22,11 @@ public class PlayerTypingMovement : MonoBehaviour
 
             if (TryMoveToKey(value[0]))
             {
-                StatsManager.Instance.Accuracy.LogCorrectKey();
+                StatsManager.Instance.AccuracyRecorder.LogCorrectKey();
             }
             else
             {
-                StatsManager.Instance.Accuracy.LogIncorrectKey();
+                StatsManager.Instance.AccuracyRecorder.LogIncorrectKey();
             }
 
             _inputField.text = "";

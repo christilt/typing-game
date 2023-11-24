@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -63,7 +64,8 @@ public class Hud : MonoBehaviour
                 _textOverlay.HideTextIfShown();
                 break;
             case GameState.LevelWon:
-                _textOverlay.ShowPositiveText("WIN", useOverlay: false);
+                var text = GetWinText();
+                _textOverlay.ShowPositiveText(text, useOverlay: false);
                 break;
             case GameState.LevelLost:
                 _textOverlay.ShowNegativeText("LOSE", useOverlay: false);
@@ -72,5 +74,55 @@ public class Hud : MonoBehaviour
                 _textOverlay.HideTextIfShown();
                 break;
         }
+    }
+
+    // TODO
+    private string GetWinText()
+    {
+        var settings = SettingsManager.Instance.LevelSettings;
+        var stats = StatsManager.Instance.CalculateEndOfLevelStats();
+        var builder = new StringBuilder();
+        builder.Append(settings.LevelName);
+        builder.AppendLine(" complete!");
+        builder.AppendLine();
+        //builder.Append("<align=\"flush\">");
+        //builder.AppendLine($"Grade: {stats.Grade}");
+        //builder.AppendLine($"Time: {stats.Speed.TimeTaken:mm\\:ss}");
+        //builder.AppendLine($"Accuracy: {stats.Accuracy.Proportion.Value:P1}");
+        //builder.Append("</align>");
+
+        AppendLeftAndRightLine("Grade:", stats.Grade.ToString());
+        AppendLeftAndRightLine("Time:", stats.Speed.TimeTaken.ToString("mm\\:ss"));
+        AppendLeftAndRightLine("Accuracy:", stats.Accuracy.Proportion.Value.ToString("P1"));
+        return builder.ToString();
+
+        // See https://forum.unity.com/threads/textmeshpro-right-and-left-align-on-same-line.485157/
+        void AppendLeftAndRightLine(string left, string right)
+        {
+            builder.Append("<align=left>");
+            builder.Append(left);
+            builder.AppendLine("</align>");
+            builder.Append("<line-height=0><align=right>");
+            builder.Append(right);
+            builder.AppendLine("</align><line-height=1em>");
+        }
+        //void AppendLeftAndRightLine(string left, string right)
+        //{
+        //    builder.Append("<align=left>");
+        //    builder.Append(left);
+        //    builder.AppendLine("</align>");
+        //    builder.Append("<line-height=0><align=right>");
+        //    builder.Append(right);
+        //    builder.AppendLine("</align><line-height=1em>");
+        //}
+        // See https://forum.unity.com/threads/textmeshpro-right-and-left-align-on-same-line.485157/
+        //void AppendLeftAndRightLine(string left, string right)
+        //{
+        //    builder.Append("<align=left>");
+        //    builder.Append(left);
+        //    builder.Append("</align><line-height=0.001><align=right>");
+        //    builder.Append(right);
+        //    builder.AppendLine("</align>");
+        //}
     }
 }
