@@ -1,6 +1,9 @@
 ﻿using System;
 using UnityEngine;
 
+// TODO: Maybe show text for mini achievements
+// TODO: Achievement for burst of high speed, say 10 letters > x speed?
+// TODO: Achievement for high accuracy over period?
 public class LevelStats : IStat
 {
     private LevelStats(AccuracyStat accuracy, SpeedStat speed, LevelRank rank, float rating, StatCategory category)
@@ -34,8 +37,8 @@ public class LevelStats : IStat
 
     private static float CalculateRating(AccuracyStat accuracy, SpeedStat speed)
     {
-        const float AccuracyRatingMultiplier = 1.5f;
-        const float SpeedRatingMultiplier = 1.0f;
+        const float AccuracyRatingMultiplier = 2.5f;
+        const float SpeedRatingMultiplier = 0.5f;
 
         var accuracyScore = accuracy.Rating * AccuracyRatingMultiplier;
         var maxAccuracyScore = 1 * AccuracyRatingMultiplier;
@@ -55,7 +58,7 @@ public class LevelStats : IStat
             return LevelRank.S;
         else if (rating >= 0.90f)
             return LevelRank.A;
-        else if (rating >= 0.85f)
+        else if (rating >= 0.80f)
             return LevelRank.B;
         else if (rating >= 0.70f)
             return LevelRank.C;

@@ -66,4 +66,9 @@ public class PlayerTypingMovement : MonoBehaviour
         var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         return new Vector3(0, 0, angle);
     }
+
+    private void OnDestroy()
+    {
+        DisableComponent();
+    }
 }

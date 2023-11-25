@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _namePart1: World 0
   _namePart2: 0
-  _namePartSeparator: ' - '
+  _namePartSeparator: '-'
   _benchmarkDurationSeconds: 60

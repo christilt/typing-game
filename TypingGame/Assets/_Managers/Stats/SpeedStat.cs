@@ -30,11 +30,11 @@ public class SpeedStat : IStat
 
     private static StatCategory CalculateCategory(float rating)
     {
-        if (rating >= 0.90f)
+        if (rating >= 0.75f)
             return StatCategory.Great;
-        else if (rating >= 0.70f)
+        else if (rating >= 0.50f)
             return StatCategory.Good;
-        else if (rating >= 0.30f)
+        else if (rating >= 0.25f)
             return StatCategory.Average;
         else
             return StatCategory.Bad;

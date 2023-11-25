@@ -62,22 +62,30 @@ public class Hud : MonoBehaviour
         switch (state)
         {
             case GameState.LevelStarting:
-                _textOverlay.ShowIntroText("Get ready");
+                _textOverlay.ShowIntroText(GetIntroText());
                 break;
             case GameState.LevelPlaying:
                 _textOverlay.HideTextIfShown();
                 break;
             case GameState.LevelWon:
-                var text = GetWinText();
-                _textOverlay.ShowPositiveText(text, useOverlay: false);
+                _textOverlay.ShowPositiveText(GetWinText(), useOverlay: false);
                 break;
             case GameState.LevelLost:
-                _textOverlay.ShowNegativeText("LOSE", useOverlay: false);
+                _textOverlay.ShowNegativeText("Try again", useOverlay: false);
                 break;
             default:
                 _textOverlay.HideTextIfShown();
                 break;
         }
+    }
+
+    private string GetIntroText()
+    {
+        var builder = new StringBuilder();
+        builder.AppendLine(SettingsManager.Instance.LevelSettings.LevelName);
+        builder.AppendLine();
+        builder.AppendLine("Get ready");
+        return builder.ToString();
     }
 
     private string GetWinText()
