@@ -22,6 +22,7 @@ public class UILoadingScreen : MonoBehaviour
 
     private void UpdateProgress(float progress)
     {
-        _image.DOFillAmount(progress, 0.25f);
+        if (progress > _image.fillAmount)
+            _image.DOFillAmount(progress, 0.25f);
     }
 }

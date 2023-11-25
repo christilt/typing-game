@@ -27,9 +27,6 @@ public class LoadingManager : PersistentSingleton<LoadingManager>
             throw new InvalidOperationException($"{nameof(_loadSceneName)} has not been set");
 
 
-        Scene loaderScene = SceneManager.GetActiveScene();
-        Scene? afterLoaderScene = null;
-
         _loadingAsyncOperation = SceneManager.LoadSceneAsync(_loadSceneName);
         // See https://docs.unity3d.com/ScriptReference/AsyncOperation-allowSceneActivation.html
         _loadingAsyncOperation.allowSceneActivation = false;

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 // TODO use own overlay and not scene hider - scene hider should hide everything
 public class UITextOverlay : MonoBehaviour
 {
+    [SerializeField] private Hider _hider;
     [SerializeField] private TextMeshProUGUI _text;
     [SerializeField] private Canvas _screenSpaceCanvas;
     [SerializeField] private Ease _textShowIntroEase;
@@ -20,11 +21,6 @@ public class UITextOverlay : MonoBehaviour
     private Vector3 _textStartPositionLocal;
     private Vector3 _textShownPositionLocal;
     private Vector3 _textHiddenPositionLocal;
-
-    private void Awake()
-    {
-        _screenSpaceCanvas = GetComponent<Canvas>();
-    }
 
     private void Start()
     {
@@ -55,7 +51,7 @@ public class UITextOverlay : MonoBehaviour
         duration ??= _showIntroDuration;
 
         if (useOverlay)
-            SceneHider.Instance.MakeOpaque(duration.Value, unscaled: unscaledTime);
+            _hider.TransitionToOpaque(duration.Value, unscaled: unscaledTime);
 
         _text.transform.localPosition = _textStartPositionLocal;
         _text.text = "<mspace=56>" + text;
@@ -67,7 +63,7 @@ public class UITextOverlay : MonoBehaviour
 
     public void HideTextIfShown(bool unscaledTime = true)
     {
-        SceneHider.Instance.Unhide(_hideDuration);
+        _hider.Unhide(_hideDuration);
 
         if (IsTextShown())
         {

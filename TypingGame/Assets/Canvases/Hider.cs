@@ -25,7 +25,12 @@ public class Hider : MonoBehaviour
         _startAlphaFloat = _startAlpha / 255f;
         var startColour = Camera.main.backgroundColor;
         startColour.a = _startAlphaFloat;
-        _hiderImage.color = startColour;
+        _hiderImage.color = startColour; // TODO not updating for SceneHider when scene is reloaded because "the object of type image has been destroyed"
+    }
+
+    private void OnDestroy()
+    {
+        _tween?.Kill();
     }
 
     // TODO Show / Hide based on rate rather than duration?
@@ -53,8 +58,7 @@ public class Hider : MonoBehaviour
         if (_transitioningToAlpha == alpha)
             return;
 
-        if (_tween != null)
-            _tween.Kill();
+        _tween?.Kill();
 
         _transitioningToAlpha = alpha;
         _tween = _hiderImage

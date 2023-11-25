@@ -53,3 +53,6 @@ TagManager:
   - name: UI
     uniqueID: 3608429825
     locked: 0
+  - name: Hider
+    uniqueID: 2214799963
+    locked: 0

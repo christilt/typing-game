@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [RequireComponent (typeof(Hider))]
-public class SceneHider : PersistentSingleton<SceneHider>
+public class SceneHider : Singleton<SceneHider>
 {
     private Hider _hider;
     [SerializeField] private float _startLevelFadeDuration;
@@ -17,21 +17,11 @@ public class SceneHider : PersistentSingleton<SceneHider>
 
     public void StartOfSceneFadeIn(Action onComplete = null)
     {
-        MakeOpaque(_startLevelFadeDuration, onComplete, unscaled: true);
-    }
-
-    public void MakeOpaque(float duration, Action onComplete = null, bool unscaled = true)
-    {
-        _hider.TransitionToOpaque(duration, onComplete, unscaled);
+        _hider.Unhide(_startLevelFadeDuration, onComplete, unscaled: true);
     }
 
     public void EndOfSceneFadeOut(Action onComplete = null)
     {
         _hider.HideCompletely(_endLevelFadeDuration, onComplete, unscaled: true);
-    }
-
-    public void Unhide(float duration, Action onComplete = null)
-    {
-        _hider.Unhide(duration, onComplete, unscaled: true);
     }
 }
