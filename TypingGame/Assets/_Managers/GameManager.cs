@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -70,6 +71,12 @@ public class GameManager : Singleton<GameManager>
         {
             case GameState.LevelStarting:
                 _pauseHelper.Pause();
+                SceneHider.Instance.StartOfSceneFadeIn(() =>
+                {
+                    TryChangeState(GameState.LevelIntroducing);
+                });
+                break;
+            case GameState.LevelIntroducing:
                 break;
             case GameState.LevelPlaying:
                 _pauseHelper.Unpause();
@@ -106,7 +113,7 @@ public class GameManager : Singleton<GameManager>
     {
         switch (State)
         {
-            case GameState.LevelStarting:
+            case GameState.LevelIntroducing:
                 if (Input.anyKeyDown)
                 {
                     TryChangeState(GameState.LevelPlaying);
@@ -155,6 +162,7 @@ public class GameManager : Singleton<GameManager>
 public enum GameState
 {
     LevelStarting,
+    LevelIntroducing,
     LevelPlaying,
     LevelWinning,
     LevelWon,
@@ -178,6 +186,11 @@ public static class GameStateExtensions
             || state == GameState.LifeLosing
             || state == GameState.LevelLosing
             || state == GameState.LevelLost;
+    }
+
+    public static bool StartsMenuControl(this GameState state) 
+    {
+        return state == GameState.LevelIntroducing;
     }
 
     public static bool EndsPlayerControl(this GameState state)

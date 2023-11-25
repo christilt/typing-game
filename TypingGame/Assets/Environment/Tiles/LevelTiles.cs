@@ -34,20 +34,13 @@ public class LevelTiles : Singleton<LevelTiles>
 
     private void OnGameStateChanging(GameState state)
     {
-        switch (state)
+        if (state.EndsPlayerControl())
         {
-            case GameState.LevelStarting:
-                gameObject.SetActive(true);
-                break;
-            case GameState.LevelPlaying:
-                gameObject.SetActive(true);
-                break;
-            case GameState.LevelWinning:
-                gameObject.SetActive(false);
-                break;
-            case GameState.PlayerDying:
-                gameObject.SetActive(false);
-                break;
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            gameObject.SetActive(true);
         }
     }
 

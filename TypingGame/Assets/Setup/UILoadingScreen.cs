@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class UILoadingScreen : MonoBehaviour
@@ -7,20 +8,20 @@ public class UILoadingScreen : MonoBehaviour
 
     private void Start()
     {
-        LoadingManager.Instance.LoadingSceneLoad();
+        SceneHider.Instance.StartOfSceneFadeIn(() =>
+        {
+            LoadingManager.Instance.LoadingSceneLoad();
+        });
     }
 
     private void Update()
     {
         var progress = LoadingManager.Instance.LoadingProgress;
-        if (progress == null)
-            return;
-
-        UpdateProgress(progress.Value);
+        UpdateProgress(progress);
     }
 
     private void UpdateProgress(float progress)
     {
-        _image.fillAmount = progress;
+        _image.DOFillAmount(progress, 0.25f);
     }
 }

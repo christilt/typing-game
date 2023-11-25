@@ -248,7 +248,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 58860449679795620, guid: d64b0f39335ac4946943dd0fcda05019, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4993880696689555671, guid: d64b0f39335ac4946943dd0fcda05019, type: 3}
       propertyPath: m_LocalPosition.x
@@ -712,7 +712,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 58860449679795620, guid: d64b0f39335ac4946943dd0fcda05019, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4993880696689555671, guid: d64b0f39335ac4946943dd0fcda05019, type: 3}
       propertyPath: m_LocalPosition.x
@@ -974,7 +974,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4736953459938292362, guid: 7e1f6f0b3042b9b4f8cfcb52192acdbb, type: 3}
       propertyPath: m_Name
-      value: LevelHider
+      value: SceneHider
       objectReference: {fileID: 0}
     - target: {fileID: 8313044861542405539, guid: 7e1f6f0b3042b9b4f8cfcb52192acdbb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1100,7 +1100,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 58860449679795620, guid: d64b0f39335ac4946943dd0fcda05019, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4993880696689555671, guid: d64b0f39335ac4946943dd0fcda05019, type: 3}
       propertyPath: m_LocalPosition.x

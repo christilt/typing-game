@@ -61,7 +61,7 @@ public class Hud : MonoBehaviour
     {
         switch (state)
         {
-            case GameState.LevelStarting:
+            case GameState.LevelIntroducing:
                 _textOverlay.ShowIntroText(GetIntroText());
                 break;
             case GameState.LevelPlaying:
@@ -74,7 +74,6 @@ public class Hud : MonoBehaviour
                 _textOverlay.ShowNegativeText("Try again", useOverlay: false);
                 break;
             default:
-                _textOverlay.HideTextIfShown();
                 break;
         }
     }

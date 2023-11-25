@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+// TODO use own overlay and not scene hider - scene hider should hide everything
 public class UITextOverlay : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _text;
@@ -54,7 +55,7 @@ public class UITextOverlay : MonoBehaviour
         duration ??= _showIntroDuration;
 
         if (useOverlay)
-            LevelHider.Instance.Hider.FadeToStartAlpha(duration.Value, unscaled: unscaledTime);
+            SceneHider.Instance.MakeOpaque(duration.Value, unscaled: unscaledTime);
 
         _text.transform.localPosition = _textStartPositionLocal;
         _text.text = "<mspace=56>" + text;
@@ -66,13 +67,15 @@ public class UITextOverlay : MonoBehaviour
 
     public void HideTextIfShown(bool unscaledTime = true)
     {
-        LevelHider.Instance.Hider.Unhide(_hideDuration, unscaled: unscaledTime);
+        SceneHider.Instance.Unhide(_hideDuration);
 
-        if (_text.transform.localPosition != _textHiddenPositionLocal)
+        if (IsTextShown())
         {
             _text.transform.DOLocalMove(_textHiddenPositionLocal, _hideDuration)
                 .SetEase(_textHideEase)
                 .SetUpdate(unscaledTime);
         }
     }
+
+    private bool IsTextShown() => _text.transform.localPosition != _textStartPositionLocal && _text.transform.localPosition != _textHiddenPositionLocal;
 }
