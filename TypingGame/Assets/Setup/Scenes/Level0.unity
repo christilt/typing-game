@@ -635,14 +635,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: HUD
       objectReference: {fileID: 0}
-    - target: {fileID: 2777859270741496361, guid: 3c5cbda67c8b7f1428b4eb9cfb1abbec, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 350
-      objectReference: {fileID: 0}
-    - target: {fileID: 2777859270741496361, guid: 3c5cbda67c8b7f1428b4eb9cfb1abbec, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -276
-      objectReference: {fileID: 0}
     - target: {fileID: 5398904523539031921, guid: 3c5cbda67c8b7f1428b4eb9cfb1abbec, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

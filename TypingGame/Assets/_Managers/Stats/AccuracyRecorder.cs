@@ -16,35 +16,5 @@ public class AccuracyRecorder
         KeysTyped++;
     }
 
-    public AccuracyStat CalculateAccuracy() => new AccuracyStat(KeysCorrect, KeysTyped);
-}
-
-public class AccuracyStat
-{
-    public AccuracyStat(int keysCorrect, int keysTyped)
-    {
-        KeysCorrect = keysCorrect;
-        KeysTyped = keysTyped;
-    }
-
-    public int KeysCorrect { get; }
-    public int KeysTyped { get; }
-    public float? Proportion
-    {
-        get
-        {
-            if (KeysTyped == 0)
-                return null;
-
-            return (float)KeysCorrect / (float)KeysTyped;
-        }
-    }
-
-    public override string ToString()
-    {
-        if (!Proportion.HasValue)
-            return "-";
-
-        return $"Accuracy: {Proportion:P2} ({KeysCorrect}/{KeysTyped})";
-    }
+    public AccuracyStat CalculateAccuracy() => AccuracyStat.Calculate(KeysCorrect, KeysTyped);
 }

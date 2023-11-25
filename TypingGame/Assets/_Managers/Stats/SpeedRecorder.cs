@@ -19,7 +19,7 @@ public class SpeedRecorder : MonoBehaviour
 
     public SpeedStat CalculateSpeed(float benchmarkDurationSeconds)
     {
-        return new SpeedStat(
+        return SpeedStat.Calculate(
             timeTaken: TimeSpan.FromSeconds(TimeTakenSeconds), 
             timeBenchmark: TimeSpan.FromSeconds(benchmarkDurationSeconds));
     }

@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 2481071843631507738}
-  _multiplier: 1.5
+  _multiplier: 1.25
   _durationSeconds: 10
 --- !u!212 &2481071843631507738 stripped
 SpriteRenderer:

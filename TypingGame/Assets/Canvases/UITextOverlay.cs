@@ -57,7 +57,7 @@ public class UITextOverlay : MonoBehaviour
             LevelHider.Instance.Hider.FadeToStartAlpha(duration.Value, unscaled: unscaledTime);
 
         _text.transform.localPosition = _textStartPositionLocal;
-        _text.text = text;
+        _text.text = "<mspace=56>" + text;
 
         _text.transform.DOLocalMove(_textShownPositionLocal, duration.Value)
             .SetEase(textEase.Value)
@@ -68,7 +68,7 @@ public class UITextOverlay : MonoBehaviour
     {
         LevelHider.Instance.Hider.Unhide(_hideDuration, unscaled: unscaledTime);
 
-        if (_text.transform.position != _textHiddenPositionLocal)
+        if (_text.transform.localPosition != _textHiddenPositionLocal)
         {
             _text.transform.DOLocalMove(_textHiddenPositionLocal, _hideDuration)
                 .SetEase(_textHideEase)

@@ -10,6 +10,10 @@ public class Hud : MonoBehaviour
     [SerializeField] private UIStatusEffectPanel _statusEffectPanel;
     [SerializeField] private UITextOverlay _textOverlay;
     [SerializeField] private Canvas _canvas;
+    [SerializeField] private Color _greatColor;
+    [SerializeField] private Color _goodColor;
+    [SerializeField] private Color _averageColor;
+    [SerializeField] private Color _badColor;
 
     private void Awake()
     {
@@ -76,53 +80,44 @@ public class Hud : MonoBehaviour
         }
     }
 
-    // TODO
     private string GetWinText()
     {
+        const int Alignment = 10;
         var settings = SettingsManager.Instance.LevelSettings;
         var stats = StatsManager.Instance.CalculateEndOfLevelStats();
+        var rankText = WithColor(stats, $"{stats.Rank,Alignment}");
+        var timeText = WithColor(stats.Speed, $"{stats.Speed.TimeTaken, Alignment:mm\\:ss}");
+        var accuracyText = WithColor(stats.Accuracy, $"{stats.Accuracy.Proportion, Alignment:P1}");
+
         var builder = new StringBuilder();
         builder.Append(settings.LevelName);
-        builder.AppendLine(" complete!");
+        builder.AppendLine("  complete!");
         builder.AppendLine();
-        //builder.Append("<align=\"flush\">");
-        //builder.AppendLine($"Grade: {stats.Grade}");
-        //builder.AppendLine($"Time: {stats.Speed.TimeTaken:mm\\:ss}");
-        //builder.AppendLine($"Accuracy: {stats.Accuracy.Proportion.Value:P1}");
-        //builder.Append("</align>");
-
-        AppendLeftAndRightLine("Grade:", stats.Grade.ToString());
-        AppendLeftAndRightLine("Time:", stats.Speed.TimeTaken.ToString("mm\\:ss"));
-        AppendLeftAndRightLine("Accuracy:", stats.Accuracy.Proportion.Value.ToString("P1"));
+        builder.AppendLine($"{"Rank:", -Alignment}{rankText}");
+        builder.AppendLine($"{"Time:", -Alignment}{timeText}");
+        builder.AppendLine($"{"Accuracy:", -Alignment}{accuracyText}");
         return builder.ToString();
+    }
 
-        // See https://forum.unity.com/threads/textmeshpro-right-and-left-align-on-same-line.485157/
-        void AppendLeftAndRightLine(string left, string right)
+    private string WithColor(IStat stat, string formattedText)
+    {
+        var color = GetCategoryColor(stat.Category);
+        var colorString = ColorUtility.ToHtmlStringRGB(color);
+        return $"<color=#{colorString}>{formattedText}</color>";
+    }
+
+    private Color GetCategoryColor(StatCategory category)
+    {
+        switch (category)
         {
-            builder.Append("<align=left>");
-            builder.Append(left);
-            builder.AppendLine("</align>");
-            builder.Append("<line-height=0><align=right>");
-            builder.Append(right);
-            builder.AppendLine("</align><line-height=1em>");
+            case StatCategory.Great:
+                return _greatColor;
+            case StatCategory.Good:
+                return _goodColor;
+            case StatCategory.Average:
+                return _averageColor;
+            default:
+                return _badColor;
         }
-        //void AppendLeftAndRightLine(string left, string right)
-        //{
-        //    builder.Append("<align=left>");
-        //    builder.Append(left);
-        //    builder.AppendLine("</align>");
-        //    builder.Append("<line-height=0><align=right>");
-        //    builder.Append(right);
-        //    builder.AppendLine("</align><line-height=1em>");
-        //}
-        // See https://forum.unity.com/threads/textmeshpro-right-and-left-align-on-same-line.485157/
-        //void AppendLeftAndRightLine(string left, string right)
-        //{
-        //    builder.Append("<align=left>");
-        //    builder.Append(left);
-        //    builder.Append("</align><line-height=0.001><align=right>");
-        //    builder.Append(right);
-        //    builder.AppendLine("</align>");
-        //}
     }
 }

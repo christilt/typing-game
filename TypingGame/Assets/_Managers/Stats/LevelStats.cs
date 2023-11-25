@@ -1,70 +1,84 @@
 ﻿using System;
 using UnityEngine;
 
-public class LevelStats
+public class LevelStats : IStat
 {
-    private LevelStats(AccuracyStat accuracy, SpeedStat speed, LevelGrade grade)
+    private LevelStats(AccuracyStat accuracy, SpeedStat speed, LevelRank rank, float rating, StatCategory category)
     {
-        if (accuracy is null || accuracy.Proportion is null) throw new ArgumentException(nameof(accuracy));
+        if (accuracy is null) throw new ArgumentException(nameof(accuracy));
         if (speed is null) throw new ArgumentException(nameof(speed));
 
         Accuracy = accuracy;
         Speed = speed;
-        Grade = grade;
+        Rank = rank;
+        Rating = rating;
+        Category = category;
     }
 
-    public LevelGrade Grade { get; }
+    public LevelRank Rank { get; }
     public AccuracyStat Accuracy { get; }
     public SpeedStat Speed { get; }
+    public float Rating { get;}
+    public StatCategory Category { get; }
 
     public static LevelStats Calculate(AccuracyRecorder accuracyRecorder, SpeedRecorder speedRecorder, LevelSettings settings)
     {
         var accuracy = accuracyRecorder.CalculateAccuracy();
         var speed = speedRecorder.CalculateSpeed(settings.BenchmarkDurationSeconds);
-        var grade = CalculateGrade(accuracy, speed);
+        var rating = CalculateRating(accuracy, speed);
+        var rank = CalculateRank(rating);
+        var category = CalculateCategory(rank);
 
-        return new LevelStats(accuracy, speed, grade);
+        return new LevelStats(accuracy, speed, rank, rating, category);
     }
 
-    private static LevelGrade CalculateGrade(AccuracyStat accuracy, SpeedStat speed)
+    private static float CalculateRating(AccuracyStat accuracy, SpeedStat speed)
     {
-        const float AccuracyRatingMultiplier = 1.0f;
+        const float AccuracyRatingMultiplier = 1.5f;
         const float SpeedRatingMultiplier = 1.0f;
 
-        var accuracyScore = GetAccuracyRating(accuracy) * AccuracyRatingMultiplier;
+        var accuracyScore = accuracy.Rating * AccuracyRatingMultiplier;
         var maxAccuracyScore = 1 * AccuracyRatingMultiplier;
 
-        var speedScore = GetSpeedRating(speed) * SpeedRatingMultiplier;
+        var speedScore = speed.Rating * SpeedRatingMultiplier;
         var maxSpeedScore = 1 * SpeedRatingMultiplier;
 
         var score = accuracyScore + speedScore;
         var maxScore = maxAccuracyScore + maxSpeedScore;
 
-        var scorePercentage = score / maxScore;
-
-        if (scorePercentage >= 95)
-            return LevelGrade.S;
-        else if (scorePercentage >= 90)
-            return LevelGrade.A;
-        else if (scorePercentage >= 85)
-            return LevelGrade.B;
-        else if (scorePercentage >= 70)
-            return LevelGrade.C;
-        else if (scorePercentage >= 60)
-            return LevelGrade.D;
-        else
-            return LevelGrade.E;
+        return score / maxScore;
     }
 
-    // 1-0
-    private static float GetAccuracyRating(AccuracyStat accuracy) => accuracy.Proportion.Value;
-
-    // 1-0
-    private static float GetSpeedRating(SpeedStat speed)
+    private static LevelRank CalculateRank(float rating)
     {
-        const float MaxTimeProportion = 2.0f;
-        var timeProportion = (float)speed.TimeTaken.TotalSeconds / (float)speed.TimeBenchmark.TotalSeconds;
-        var timeProportionCapped = Mathf.Min(timeProportion, MaxTimeProportion);
-        return 1f - (timeProportionCapped / MaxTimeProportion);
+        if (rating >= 0.95f)
+            return LevelRank.S;
+        else if (rating >= 0.90f)
+            return LevelRank.A;
+        else if (rating >= 0.85f)
+            return LevelRank.B;
+        else if (rating >= 0.70f)
+            return LevelRank.C;
+        else if (rating >= 0.60f)
+            return LevelRank.D;
+        else
+            return LevelRank.E;
+    }
+
+    private static StatCategory CalculateCategory(LevelRank rank)
+    {
+        switch (rank)
+        {
+            case LevelRank.S:
+                return StatCategory.Great;
+            case LevelRank.A:
+            case LevelRank.B:
+                return StatCategory.Good;
+            case LevelRank.C:
+            case LevelRank.D:
+                return StatCategory.Average;
+            default:
+                return StatCategory.Bad;
+        }
     }
 }

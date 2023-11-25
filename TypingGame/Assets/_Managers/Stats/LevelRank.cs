@@ -1,4 +1,4 @@
-﻿public enum LevelGrade
+﻿public enum LevelRank
 {
     S,
     A,
