@@ -14,7 +14,30 @@ public class Player : Singleton<Player>
         GameManager.Instance.OnStateChanging += HandleGameStateChanging;
         _visual.OnPacmanExploding += HandlePacmanExploding;
         _visual.OnPacmanExploded += HandlePacmanExploded;
+        _typingMovement.OnCorrectKeyTyped += HandleCorrectKeyTyped;
+        _typingMovement.OnIncorrectKeyTyped += HandleIncorrectKeyTyped;
     }
+
+    private void OnDestroy()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnStateChanging -= HandleGameStateChanging;
+        }
+        if (_visual != null)
+        {
+            _visual.OnPacmanExploding -= HandlePacmanExploding;
+            _visual.OnPacmanExploded -= HandlePacmanExploded;
+        }
+        if (_typingMovement != null)
+        {
+            _typingMovement.OnCorrectKeyTyped -= HandleCorrectKeyTyped;
+            _typingMovement.OnIncorrectKeyTyped -= HandleIncorrectKeyTyped;
+        }
+    }
+
+    private void HandleCorrectKeyTyped(KeyTile keyTile) => StatsManager.Instance.TypingRecorder.LogCorrectKey(keyTile);
+    private void HandleIncorrectKeyTyped(KeyTile keyTile) => StatsManager.Instance.TypingRecorder.LogIncorrectKey(keyTile);
 
     public event Action<PlayerState> OnStateChanging;
     public event Action<PlayerState> OnStateChanged;
@@ -113,14 +136,6 @@ public class Player : Singleton<Player>
         TryChangeState(PlayerState.Normal);
     }
 
-    private void OnDestroy()
-    {
-        if (GameManager.Instance != null)
-            GameManager.Instance.OnStateChanging -= HandleGameStateChanging;
-        if (_visual != null)
-            _visual.OnPacmanExploding -= HandlePacmanExploding;
-    }
-
     private void HandleGameStateChanging(GameState state)
     {
         switch (state)
@@ -188,6 +203,6 @@ public static class PlayerStateExtensions
 
     public static bool IsRevertable(this PlayerState state)
     {
-        return state.IsEffect();  
+        return state.IsEffect();
     }
 }

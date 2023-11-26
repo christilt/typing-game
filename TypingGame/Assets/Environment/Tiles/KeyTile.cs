@@ -34,4 +34,16 @@ public class KeyTile
 
         return allowedKeys[Random.Range(0, allowedKeys.Length)];
     }
+
+    public override bool Equals(object obj)
+    {
+        return obj is KeyTile tile &&
+               Key == tile.Key &&
+               Position.Equals(tile.Position);
+    }
+
+    public override int GetHashCode()
+    {
+        return System.HashCode.Combine(Key, Position);
+    }
 }

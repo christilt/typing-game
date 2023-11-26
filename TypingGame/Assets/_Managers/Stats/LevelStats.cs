@@ -24,7 +24,7 @@ public class LevelStats : IStat
     public float Rating { get;}
     public StatCategory Category { get; }
 
-    public static LevelStats Calculate(AccuracyRecorder accuracyRecorder, SpeedRecorder speedRecorder, LevelSettings settings)
+    public static LevelStats Calculate(TypingRecorder accuracyRecorder, SpeedRecorder speedRecorder, LevelSettings settings)
     {
         var accuracy = accuracyRecorder.CalculateAccuracy();
         var speed = speedRecorder.CalculateSpeed(settings.BenchmarkDurationSeconds);

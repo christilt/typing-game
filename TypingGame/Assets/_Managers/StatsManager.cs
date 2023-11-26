@@ -4,9 +4,17 @@ using UnityEngine;
 public class StatsManager : Singleton<StatsManager>
 {
     [SerializeField] private SpeedRecorder _speedRecorder;
+    [SerializeField] private int _streakRepeatsTolerated;
+    [SerializeField] private int _streakRepeatsChecked;
     private LevelStats _endOfLevelStats = default;
 
-    public AccuracyRecorder AccuracyRecorder { get; } = new();
+    protected override void Awake()
+    {
+        base.Awake();
+        TypingRecorder =  new(_streakRepeatsTolerated, _streakRepeatsChecked);
+    }
+
+    public TypingRecorder TypingRecorder { get; private set; }
 
     public LevelStats CalculateEndOfLevelStats()
     {
@@ -20,7 +28,7 @@ public class StatsManager : Singleton<StatsManager>
             return _endOfLevelStats;
         }
 
-        _endOfLevelStats = LevelStats.Calculate(AccuracyRecorder, _speedRecorder, SettingsManager.Instance.LevelSettings);
+        _endOfLevelStats = LevelStats.Calculate(TypingRecorder, _speedRecorder, SettingsManager.Instance.LevelSettings);
         return _endOfLevelStats;
     }
 }

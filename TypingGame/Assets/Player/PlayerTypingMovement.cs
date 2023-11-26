@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,9 @@ public class PlayerTypingMovement : MonoBehaviour
     [SerializeField] private GameObject _centre;
 
     private InputField _inputField;
+
+    public event Action<KeyTile> OnCorrectKeyTyped;
+    public event Action<KeyTile> OnIncorrectKeyTyped;
 
     public Vector2 Direction { get; private set; }
 
@@ -20,13 +24,14 @@ public class PlayerTypingMovement : MonoBehaviour
             if (value == "")
                 return;
 
-            if (TryMoveToKey(value[0]))
+            var key = value[0];
+            if (TryMoveToKey(key, out var keyTile))
             {
-                StatsManager.Instance.AccuracyRecorder.LogCorrectKey();
+                OnCorrectKeyTyped?.Invoke(keyTile);
             }
             else
             {
-                StatsManager.Instance.AccuracyRecorder.LogIncorrectKey();
+                OnIncorrectKeyTyped?.Invoke(keyTile);
             }
 
             _inputField.text = "";
@@ -43,20 +48,22 @@ public class PlayerTypingMovement : MonoBehaviour
         _inputField?.onEndEdit.RemoveAllListeners();
     }
 
-    private bool TryMoveToKey(char key)
+    private bool TryMoveToKey(char key, out KeyTile keyTile)
     {
-        foreach (var keyTile in LevelTiles.Instance.GetNeighboursOf(transform.position))
+        foreach (var candidateKeyTile in LevelTiles.Instance.GetNeighboursOf(transform.position))
         {
-            if (keyTile.Key == key)
+            if (candidateKeyTile.Key == key)
             {
-                Direction = (Vector2)(keyTile.Position - transform.position).normalized;
+                keyTile = candidateKeyTile;
+                Direction = (Vector2)(candidateKeyTile.Position - transform.position).normalized;
                 // TODO
                 //_visual.transform.eulerAngles = GetEulerAnglesTowards(keyTile.Position);
-                _centre.transform.eulerAngles = GetEulerAnglesTowards(keyTile.Position);
-                transform.position = keyTile.Position;
+                _centre.transform.eulerAngles = GetEulerAnglesTowards(candidateKeyTile.Position);
+                transform.position = candidateKeyTile.Position;
                 return true;
             }
         }
+        keyTile = null;
         return false;
     }
 

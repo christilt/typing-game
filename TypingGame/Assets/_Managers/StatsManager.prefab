@@ -90,3 +90,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speedRecorder: {fileID: 6304515390153414985}
+  _streakRepeatsTolerated: 3
+  _streakRepeatsChecked: 10
