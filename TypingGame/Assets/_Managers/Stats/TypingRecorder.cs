@@ -18,6 +18,7 @@ public class TypingRecorder
     }
 
     public event Action<int> OnStreakIncreased;
+    public event Action OnStreakReset;
 
     public int KeysCorrect { get; private set; }
     public int KeysTyped { get; private set; }
@@ -74,5 +75,7 @@ public class TypingRecorder
         _currentStreak.Clear();
         _currentStreakCheckedPositions.Clear();
         _currentStreakRepeats = 0;
+
+        OnStreakReset?.Invoke();
     }
 }

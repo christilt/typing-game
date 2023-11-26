@@ -19,6 +19,8 @@ public class PlayerTypingMovement : MonoBehaviour
     {
         _inputField = GetComponent<InputField>();
         _inputField.Select();
+        // TODO Bug after a while returning false while still moving to the right key - maybe enabled x2?  Maybe fixed?
+        _inputField.onValueChanged.RemoveAllListeners();
         _inputField.onValueChanged.AddListener(value =>
         {
             if (value == "")
@@ -36,6 +38,7 @@ public class PlayerTypingMovement : MonoBehaviour
 
             _inputField.text = "";
         });
+        _inputField.onEndEdit.RemoveAllListeners();
         _inputField.onEndEdit.AddListener(value =>
         {
             this.DoNextFrame(() => _inputField.Select());

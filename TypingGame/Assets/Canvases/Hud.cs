@@ -10,10 +10,7 @@ public class Hud : MonoBehaviour
     [SerializeField] private UIStatusEffectPanel _statusEffectPanel;
     [SerializeField] private UITextOverlay _textOverlay;
     [SerializeField] private Canvas _canvas;
-    [SerializeField] private Color _greatColor;
-    [SerializeField] private Color _goodColor;
-    [SerializeField] private Color _averageColor;
-    [SerializeField] private Color _badColor;
+    [SerializeField] private UIStreakPopUp _streakPopUp;
 
     private void Awake()
     {
@@ -30,6 +27,9 @@ public class Hud : MonoBehaviour
         CollectableEffectManager.Instance.OnCollectableEffectUpdate += _statusEffectPanel.UpdateEffect;
         CollectableEffectManager.Instance.OnCollectableEffectRemoved += _statusEffectPanel.RemoveEffect;
 
+        StatsManager.Instance.TypingRecorder.OnStreakIncreased += _streakPopUp.MaybeNotifyOfIncrease;
+        StatsManager.Instance.TypingRecorder.OnStreakReset += _streakPopUp.HandleReset;
+
     }
 
     private void OnDestroy()
@@ -45,6 +45,12 @@ public class Hud : MonoBehaviour
             CollectableEffectManager.Instance.OnCollectableEffectUpdate -= _statusEffectPanel.UpdateEffect;
             CollectableEffectManager.Instance.OnCollectableEffectRemoved -= _statusEffectPanel.RemoveEffect;
         }
+
+        if (StatsManager.Instance?.TypingRecorder != null)
+        {
+            StatsManager.Instance.TypingRecorder.OnStreakIncreased -= _streakPopUp.MaybeNotifyOfIncrease;
+            StatsManager.Instance.TypingRecorder.OnStreakReset -= _streakPopUp.HandleReset;
+        }
     }
 
     private void UpdateForGameState(GameState state)
@@ -54,6 +60,7 @@ public class Hud : MonoBehaviour
         if (state.EndsPlayerControl())
         {
             _statusEffectPanel.gameObject.SetActive(false);
+            _streakPopUp.gameObject.SetActive(false);
         }
     }
 
@@ -92,9 +99,9 @@ public class Hud : MonoBehaviour
         const int Alignment = 10;
         var settings = SettingsManager.Instance.LevelSettings;
         var stats = StatsManager.Instance.CalculateEndOfLevelStats();
-        var rankText = WithColor(stats, $"{stats.Rank,Alignment}");
-        var timeText = WithColor(stats.Speed, $"{stats.Speed.TimeTaken, Alignment:mm\\:ss}");
-        var accuracyText = WithColor(stats.Accuracy, $"{stats.Accuracy.Proportion, Alignment:P1}");
+        var rankText = WithColour(stats, $"{stats.Rank,Alignment}");
+        var timeText = WithColour(stats.Speed, $"{stats.Speed.TimeTaken, Alignment:mm\\:ss}");
+        var accuracyText = WithColour(stats.Accuracy, $"{stats.Accuracy.Proportion, Alignment:P1}");
 
         var builder = new StringBuilder();
         builder.Append(settings.LevelName);
@@ -106,25 +113,24 @@ public class Hud : MonoBehaviour
         return builder.ToString();
     }
 
-    private string WithColor(IStat stat, string formattedText)
+    private string WithColour(IStat stat, string formattedText)
     {
-        var color = GetCategoryColor(stat.Category);
-        var colorString = ColorUtility.ToHtmlStringRGB(color);
-        return $"<color=#{colorString}>{formattedText}</color>";
+        var colour = GetCategoryColour(stat.Category);
+        return TextHelper.WithColour(formattedText, colour);
     }
 
-    private Color GetCategoryColor(StatCategory category)
+    private Color GetCategoryColour(StatCategory category)
     {
         switch (category)
         {
             case StatCategory.Great:
-                return _greatColor;
+                return SettingsManager.Instance.Palette.GreatColour;
             case StatCategory.Good:
-                return _goodColor;
+                return SettingsManager.Instance.Palette.GoodColour;
             case StatCategory.Average:
-                return _averageColor;
+                return SettingsManager.Instance.Palette.AverageColour;
             default:
-                return _badColor;
+                return SettingsManager.Instance.Palette.BadColour;
         }
     }
 }

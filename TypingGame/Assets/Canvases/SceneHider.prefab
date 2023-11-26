@@ -65,7 +65,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb7977111eea324aa2ffe6e155fa706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startLevelFadeDuration: 1
+  _startLevelFadeDuration: 0.5
   _endLevelFadeDuration: 0.5
 --- !u!210 &3262186737928501034
 SortingGroup:

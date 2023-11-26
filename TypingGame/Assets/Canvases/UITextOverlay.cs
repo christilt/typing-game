@@ -56,7 +56,7 @@ public class UITextOverlay : MonoBehaviour
             _hider.TransitionToOpaque(duration.Value, unscaled: unscaledTime);
 
         _text.transform.localPosition = _textStartPositionLocal;
-        _text.text = "<mspace=56>" + text;
+        _text.text = TextHelper.WithPixelatedMonospaceText(text);
 
         _tween?.Kill();
 

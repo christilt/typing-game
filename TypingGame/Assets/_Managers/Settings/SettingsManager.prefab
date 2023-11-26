@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _levelSettings: {fileID: 0}
+  _palette: {fileID: 11400000, guid: c696532cce4650742b9e18fdd75c51ed, type: 2}
