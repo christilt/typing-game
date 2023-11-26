@@ -6,12 +6,19 @@ public class UILoadingScreen : MonoBehaviour
 {
     [SerializeField] private Image _image;
 
+    private Tween _tween;
+
     private void Start()
     {
         SceneHider.Instance.StartOfSceneFadeIn(() =>
         {
             LoadingManager.Instance.LoadingSceneLoad();
         });
+    }
+
+    private void OnDestroy()
+    {
+        _tween?.Kill();
     }
 
     private void Update()
@@ -22,7 +29,10 @@ public class UILoadingScreen : MonoBehaviour
 
     private void UpdateProgress(float progress)
     {
-        if (progress > _image.fillAmount)
-            _image.DOFillAmount(progress, 0.25f);
+        if (progress <= _image.fillAmount)
+            return;
+
+        _tween?.Kill();
+        _tween = _image.DOFillAmount(progress, 0.1f);
     }
 }

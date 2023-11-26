@@ -22,6 +22,8 @@ public class UITextOverlay : MonoBehaviour
     private Vector3 _textShownPositionLocal;
     private Vector3 _textHiddenPositionLocal;
 
+    private Tween _tween;
+
     private void Start()
     {
         _textShownPositionLocal = _text.transform.localPosition;
@@ -56,7 +58,9 @@ public class UITextOverlay : MonoBehaviour
         _text.transform.localPosition = _textStartPositionLocal;
         _text.text = "<mspace=56>" + text;
 
-        _text.transform.DOLocalMove(_textShownPositionLocal, duration.Value)
+        _tween?.Kill();
+
+        _tween = _text.transform.DOLocalMove(_textShownPositionLocal, duration.Value)
             .SetEase(textEase.Value)
             .SetUpdate(unscaledTime);
     }
@@ -67,7 +71,9 @@ public class UITextOverlay : MonoBehaviour
 
         if (IsTextShown())
         {
-            _text.transform.DOLocalMove(_textHiddenPositionLocal, _hideDuration)
+            _tween?.Kill();
+
+            _tween = _text.transform.DOLocalMove(_textHiddenPositionLocal, _hideDuration)
                 .SetEase(_textHideEase)
                 .SetUpdate(unscaledTime);
         }

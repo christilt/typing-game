@@ -135,6 +135,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneHider
       objectReference: {fileID: 0}
+    - target: {fileID: 6778324222958060149, guid: 7e1f6f0b3042b9b4f8cfcb52192acdbb, type: 3}
+      propertyPath: _endLevelFadeDuration
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6778324222958060149, guid: 7e1f6f0b3042b9b4f8cfcb52192acdbb, type: 3}
+      propertyPath: _startLevelFadeDuration
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8313044861542405539, guid: 7e1f6f0b3042b9b4f8cfcb52192acdbb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

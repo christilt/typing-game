@@ -560,3 +560,5 @@ MonoBehaviour:
   _hiderCanvas: {fileID: 152894855208625596}
   _startAlpha: 221
   _opaqueAlpha: 221
+  _hideEase: 6
+  _unhideEase: 5

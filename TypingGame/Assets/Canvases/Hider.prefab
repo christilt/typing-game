@@ -50,6 +50,8 @@ MonoBehaviour:
   _hiderCanvas: {fileID: 1067916481277051117}
   _startAlpha: 221
   _opaqueAlpha: 221
+  _hideEase: 6
+  _unhideEase: 5
 --- !u!210 &3262186737928501034
 SortingGroup:
   m_ObjectHideFlags: 0
