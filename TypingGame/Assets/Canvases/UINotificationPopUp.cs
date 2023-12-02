@@ -18,7 +18,7 @@ public class UINotificationPopUp : MonoBehaviour
     {
         CancelInvoke(nameof(HideText));
 
-        _text.text = TextHelper.WithPixelatedMonospaceText(text, 28);
+        _text.text = text;
         ResetAnimator();
         _animator.Play("NotificationAppear", -1, 0);
 
