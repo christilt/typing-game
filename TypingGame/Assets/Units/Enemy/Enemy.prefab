@@ -318,6 +318,10 @@ MonoBehaviour:
   _exploder: {fileID: 7104000279157000432}
   _spawningSeconds: 2
   _centre: {fileID: 1921477054113794594}
+  _beginDestroyed: 0
+  _excludeLayersWhenNotCollidable:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!114 &6279949851714437955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -347,6 +351,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _respawnSeconds: 10
+  _respawnAdditionalRandomSeconds: 0
   _unit: {fileID: 2072145250326823006}
   _mode: 1
 --- !u!4 &1797157369037569156 stripped

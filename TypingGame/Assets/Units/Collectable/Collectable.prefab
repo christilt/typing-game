@@ -246,6 +246,9 @@ MonoBehaviour:
   _spawningSeconds: 2
   _centre: {fileID: 1924738095847155019}
   _beginDestroyed: 0
+  _excludeLayersWhenNotCollidable:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!114 &3107124790110949690
 MonoBehaviour:
   m_ObjectHideFlags: 0

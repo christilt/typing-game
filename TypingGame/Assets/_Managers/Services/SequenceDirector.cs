@@ -15,12 +15,12 @@ public class SequenceDirector : MonoBehaviour
     public void PlayerDying(Action onComplete)
     {
         PromoteCamera();
-        HideLevel(3.5f, onComplete);
+        HideLevel(2.5f, onComplete);
     }
 
     public void PlayerExploding()
     {
-        _sequenceCamera.QuickShake(unscaledTime: true);
+        _sequenceCamera.VeryQuickShake(unscaledTime: true);
     }
 
     private void PromoteCamera() => _sequenceCamera.Camera.Priority = 110;

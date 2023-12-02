@@ -9,6 +9,7 @@ public class Unit : MonoBehaviour
     [SerializeField] protected float _spawningSeconds;
     [SerializeField] protected Transform _centre;
     [SerializeField] protected bool _beginDestroyed;
+    [SerializeField] protected LayerMask _excludeLayersWhenNotCollidable;
 
     protected UnitMovement _movement;
     protected UnitBrain _brain;
@@ -126,6 +127,14 @@ public class Unit : MonoBehaviour
     {
         _movement.enabled = enabled;
         _collider.enabled = enabled;
+    }
+
+    protected void SetPlayerCollidable(bool enabled)
+    {
+        if (enabled)
+            _collider.excludeLayers = 0;
+        else
+            _collider.excludeLayers = _excludeLayersWhenNotCollidable;
     }
 }
 public enum UnitState

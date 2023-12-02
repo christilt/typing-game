@@ -69,32 +69,30 @@ public class Hud : MonoBehaviour
         switch (state)
         {
             case GameState.LevelIntroducing:
-                _textOverlay.ShowIntroText(GetIntroText());
+                var (introText1, introText2) = GetIntroText();
+                _textOverlay.ShowIntroText(introText1, introText2);
                 break;
             case GameState.LevelPlaying:
                 _textOverlay.HideTextIfShown();
                 break;
             case GameState.LevelWon:
-                _textOverlay.ShowPositiveText(GetWinText(), useOverlay: false);
+                var (winText1, winText2) = GetWinText();
+                _textOverlay.ShowPositiveText(winText1, winText2, useOverlay: false);
                 break;
             case GameState.LevelLost:
-                _textOverlay.ShowNegativeText("Try again", useOverlay: false);
+                _textOverlay.ShowNegativeText("", "Try again", useOverlay: false);
                 break;
             default:
                 break;
         }
     }
 
-    private string GetIntroText()
+    private (string, string) GetIntroText()
     {
-        var builder = new StringBuilder();
-        builder.AppendLine(SettingsManager.Instance.LevelSettings.LevelName);
-        builder.AppendLine();
-        builder.AppendLine("Get ready");
-        return builder.ToString();
+        return (SettingsManager.Instance.LevelSettings.LevelName, "Get ready");
     }
 
-    private string GetWinText()
+    private (string, string) GetWinText()
     {
         const int Alignment = 10;
         var settings = SettingsManager.Instance.LevelSettings;
@@ -103,14 +101,15 @@ public class Hud : MonoBehaviour
         var timeText = WithColour(stats.Speed, $"{stats.Speed.TimeTaken, Alignment:mm\\:ss}");
         var accuracyText = WithColour(stats.Accuracy, $"{stats.Accuracy.Proportion, Alignment:P1}");
 
+        var text1 = $"{settings.LevelName}  complete!";
+
         var builder = new StringBuilder();
-        builder.Append(settings.LevelName);
-        builder.AppendLine("  complete!");
-        builder.AppendLine();
         builder.AppendLine($"{"Rank:", -Alignment}{rankText}");
         builder.AppendLine($"{"Time:", -Alignment}{timeText}");
         builder.AppendLine($"{"Accuracy:", -Alignment}{accuracyText}");
-        return builder.ToString();
+        var text2 = builder.ToString();
+
+        return (text1, text2);
     }
 
     private string WithColour(IStat stat, string formattedText)

@@ -1,83 +1,74 @@
 ﻿using DG.Tweening;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-// TODO use own overlay and not scene hider - scene hider should hide everything
 public class UITextOverlay : MonoBehaviour
 {
     [SerializeField] private Hider _hider;
-    [SerializeField] private TextMeshProUGUI _text;
-    [SerializeField] private Canvas _screenSpaceCanvas;
-    [SerializeField] private Ease _textShowIntroEase;
+    [SerializeField] private UIText _text1;
+    [SerializeField] private UIText _text2;
     [SerializeField] private float _showIntroDuration;
-    [SerializeField] private Ease _textShowPositiveEase;
     [SerializeField] private float _showPositiveDuration;
-    [SerializeField] private Ease _textShowNegativeEase;
     [SerializeField] private float _showNegativeDuration;
     [SerializeField] private float _hideDuration;
-    [SerializeField] private Ease _textHideEase;
+    [SerializeField] private float _text1Text2Delay;
 
-    private Vector3 _textStartPositionLocal;
-    private Vector3 _textShownPositionLocal;
-    private Vector3 _textHiddenPositionLocal;
+    private Sequence _delayThenText2Sequence;
 
-    private Tween _tween;
-
-    private void Start()
+    public void ShowIntroText(string text1, string text2, bool useOverlay = true, bool unscaledTime = true)
     {
-        _textShownPositionLocal = _text.transform.localPosition;
-        _textStartPositionLocal = _text.transform.localPosition + new Vector3(0, _screenSpaceCanvas.pixelRect.yMax, 0);
-        _textHiddenPositionLocal = _text.transform.localPosition - new Vector3(0, _screenSpaceCanvas.pixelRect.yMax, 0);
-        _text.transform.localPosition = _textStartPositionLocal;
+        Func<UIText, string, float, Tween> showTextAction = (uitext, text, duration) => uitext.ShowIntroText(text, duration, unscaledTime);
+        ShowText(text1, text2, _showIntroDuration, showTextAction, useOverlay, unscaledTime);
     }
 
-    public void ShowIntroText(string text, bool useOverlay = true, bool unscaledTime = true)
+    public void ShowPositiveText(string text1, string text2, bool useOverlay = true, bool unscaledTime = true)
     {
-        ShowText(text, _textShowIntroEase, _showIntroDuration, useOverlay, unscaledTime);
+        Func<UIText, string, float, Tween> showTextAction = (uitext, text, duration) => uitext.ShowPositiveText(text, duration, unscaledTime);
+        ShowText(text1, text2, _showPositiveDuration, showTextAction, useOverlay, unscaledTime);
     }
 
-    public void ShowPositiveText(string text, bool useOverlay = true, bool unscaledTime = true)
+    public void ShowNegativeText(string text1, string text2, bool useOverlay = true, bool unscaledTime = true)
     {
-        ShowText(text, _textShowPositiveEase, _showPositiveDuration, useOverlay, unscaledTime);
+        Func<UIText, string, float, Tween> showTextAction = (uitext, text, duration) => uitext.ShowNegativeText(text, duration, unscaledTime);
+        ShowText(text1, text2, _showNegativeDuration, showTextAction, useOverlay, unscaledTime);
     }
 
-    public void ShowNegativeText(string text, bool useOverlay = true, bool unscaledTime = true)
+    private void ShowText(string text1, string text2, float duration, Func<UIText, string, float, Tween> showTextAction, bool useOverlay = true, bool unscaledTime = true)
     {
-        ShowText(text, _textShowNegativeEase, _showNegativeDuration, useOverlay, unscaledTime);
-    }
-
-    private void ShowText(string text, Ease? textEase = null, float? duration = null, bool useOverlay = true, bool unscaledTime = true)
-    {
-        textEase ??= _textShowIntroEase;
-        duration ??= _showIntroDuration;
-
         if (useOverlay)
-            _hider.TransitionToOpaque(duration.Value, unscaled: unscaledTime);
+            _hider.TransitionToOpaque(duration, unscaled: unscaledTime);
 
-        _text.transform.localPosition = _textStartPositionLocal;
-        _text.text = TextHelper.WithPixelatedMonospaceText(text);
 
-        _tween?.Kill();
+        Tween tween1 = default;
+        if (!string.IsNullOrWhiteSpace(text1))
+        {
+            tween1 = showTextAction(_text1, text1, duration);
+        }
 
-        _tween = _text.transform.DOLocalMove(_textShownPositionLocal, duration.Value)
-            .SetEase(textEase.Value)
-            .SetUpdate(unscaledTime);
+        if (!string.IsNullOrWhiteSpace(text2))
+        {
+            var tween2 = showTextAction(_text2, text2, duration);
+
+            if (tween1 != null)
+            {
+                _delayThenText2Sequence?.Kill();
+                _delayThenText2Sequence = DOTween.Sequence()
+                    .AppendInterval(_text1Text2Delay)
+                    .Append(tween2)
+                    .SetUpdate(unscaledTime);
+            }
+        }
     }
 
     public void HideTextIfShown(bool unscaledTime = true)
     {
-        _hider.Unhide(_hideDuration);
+        _hider.Unhide(_hideDuration, unscaled: unscaledTime);
 
-        if (IsTextShown())
-        {
-            _tween?.Kill();
+        _delayThenText2Sequence?.Kill();
 
-            _tween = _text.transform.DOLocalMove(_textHiddenPositionLocal, _hideDuration)
-                .SetEase(_textHideEase)
-                .SetUpdate(unscaledTime);
-        }
+        _text1.HideTextIfShown(_hideDuration, unscaledTime);
+        _text2.HideTextIfShown(_hideDuration, unscaledTime);
     }
-
-    private bool IsTextShown() => _text.transform.localPosition != _textStartPositionLocal && _text.transform.localPosition != _textHiddenPositionLocal;
 }
