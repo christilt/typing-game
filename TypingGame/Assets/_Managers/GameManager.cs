@@ -128,18 +128,10 @@ public class GameManager : Singleton<GameManager>
             case GameState.LifeLosing:
                 break;
             case GameState.LevelWon:
-                if (Input.anyKeyDown)
-                {
-                    LoadingManager.Instance.ReloadLevel();
-                }
                 break;
             case GameState.LevelLosing:
                 break;
             case GameState.LevelLost:
-                if (Input.anyKeyDown)
-                {
-                    LoadingManager.Instance.ReloadLevel();
-                }
                 break;
             default:
                 break;

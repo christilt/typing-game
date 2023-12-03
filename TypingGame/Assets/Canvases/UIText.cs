@@ -2,20 +2,23 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static System.Net.Mime.MediaTypeNames;
 
 [RequireComponent(typeof(TextMeshProUGUI))]
 public class UIText : MonoBehaviour
 {
     [SerializeField] private Canvas _screenSpaceCanvas;
-    [SerializeField] private Ease _textShowIntroEase;
-    [SerializeField] private Ease _textShowPositiveEase;
-    [SerializeField] private Ease _textShowNegativeEase;
-    [SerializeField] private Ease _textHideEase;
+    [SerializeField] private Ease _textMoveInIntroEase;
+    [SerializeField] private Ease _textMoveInPositiveEase;
+    [SerializeField] private Ease _textMoveInNegativeEase;
+    [SerializeField] private Ease _textMoveOutEase;
+    [SerializeField] private Ease _textFadeInEase;
+    [SerializeField] private Ease _textFadeOutEase;
 
     private TextMeshProUGUI _text;
     private Vector3 _textStartPositionLocal;
-    private Vector3 _textShownPositionLocal;
-    private Vector3 _textHiddenPositionLocal;
+    private Vector3 _textMovedInPositionLocal;
+    private Vector3 _textMovedOutPositionLocal;
 
     private Tween _tween;
 
@@ -26,56 +29,100 @@ public class UIText : MonoBehaviour
 
     private void Start()
     {
-        _textShownPositionLocal = _text.transform.localPosition;
+        _textMovedInPositionLocal = _text.transform.localPosition;
         _textStartPositionLocal = _text.transform.localPosition + new Vector3(0, _screenSpaceCanvas.pixelRect.yMax, 0);
-        _textHiddenPositionLocal = _text.transform.localPosition - new Vector3(0, _screenSpaceCanvas.pixelRect.yMax, 0);
+        _textMovedOutPositionLocal = _text.transform.localPosition - new Vector3(0, _screenSpaceCanvas.pixelRect.yMax, 0);
         _text.transform.localPosition = _textStartPositionLocal;
     }
 
-    public Tween ShowIntroText(string text, float duration, bool unscaledTime = true)
+    public Tween MoveInIntroText(string text, float duration, bool unscaledTime = true)
     {
-        return ShowText(text, duration, _textShowIntroEase, unscaledTime);
+        return MoveInText(text, duration, _textMoveInIntroEase, unscaledTime);
     }
 
-    public Tween ShowPositiveText(string text, float duration, bool unscaledTime = true)
+    public Tween MoveInPositiveText(string text, float duration, bool unscaledTime = true)
     {
-        return ShowText(text, duration, _textShowPositiveEase, unscaledTime);
+        return MoveInText(text, duration, _textMoveInPositiveEase, unscaledTime);
     }
 
-    public Tween ShowNegativeText(string text, float duration, bool unscaledTime = true)
+    public Tween MoveInNegativeText(string text, float duration, bool unscaledTime = true)
     {
-        return ShowText(text, duration, _textShowNegativeEase, unscaledTime);
+        return MoveInText(text, duration, _textMoveInNegativeEase, unscaledTime);
     }
 
-    private Tween ShowText(string text, float duration, Ease? textEase = null, bool unscaledTime = true)
+    private Tween MoveInText(string text, float duration, Ease? textEase = null, bool unscaledTime = true)
     {
-        textEase ??= _textShowIntroEase;
+        textEase ??= _textMoveInIntroEase;
 
         _text.transform.localPosition = _textStartPositionLocal;
-        _text.text = TextHelper.WithPixelatedMonospaceText(text);
+        SetText(text);
 
         _tween?.Kill();
 
-        _tween = _text.transform.DOLocalMove(_textShownPositionLocal, duration)
+        _tween = _text.transform.DOLocalMove(_textMovedInPositionLocal, duration)
             .SetEase(textEase.Value)
             .SetUpdate(unscaledTime);
 
         return _tween;
     }
 
-    public Tween HideTextIfShown(float duration, bool unscaledTime = true)
+    public Tween MoveOutTextIfShown(float duration, bool unscaledTime = true)
     {
         if (IsTextShown())
         {
             _tween?.Kill();
 
-            _tween = _text.transform.DOLocalMove(_textHiddenPositionLocal, duration)
-                .SetEase(_textHideEase)
+            _tween = _text.transform.DOLocalMove(_textMovedOutPositionLocal, duration)
+                .SetEase(_textMoveOutEase)
                 .SetUpdate(unscaledTime);
         }
 
         return _tween;
     }
 
-    private bool IsTextShown() => _text.transform.localPosition != _textStartPositionLocal && _text.transform.localPosition != _textHiddenPositionLocal;
+    public Tween FadeOutTextIfShown(float duration, bool unscaledTime = true)
+    {
+        if (IsTextShown())
+        {
+            return FadeOutText(duration, unscaledTime);
+        }
+
+        return _tween;
+    }
+
+    public Tween FadeInText(string text, float duration, bool unscaledTime = true)
+    {
+        _tween?.Kill();
+
+        _tween = DOTween.Sequence()
+            .PrependCallback(() =>
+            {
+                _text.transform.localPosition = _textMovedInPositionLocal;
+                SetText(text);
+            })
+            .Append(_text.DOFade(1, duration))
+            .SetEase(_textFadeInEase)
+            .SetUpdate(unscaledTime);
+
+        return _tween;
+    }
+
+    public Tween FadeOutText(float duration, bool unscaledTime = true)
+    {
+        _tween?.Kill();
+
+        _tween = _text
+            .DOFade(0, duration)
+            .SetEase(_textFadeOutEase)
+            .SetUpdate(unscaledTime);
+
+        return _tween;
+    }
+
+    private void SetText(string text)
+    {
+        _text.text = TextHelper.WithPixelatedMonospaceText(text);
+    }
+
+    private bool IsTextShown() => _text.transform.localPosition != _textStartPositionLocal && _text.transform.localPosition != _textMovedOutPositionLocal && _text.material.color.a > 0;
 }

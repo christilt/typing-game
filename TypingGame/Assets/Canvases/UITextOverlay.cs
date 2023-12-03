@@ -9,33 +9,57 @@ public class UITextOverlay : MonoBehaviour
     [SerializeField] private Hider _hider;
     [SerializeField] private UIText _text1;
     [SerializeField] private UIText _text2;
-    [SerializeField] private float _showIntroDuration;
-    [SerializeField] private float _showPositiveDuration;
-    [SerializeField] private float _showNegativeDuration;
-    [SerializeField] private float _hideDuration;
+    [SerializeField] private float _moveInIntroDuration;
+    [SerializeField] private float _moveInPositiveDuration;
+    [SerializeField] private float _moveInNegativeDuration;
+    [SerializeField] private float _moveOutDuration;
     [SerializeField] private float _text1Text2Delay;
+    [SerializeField] private float _textFadeOutDuration;
+    [SerializeField] private float _textFadeInDuration;
 
-    private Sequence _delayThenText2Sequence;
+    private Tween _textSequence;
 
-    public void ShowIntroText(string text1, string text2, bool useOverlay = true, bool unscaledTime = true)
+    public void MoveInIntroText(string text1, string text2, bool useOverlay = true, bool unscaledTime = true)
     {
-        Func<UIText, string, float, Tween> showTextAction = (uitext, text, duration) => uitext.ShowIntroText(text, duration, unscaledTime);
-        ShowText(text1, text2, _showIntroDuration, showTextAction, useOverlay, unscaledTime);
+        Func<UIText, string, float, Tween> showTextAction = (uitext, text, duration) => uitext.MoveInIntroText(text, duration, unscaledTime);
+        MoveInText(text1, text2, _moveInIntroDuration, showTextAction, useOverlay, unscaledTime);
     }
 
-    public void ShowPositiveText(string text1, string text2, bool useOverlay = true, bool unscaledTime = true)
+    public void MoveInPositiveText(string text1, string text2, bool useOverlay = true, bool unscaledTime = true)
     {
-        Func<UIText, string, float, Tween> showTextAction = (uitext, text, duration) => uitext.ShowPositiveText(text, duration, unscaledTime);
-        ShowText(text1, text2, _showPositiveDuration, showTextAction, useOverlay, unscaledTime);
+        Func<UIText, string, float, Tween> showTextAction = (uitext, text, duration) => uitext.MoveInPositiveText(text, duration, unscaledTime);
+        MoveInText(text1, text2, _moveInPositiveDuration, showTextAction, useOverlay, unscaledTime);
     }
 
-    public void ShowNegativeText(string text1, string text2, bool useOverlay = true, bool unscaledTime = true)
+    public void MoveInNegativeText(string text1, string text2, bool useOverlay = true, bool unscaledTime = true)
     {
-        Func<UIText, string, float, Tween> showTextAction = (uitext, text, duration) => uitext.ShowNegativeText(text, duration, unscaledTime);
-        ShowText(text1, text2, _showNegativeDuration, showTextAction, useOverlay, unscaledTime);
+        Func<UIText, string, float, Tween> showTextAction = (uitext, text, duration) => uitext.MoveInNegativeText(text, duration, unscaledTime);
+        MoveInText(text1, text2, _moveInNegativeDuration, showTextAction, useOverlay, unscaledTime);
     }
 
-    private void ShowText(string text1, string text2, float duration, Func<UIText, string, float, Tween> showTextAction, bool useOverlay = true, bool unscaledTime = true)
+    public void MoveOutTextIfShown(bool unscaledTime = true)
+    {
+        _hider.Unhide(_moveOutDuration, unscaled: unscaledTime);
+
+        _textSequence?.Kill();
+
+        _text1.MoveOutTextIfShown(_moveOutDuration, unscaledTime);
+        _text2.MoveOutTextIfShown(_moveOutDuration, unscaledTime);
+    }
+
+    public void FadeSwapText(string text1, string text2, bool unscaledTime = true)
+    {
+        _textSequence?.Kill();
+
+        _textSequence = DOTween.Sequence()
+            .Append(_text1.FadeOutText(_textFadeOutDuration, unscaledTime))
+            .Join(_text2.FadeOutText(_textFadeOutDuration, unscaledTime))
+            .Append(_text1.FadeInText(text1, _textFadeInDuration, unscaledTime))
+            .Join(_text2.FadeInText(text2, _textFadeInDuration, unscaledTime))
+            .SetUpdate(unscaledTime);
+    }
+
+    private void MoveInText(string text1, string text2, float duration, Func<UIText, string, float, Tween> moveInTextAction, bool useOverlay = true, bool unscaledTime = true)
     {
         if (useOverlay)
             _hider.TransitionToOpaque(duration, unscaled: unscaledTime);
@@ -44,31 +68,21 @@ public class UITextOverlay : MonoBehaviour
         Tween tween1 = default;
         if (!string.IsNullOrWhiteSpace(text1))
         {
-            tween1 = showTextAction(_text1, text1, duration);
+            tween1 = moveInTextAction(_text1, text1, duration);
         }
 
         if (!string.IsNullOrWhiteSpace(text2))
         {
-            var tween2 = showTextAction(_text2, text2, duration);
+            var tween2 = moveInTextAction(_text2, text2, duration);
 
             if (tween1 != null)
             {
-                _delayThenText2Sequence?.Kill();
-                _delayThenText2Sequence = DOTween.Sequence()
+                _textSequence?.Kill();
+                _textSequence = DOTween.Sequence()
                     .AppendInterval(_text1Text2Delay)
                     .Append(tween2)
                     .SetUpdate(unscaledTime);
             }
         }
-    }
-
-    public void HideTextIfShown(bool unscaledTime = true)
-    {
-        _hider.Unhide(_hideDuration, unscaled: unscaledTime);
-
-        _delayThenText2Sequence?.Kill();
-
-        _text1.HideTextIfShown(_hideDuration, unscaledTime);
-        _text2.HideTextIfShown(_hideDuration, unscaledTime);
     }
 }

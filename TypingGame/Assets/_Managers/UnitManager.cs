@@ -81,6 +81,7 @@ public class UnitManager : Singleton<UnitManager>
             enemy.ResetSpeed();
     }
 
+    // TODO: Sometimes causing things to position on top of each other.  Maybe don't allow > 0 collisions when checking for obstacles
     public Vector3 GetRespawnPosition(RespawnMode mode) => _respawnPositioner.GetRespawnPosition(mode);
 
     private void OnDestroy()

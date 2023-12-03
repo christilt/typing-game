@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _burstMinimumChecked: 5
-  _burstMaximumChecked: 10
+  _burstMaximumChecked: 7
   _burstProcessingInterval: 0.2
 --- !u!1 &732694257627241145
 GameObject:

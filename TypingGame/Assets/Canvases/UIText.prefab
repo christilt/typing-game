@@ -148,7 +148,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _screenSpaceCanvas: {fileID: 0}
-  _textShowIntroEase: 18
-  _textShowPositiveEase: 18
-  _textShowNegativeEase: 30
-  _textHideEase: 1
+  _textMoveInIntroEase: 18
+  _textMoveInPositiveEase: 18
+  _textMoveInNegativeEase: 30
+  _textMoveOutEase: 1
+  _textFadeInEase: 5
+  _textFadeOutEase: 6

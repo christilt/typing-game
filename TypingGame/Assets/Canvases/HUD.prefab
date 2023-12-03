@@ -359,11 +359,13 @@ MonoBehaviour:
   _hider: {fileID: 4611784807472098298}
   _text1: {fileID: 530119102613662034}
   _text2: {fileID: 2349324325199287082}
-  _showIntroDuration: 0.4
-  _showPositiveDuration: 0.4
-  _showNegativeDuration: 1.5
-  _hideDuration: 0.25
+  _moveInIntroDuration: 0.4
+  _moveInPositiveDuration: 0.4
+  _moveInNegativeDuration: 1.5
+  _moveOutDuration: 0.25
   _text1Text2Delay: 0.3
+  _textFadeOutDuration: 0.25
+  _textFadeInDuration: 0.25
 --- !u!210 &7378376439035844907
 SortingGroup:
   m_ObjectHideFlags: 0

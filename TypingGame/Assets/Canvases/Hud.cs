@@ -16,6 +16,7 @@ public class Hud : MonoBehaviour
     {
         _canvas.worldCamera = Camera.main;
         _canvas.sortingLayerID = GetComponent<SortingGroup>().sortingLayerID;
+        _statsShown = false; // TODO remove
     }
 
     private void Start()
@@ -53,6 +54,28 @@ public class Hud : MonoBehaviour
         }
     }
 
+    // TODO: Find how people normally do this - do these use states or different menus?
+    private bool _statsShown = false;
+    private void Update()
+    {
+        if (GameManager.Instance.State != GameState.LevelWon)
+            return;
+
+        if (Input.anyKeyDown)
+        {
+            if (_statsShown)
+            {
+                LoadingManager.Instance.ReloadLevel();
+            }
+            else
+            {
+                var (statsText1, statsText2) = GetStatsText();
+                _textOverlay.FadeSwapText(statsText1, statsText2);
+                _statsShown = true;
+            }
+        }
+    }
+
     private void UpdateForGameState(GameState state)
     {
         UpdateTextForGameState(state);
@@ -70,17 +93,17 @@ public class Hud : MonoBehaviour
         {
             case GameState.LevelIntroducing:
                 var (introText1, introText2) = GetIntroText();
-                _textOverlay.ShowIntroText(introText1, introText2);
+                _textOverlay.MoveInIntroText(introText1, introText2);
                 break;
             case GameState.LevelPlaying:
-                _textOverlay.HideTextIfShown();
+                _textOverlay.MoveOutTextIfShown();
                 break;
             case GameState.LevelWon:
                 var (winText1, winText2) = GetWinText();
-                _textOverlay.ShowPositiveText(winText1, winText2, useOverlay: false);
+                _textOverlay.MoveInPositiveText(winText1, winText2, useOverlay: false);
                 break;
             case GameState.LevelLost:
-                _textOverlay.ShowNegativeText("", "Try again", useOverlay: false);
+                _textOverlay.MoveInNegativeText("", "Try again", useOverlay: false);
                 break;
             default:
                 break;
@@ -94,20 +117,44 @@ public class Hud : MonoBehaviour
 
     private (string, string) GetWinText()
     {
-        const int Alignment = 10;
+        const int TextAlignment = 8;
         var settings = SettingsManager.Instance.LevelSettings;
         var stats = StatsManager.Instance.CalculateEndOfLevelStats();
-        var rankText = WithColour(stats, $"{stats.Rank,Alignment}");
-        var timeText = WithColour(stats.Speed, $"{stats.Speed.TimeTaken, Alignment:mm\\:ss}");
-        var accuracyText = WithColour(stats.Accuracy, $"{stats.Accuracy.Proportion, Alignment:P1}");
+        var rankText = WithColour(stats, $"{stats.Rank,TextAlignment}");
 
         var text1 = $"{settings.LevelName}  complete!";
 
-        // TODO: Present these on a separate screen with more details also
         var builder = new StringBuilder();
-        builder.AppendLine($"{"Rank:", -Alignment}{rankText}");
-        builder.AppendLine($"{"Time:", -Alignment}{timeText}");
-        builder.AppendLine($"{"Accuracy:", -Alignment}{accuracyText}");
+        builder.AppendLine($"{"Rank",-TextAlignment}{rankText}");
+        var text2 = builder.ToString();
+
+        return (text1, text2);
+    }
+
+    private (string, string) GetStatsText()
+    {
+        const int TextAlignment = 15;
+        var settings = SettingsManager.Instance.LevelSettings;
+        var stats = StatsManager.Instance.CalculateEndOfLevelStats();
+        var rankText = WithColour(stats, $"{stats.Rank,TextAlignment}");
+        var timeText = WithColour(stats.Speed, $"{stats.Speed.TimeTaken,TextAlignment:mm\\:ss}");
+        var accuracyText = WithColour(stats.Accuracy, $"{stats.Accuracy.Proportion,TextAlignment:P1}");
+        // TODO
+        var streakText = TextHelper.WithColour($"{42,TextAlignment}", GetCategoryColour(StatCategory.Great));
+        var topSpeedText = TextHelper.WithColour($"{"32.5 WPM",TextAlignment}", GetCategoryColour(StatCategory.Good));
+        var nearMissesText = $"{"3",TextAlignment}";
+
+        var builder = new StringBuilder();
+        builder.AppendLine($"{"Rank",-TextAlignment}{rankText}");
+        builder.AppendLine($"{"Time",-TextAlignment}{timeText}");
+        builder.AppendLine($"{"Accuracy",-TextAlignment}{accuracyText}");
+        var text1 = builder.ToString();
+
+        builder.Clear();
+        builder.AppendLine();
+        builder.AppendLine($"{"Best streak",-TextAlignment}{streakText}");
+        builder.AppendLine($"{"Top speed",-TextAlignment}{topSpeedText}");
+        builder.AppendLine($"{"Near misses",-TextAlignment}{nearMissesText}");
         var text2 = builder.ToString();
 
         return (text1, text2);

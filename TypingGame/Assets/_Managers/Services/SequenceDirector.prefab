@@ -49,6 +49,9 @@ MonoBehaviour:
   _hiderImage: {fileID: 6304032429480777617}
   _hiderCanvas: {fileID: 264608162733912445}
   _startAlpha: 0
+  _opaqueAlpha: 0
+  _hideEase: 6
+  _unhideEase: 5
 --- !u!210 &1894645010340715322
 SortingGroup:
   m_ObjectHideFlags: 0
