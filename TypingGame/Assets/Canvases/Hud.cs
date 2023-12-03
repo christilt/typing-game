@@ -158,10 +158,13 @@ public class Hud : MonoBehaviour
             builder.AppendLine($"{"Best streak",-TextAlignment}{streakText}");
         }
 
-        // TODO
-        var topSpeedText = TextHelper.WithColour($"{"32.5 WPM",TextAlignment}", StatCategory.Good.GetColour());
-        builder.AppendLine($"{"Top speed",-TextAlignment}{topSpeedText}");
+        if (stats.TopSpeed.Category.IsAtLeastGood())
+        {
+            var topSpeedText = TextHelper.WithColour($"{$"{stats.TopSpeed.WordsPerMinute:n1} WPM",TextAlignment}", StatCategory.Good.GetColour());
+            builder.AppendLine($"{"Top speed",-TextAlignment}{topSpeedText}");
+        }
 
+        // TODO
         var nearMissesText = $"{"3",TextAlignment}";
         builder.AppendLine($"{"Near misses",-TextAlignment}{nearMissesText}");
 

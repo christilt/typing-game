@@ -6,7 +6,7 @@ using UnityEngine;
 // TODO: Achievement for high accuracy over period?
 public class LevelStats : IStat
 {
-    private LevelStats(AccuracyStat accuracy, SpeedStat speed, LevelRank rank, float rating, StatCategory category, StreakStat bestStreak)
+    private LevelStats(AccuracyStat accuracy, SpeedStat speed, LevelRank rank, float rating, StatCategory category, StreakStat bestStreak, BurstStat topSpeed)
     {
         if (accuracy is null) throw new ArgumentException(nameof(accuracy));
         if (speed is null) throw new ArgumentException(nameof(speed));
@@ -17,12 +17,14 @@ public class LevelStats : IStat
         Rating = rating;
         Category = category;
         BestStreak = bestStreak;
+        TopSpeed = topSpeed;
     }
 
     public LevelRank Rank { get; }
     public AccuracyStat Accuracy { get; }
     public SpeedStat Speed { get; }
     public StreakStat BestStreak { get; }
+    public BurstStat TopSpeed { get; }
     public float Rating { get;}
     public StatCategory Category { get; }
 
@@ -34,8 +36,9 @@ public class LevelStats : IStat
         var rank = CalculateRank(rating);
         var category = CalculateCategory(rank);
         var bestStreak = typingRecorder.CalculateBestStreak();
+        var topSpeed = typingRecorder.CalculateTopSpeed();
 
-        return new LevelStats(accuracy, speed, rank, rating, category, bestStreak);
+        return new LevelStats(accuracy, speed, rank, rating, category, bestStreak, topSpeed);
     }
 
     private static float CalculateRating(AccuracyStat accuracy, SpeedStat speed)

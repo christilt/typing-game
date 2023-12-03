@@ -21,9 +21,9 @@ public class BurstRecorder : MonoBehaviour
         StartCoroutine(ProcessBurstMeasurement());
     }
 
-    public void MeasureBursts(int keyNumber, float timeKeyLogged, Action<Burst> onBurstMeasured = null)
+    public void MeasureBursts(int keyNumber, float timeKeyLogged, Action<BurstStat> onBurstMeasured = null)
     {
-        onBurstMeasured ??= (Burst _) => { };
+        onBurstMeasured ??= (BurstStat _) => { };
 
         _burstMeasurementRequests.Enqueue(new MeasureBurstsRequest(keyNumber, timeKeyLogged, onBurstMeasured));
     }
@@ -69,9 +69,7 @@ public class BurstRecorder : MonoBehaviour
 
                     var keys = burstMeasurementTo.KeyNumber - burstMeasurementFrom.KeyNumber;
                     var duration = burstMeasurementTo.KeyTimeLogged - burstMeasurementFrom.KeyTimeLogged;
-                    var keysPerSecond = keys / duration;
-                    var wordsPerMinute = ToWordsPerMinute(keysPerSecond);
-                    var burst = new Burst(keys, duration, keysPerSecond, wordsPerMinute);
+                    var burst = BurstStat.Calculate(keys, duration);
 
                     burstMeasurementFrom.BurstsByKeyNumberTo.Add(burstMeasurementTo.KeyNumber, burst);
 
@@ -90,17 +88,6 @@ public class BurstRecorder : MonoBehaviour
         }
     }
 
-    private float ToWordsPerMinute(float keysPerSecond)
-    {
-        // Consensus whole number based on various sources, and based on usage rather than dictionary
-        // e.g. https://www.ilovelanguages.com/how-many-letters-does-the-average-english-word-have/, https://en.ans.wiki/6074/what-is-the-average-number-of-letters-per-word/
-        const int AverageLettersPerWord = 5;
-
-        var lettersPerMinute = keysPerSecond * 60;
-        var wordsPerMinute = lettersPerMinute / AverageLettersPerWord;
-        return wordsPerMinute;
-    }
-
     private class BurstMeasurement
     {
         public BurstMeasurement(int keyNumber, float keyTimeLogged)
@@ -112,12 +99,12 @@ public class BurstRecorder : MonoBehaviour
 
         public int KeyNumber { get; }
         public float KeyTimeLogged { get; }
-        public Dictionary<int, Burst> BurstsByKeyNumberTo { get; }
+        public Dictionary<int, BurstStat> BurstsByKeyNumberTo { get; }
     }
 
     private class MeasureBurstsRequest
     {
-        public MeasureBurstsRequest(int keyNumber, float keyTimeLogged, Action<Burst> onBurstMeasured)
+        public MeasureBurstsRequest(int keyNumber, float keyTimeLogged, Action<BurstStat> onBurstMeasured)
         {
             KeyNumber = keyNumber;
             KeyTimeLogged = keyTimeLogged;
@@ -127,35 +114,7 @@ public class BurstRecorder : MonoBehaviour
 
         public int KeyNumber { get; }
         public float KeyTimeLogged { get; }
-        public Action<Burst> OnBurstMeasured { get; }
+        public Action<BurstStat> OnBurstMeasured { get; }
         public bool IsProcessing { get; set; }
-    }
-}
-
-public struct Burst
-{
-    public Burst(int keys, float duration, float keysPerSecond, float wordsPerMinute)
-    {
-        Keys = keys;
-        Duration = duration;
-        KeysPerSecond = keysPerSecond;
-        WordsPerMinute = wordsPerMinute;
-    }
-
-    public int Keys { get; }
-    public float Duration { get; }
-    public float KeysPerSecond { get; }
-    public float WordsPerMinute { get; }
-
-    public bool IsBetterThan(Burst other)
-    {
-        // TODO: Does this need to be more clever?
-
-        return KeysPerSecond > other.KeysPerSecond;
-    }
-
-    public override string ToString()
-    {
-        return $"{WordsPerMinute:n1} wpm ({Keys}keys / {Duration:n0}s)";
     }
 }

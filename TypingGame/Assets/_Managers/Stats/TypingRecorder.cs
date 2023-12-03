@@ -20,7 +20,7 @@ public class TypingRecorder : MonoBehaviour
     private int _keysCorrect;
     private int _keysTyped;
     private int _bestStreak;
-    private Burst _bestBurst;
+    private BurstStat _bestBurst;
 
     public event Action<StreakStat> OnStreakIncreased;
     public event Action OnStreakReset;
@@ -51,6 +51,9 @@ public class TypingRecorder : MonoBehaviour
         else
         {
             ResetStreak();
+
+            // TODO allow some mistakes?
+            _burstRecorder.ResetBursts();
         }
     }
 
@@ -64,6 +67,7 @@ public class TypingRecorder : MonoBehaviour
     public AccuracyStat CalculateAccuracy() => AccuracyStat.Calculate(_keysCorrect, _keysTyped);
 
     public StreakStat CalculateBestStreak() => StreakStat.Calculate(_bestStreak);
+    public BurstStat CalculateTopSpeed() => _bestBurst;
 
     private bool TryValidateStreak(KeyTile correctKeyTile)
     {
@@ -98,8 +102,6 @@ public class TypingRecorder : MonoBehaviour
         _currentStreak.Clear();
         _currentStreakCheckedPositions.Clear();
         _currentStreakRepeats = 0;
-
-        _burstRecorder.ResetBursts();
 
         OnStreakReset?.Invoke();
     }
