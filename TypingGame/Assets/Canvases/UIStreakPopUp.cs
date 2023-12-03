@@ -18,16 +18,16 @@ public class UIStreakPopUp : MonoBehaviour
         _notificationPopUp = GetComponent<UINotificationPopUp>();
     }
 
-    public void MaybeNotifyOfIncrease(int streakCount)
+    public void MaybeNotifyOfIncrease(StreakStat streak)
     {
-        if (streakCount < _notifyAfterMinimumCount)
+        if (streak.Count < _notifyAfterMinimumCount)
             return;
 
-        if (streakCount % _notifyAfterIntervalCount != 0)
+        if (streak.Count % _notifyAfterIntervalCount != 0)
             return;
 
-        var colour = GetStreakColour(streakCount);
-        var text = TextHelper.WithColour($"Streak x{streakCount}", colour);
+        var colour = streak.Category.GetColour();
+        var text = TextHelper.WithColour($"Streak x{streak.Count}", colour);
         _notificationPopUp.ShowText(text);
     }
 

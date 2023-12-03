@@ -54,7 +54,7 @@ public class Hud : MonoBehaviour
         }
     }
 
-    // TODO: Find how people normally do this - do these use states or different menus?
+    // TODO: Find how people normally do this - do they use states or different menus?
     private bool _statsShown = false;
     private void Update()
     {
@@ -134,27 +134,37 @@ public class Hud : MonoBehaviour
     private (string, string) GetStatsText()
     {
         const int TextAlignment = 15;
-        var settings = SettingsManager.Instance.LevelSettings;
         var stats = StatsManager.Instance.CalculateEndOfLevelStats();
-        var rankText = WithColour(stats, $"{stats.Rank,TextAlignment}");
-        var timeText = WithColour(stats.Speed, $"{stats.Speed.TimeTaken,TextAlignment:mm\\:ss}");
-        var accuracyText = WithColour(stats.Accuracy, $"{stats.Accuracy.Proportion,TextAlignment:P1}");
-        // TODO
-        var streakText = TextHelper.WithColour($"{42,TextAlignment}", GetCategoryColour(StatCategory.Great));
-        var topSpeedText = TextHelper.WithColour($"{"32.5 WPM",TextAlignment}", GetCategoryColour(StatCategory.Good));
-        var nearMissesText = $"{"3",TextAlignment}";
 
         var builder = new StringBuilder();
-        builder.AppendLine($"{"Rank",-TextAlignment}{rankText}");
-        builder.AppendLine($"{"Time",-TextAlignment}{timeText}");
-        builder.AppendLine($"{"Accuracy",-TextAlignment}{accuracyText}");
-        var text1 = builder.ToString();
 
+        var rankText = WithColour(stats, $"{stats.Rank,TextAlignment}");
+        builder.AppendLine($"{"Rank",-TextAlignment}{rankText}");
+
+        var timeText = WithColour(stats.Speed, $"{stats.Speed.TimeTaken,TextAlignment:mm\\:ss}");
+        builder.AppendLine($"{"Time",-TextAlignment}{timeText}");
+
+        var accuracyText = WithColour(stats.Accuracy, $"{stats.Accuracy.Proportion,TextAlignment:P1}");
+        builder.AppendLine($"{"Accuracy",-TextAlignment}{accuracyText}");
+        
+        var text1 = builder.ToString();
         builder.Clear();
+
         builder.AppendLine();
-        builder.AppendLine($"{"Best streak",-TextAlignment}{streakText}");
+
+        if (stats.BestStreak.Category.IsAtLeastGood())
+        {
+            var streakText = WithColour(stats.BestStreak, $"{stats.BestStreak.Count,TextAlignment}");
+            builder.AppendLine($"{"Best streak",-TextAlignment}{streakText}");
+        }
+
+        // TODO
+        var topSpeedText = TextHelper.WithColour($"{"32.5 WPM",TextAlignment}", StatCategory.Good.GetColour());
         builder.AppendLine($"{"Top speed",-TextAlignment}{topSpeedText}");
+
+        var nearMissesText = $"{"3",TextAlignment}";
         builder.AppendLine($"{"Near misses",-TextAlignment}{nearMissesText}");
+
         var text2 = builder.ToString();
 
         return (text1, text2);
@@ -162,22 +172,7 @@ public class Hud : MonoBehaviour
 
     private string WithColour(IStat stat, string formattedText)
     {
-        var colour = GetCategoryColour(stat.Category);
+        var colour = stat.Category.GetColour();
         return TextHelper.WithColour(formattedText, colour);
-    }
-
-    private Color GetCategoryColour(StatCategory category)
-    {
-        switch (category)
-        {
-            case StatCategory.Great:
-                return SettingsManager.Instance.Palette.GreatColour;
-            case StatCategory.Good:
-                return SettingsManager.Instance.Palette.GoodColour;
-            case StatCategory.Average:
-                return SettingsManager.Instance.Palette.AverageColour;
-            default:
-                return SettingsManager.Instance.Palette.BadColour;
-        }
     }
 }
