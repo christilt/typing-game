@@ -1,27 +1,34 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class TypingRecorder
+// TODO: Maybe split out 
+[RequireComponent(typeof(BurstRecorder))]
+public class TypingRecorder : MonoBehaviour
 {
-    private readonly int _streakRepeatsTolerated;
-    private readonly int _streakRepeatsChecked;
-    private readonly List<KeyTile> _currentStreak = new();
+    [SerializeField] private int _streakRepeatsTolerated;
+    [SerializeField] private int _streakRepeatsChecked;
+
+    private BurstRecorder _burstRecorder;
+
+    private readonly List<StreakInfo> _currentStreak = new();
     private readonly HashSet<Vector3Int> _currentStreakCheckedPositions = new(); // For O(1) lookup of repeats
     private int _currentStreakRepeats;
-
-    public TypingRecorder(int streakRepeatsTolerated, int streakRepeatsChecked)
-    {
-        _streakRepeatsTolerated = streakRepeatsTolerated;
-        _streakRepeatsChecked = streakRepeatsChecked;
-    }
 
     public event Action<int> OnStreakIncreased;
     public event Action OnStreakReset;
 
+    private void Awake()
+    {
+        _burstRecorder = GetComponent<BurstRecorder>();
+    }
+
     public int KeysCorrect { get; private set; }
     public int KeysTyped { get; private set; }
+    public int BestStreak { get; private set; }
+    public Burst BestBurst { get; private set; }
 
     public void LogCorrectKey(KeyTile keyTile)
     {
@@ -31,6 +38,14 @@ public class TypingRecorder
         if (TryValidateStreak(keyTile))
         {
             IncreaseStreak(keyTile);
+            _burstRecorder.MeasureBursts(KeysCorrect, Time.time, measuredBurst =>
+            {
+                if (measuredBurst.IsBetterThan(BestBurst))
+                {
+                    BestBurst = measuredBurst;
+                    Debug.Log($"New best burst: {measuredBurst}"); // TODO remove
+                }
+            });
         }
         else
         {
@@ -58,11 +73,16 @@ public class TypingRecorder
 
     private void IncreaseStreak(KeyTile correctKeyTile)
     {
-        _currentStreak.Add(correctKeyTile);
+        _currentStreak.Add(new StreakInfo(Time.unscaledTime));
 
         _currentStreakCheckedPositions.Add(correctKeyTile.Position);
         if (_currentStreakCheckedPositions.Count > _streakRepeatsChecked)
             _currentStreakCheckedPositions.Remove(_currentStreakCheckedPositions.First());
+
+        if (_currentStreak.Count > BestStreak)
+        {
+            BestStreak = _currentStreak.Count;
+        }
 
         OnStreakIncreased?.Invoke(_currentStreak.Count);
 
@@ -76,6 +96,19 @@ public class TypingRecorder
         _currentStreakCheckedPositions.Clear();
         _currentStreakRepeats = 0;
 
+        _burstRecorder.ResetBursts();
+
         OnStreakReset?.Invoke();
     }
+
+    private struct StreakInfo
+    {
+        public StreakInfo(float time)
+        {
+            Time = time;
+        }
+
+        public float Time { get; }
+    }
 }
+
