@@ -1,4 +1,7 @@
-﻿public struct BurstStat : IStat
+﻿using System;
+using UnityEngine;
+
+public struct BurstStat : IStat
 {
     private BurstStat(int keys, float duration, float keysPerSecond, float wordsPerMinute, StatCategory category)
     {
@@ -18,7 +21,7 @@
 
     public static BurstStat Calculate(int keys, float duration)
     {
-        var keysPerSecond = keys / duration;
+        var keysPerSecond = (float)Math.Round(keys / duration, 1);
         var wordsPerMinute = ToWordsPerMinute(keysPerSecond);
         var category = CalculateCategory(wordsPerMinute);
         var burst = new BurstStat(keys, duration, keysPerSecond, wordsPerMinute, category);
@@ -34,7 +37,7 @@
 
     public override string ToString()
     {
-        return $"{WordsPerMinute:n1} wpm ({Keys}keys / {Duration:n0}s)";
+        return $"{WordsPerMinute:n1} wpm ({Keys} keys / {Duration:n0} s)";
     }
 
     private static StatCategory CalculateCategory(float wordsPerMinute)
@@ -58,6 +61,6 @@
 
         var lettersPerMinute = keysPerSecond * 60;
         var wordsPerMinute = lettersPerMinute / AverageLettersPerWord;
-        return wordsPerMinute;
+        return (float)Math.Round(wordsPerMinute, 1);
     }
 }

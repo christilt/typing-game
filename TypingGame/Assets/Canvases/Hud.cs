@@ -161,17 +161,12 @@ public class Hud : MonoBehaviour
         var timeText = WithColour(stats.Speed, $"{stats.Speed.TimeTaken,TextAlignment:mm\\:ss}");
         builder.AppendLine($"{"Time",-TextAlignment}{timeText}");
 
-        if (stats.BestStreak.Category.IsAtLeastGood())
-        {
-            var streakText = WithColour(stats.BestStreak, $"{stats.BestStreak.Count,TextAlignment}");
-            builder.AppendLine($"{"Best streak",-TextAlignment}{streakText}");
-        }
 
-        if (stats.TopSpeed.Category.IsAtLeastGood())
-        {
-            var topSpeedText = TextHelper.WithColour($"{$"{stats.TopSpeed.WordsPerMinute:n1} WPM",TextAlignment}", StatCategory.Good.GetColour());
-            builder.AppendLine($"{"Top speed",-TextAlignment}{topSpeedText}");
-        }
+        var streakText = WithColour(stats.BestStreak, $"{stats.BestStreak.Count,TextAlignment}");
+        builder.AppendLine($"{"Best streak",-TextAlignment}{streakText}");
+
+        var topSpeedText = WithColour(stats.TopSpeed, $"{$"{stats.TopSpeed.WordsPerMinute} WPM",TextAlignment}");
+        builder.AppendLine($"{"Top speed",-TextAlignment}{topSpeedText}");
 
         // Maybe add misc stats?
 
