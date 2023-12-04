@@ -35,12 +35,4 @@ public class UIStreakPopUp : MonoBehaviour
     {
         _notificationPopUp.HideText();
     }
-
-    private Color GetStreakColour(int streakCount)
-    {
-        if (streakCount > 25)
-            return SettingsManager.Instance.Palette.GreatColour;
-        else
-            return SettingsManager.Instance.Palette.GoodColour;
-    }
 }

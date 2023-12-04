@@ -12,20 +12,44 @@ public class BurstRecorder : MonoBehaviour
     [SerializeField] private int _burstMinimumChecked;
     [SerializeField] private int _burstMaximumChecked;
     [SerializeField] private float _burstProcessingInterval;
+    [SerializeField] private int _burstMistakesTolerated;
 
+    private readonly Queue<MeasureBurstsRequest> _burstMeasurementRequests = new();
     private readonly List<BurstMeasurement> _currentBurstMeasurements = new();
-    private Queue<MeasureBurstsRequest> _burstMeasurementRequests = new();
+
+    private BurstStat _bestBurst;
+    private int _currentBurstMistakes;
 
     private void Start()
     {
         StartCoroutine(ProcessBurstMeasurement());
     }
 
-    public void MeasureBursts(int keyNumber, float timeKeyLogged, Action<BurstStat> onBurstMeasured = null)
-    {
-        onBurstMeasured ??= (BurstStat _) => { };
+    public event Action<BurstStat> OnBurstMeasured;
+    public event Action OnBurstReset;
 
-        _burstMeasurementRequests.Enqueue(new MeasureBurstsRequest(keyNumber, timeKeyLogged, onBurstMeasured));
+    public BurstStat CalculateTopSpeed() => _bestBurst;
+
+    public void LogValidKey(int keyNumber, float timeKeyLogged)
+    {
+        _burstMeasurementRequests.Enqueue(new MeasureBurstsRequest(keyNumber, timeKeyLogged, measuredBurst =>
+        {
+            OnBurstMeasured?.Invoke(measuredBurst);
+
+            if (measuredBurst.IsBetterThan(_bestBurst))
+            {
+                _bestBurst = measuredBurst;
+
+                //Debug.Log($"New best burst: {measuredBurst}");
+            }
+        }));
+    }
+
+    public void LogIncorrectKey()
+    {
+        _currentBurstMistakes++;
+        if (_currentBurstMistakes > _burstMistakesTolerated)
+            ResetBursts();
     }
 
     public void ResetBursts()
@@ -34,11 +58,12 @@ public class BurstRecorder : MonoBehaviour
 
         _currentBurstMeasurements.Clear();
         _burstMeasurementRequests.Clear();
+        _currentBurstMistakes = 0;
 
         StartCoroutine(ProcessBurstMeasurement());
     }
 
-    // TODO: Is a coroutine enough for performance here?
+    // TODO: Consider simplifying if a performance concern - logging after every e.g. 5 keys might be enough
     private IEnumerator ProcessBurstMeasurement()
     {
         while (true)
@@ -85,6 +110,15 @@ public class BurstRecorder : MonoBehaviour
 
             //Debug.Log($"Dequeuing request for {request.KeyNumber}");
             _burstMeasurementRequests.Dequeue();
+        }
+    }
+
+    private void MaybeIncreaseBestBurst(BurstStat measuredBurst)
+    {
+        if (measuredBurst.IsBetterThan(_bestBurst))
+        {
+            _bestBurst = measuredBurst;
+            Debug.Log($"New best burst: {measuredBurst}"); // TODO remove
         }
     }
 

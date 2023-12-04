@@ -1,120 +1,115 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-// TODO: Maybe split out 
-[RequireComponent(typeof(BurstRecorder))]
+[RequireComponent(typeof(StreakRecorder), typeof(BurstRecorder))]
 public class TypingRecorder : MonoBehaviour
 {
-    [SerializeField] private int _streakRepeatsTolerated;
-    [SerializeField] private int _streakRepeatsChecked;
+    [SerializeField] private int _repeatsTolerated;
+    [SerializeField] private int _repeatsChecked;
 
     private BurstRecorder _burstRecorder;
+    private StreakRecorder _streakRecorder;
 
-    private readonly List<StreakInfo> _currentStreak = new();
-    private readonly HashSet<Vector3Int> _currentStreakCheckedPositions = new(); // For O(1) lookup of repeats
-    private int _currentStreakRepeats;
+    private readonly HashSet<Vector3Int> _checkedRepeatPositions = new(); // For O(1) lookup of repeats
+    private int _currentRepeats;
 
     private int _keysCorrect;
     private int _keysTyped;
-    private int _bestStreak;
-    private BurstStat _bestBurst;
 
     public event Action<StreakStat> OnStreakIncreased;
     public event Action OnStreakReset;
 
+    public event Action<BurstStat> OnBurstMeasured;
+    public event Action OnBurstReset;
+
     private void Awake()
     {
         _burstRecorder = GetComponent<BurstRecorder>();
+        _streakRecorder = GetComponent<StreakRecorder>();
     }
 
+    private void Start()
+    {
+        _streakRecorder.OnStreakIncreased += HandleStreakIncreased;
+        _streakRecorder.OnStreakReset += HandleStreakReset;
+        _burstRecorder.OnBurstMeasured += HandleBurstMeasured;
+        _burstRecorder.OnBurstReset += HandleBurstReset;
+    }
+
+    private void OnDestroy()
+    {
+        if (_streakRecorder != null)
+        {
+            _streakRecorder.OnStreakIncreased -= HandleStreakIncreased;
+            _streakRecorder.OnStreakReset -= HandleStreakReset;
+        }
+        if ( _burstRecorder != null)
+        {
+            _burstRecorder.OnBurstMeasured -= HandleBurstMeasured;
+            _burstRecorder.OnBurstReset -= HandleBurstReset;
+        }
+    }
+
+    public AccuracyStat CalculateAccuracy() => AccuracyStat.Calculate(_keysCorrect, _keysTyped);
+
+    public StreakStat CalculateBestStreak() => _streakRecorder.CalculateBestStreak();
+
+    public BurstStat CalculateTopSpeed() => _burstRecorder.CalculateTopSpeed();
 
     public void LogCorrectKey(KeyTile keyTile)
     {
         _keysCorrect++;
         _keysTyped++;
 
-        if (TryValidateStreak(keyTile))
+        if (TryValidateRepeats(keyTile))
         {
-            IncreaseStreak(keyTile);
-            _burstRecorder.MeasureBursts(_keysCorrect, Time.time, measuredBurst =>
-            {
-                if (measuredBurst.IsBetterThan(_bestBurst))
-                {
-                    _bestBurst = measuredBurst;
-                    Debug.Log($"New best burst: {measuredBurst}"); // TODO remove
-                }
-            });
+            IncreaseCheckedRepeats(keyTile);
+            _streakRecorder.LogValidKey();
+            _burstRecorder.LogValidKey(_keysCorrect, Time.time);
         }
         else
         {
-            ResetStreak();
-
+            ResetRepeats();
+            _streakRecorder.ResetStreak();
             _burstRecorder.ResetBursts();
         }
     }
 
-    public void LogIncorrectKey(KeyTile keyTile)
+    public void LogIncorrectKey()
     {
         _keysTyped++;
 
-        ResetStreak();
-        // TODO allow some mistakes?
-        _burstRecorder.ResetBursts();
+        _streakRecorder.LogIncorrectKey();
+        _burstRecorder.LogIncorrectKey();
     }
 
-    public AccuracyStat CalculateAccuracy() => AccuracyStat.Calculate(_keysCorrect, _keysTyped);
-
-    public StreakStat CalculateBestStreak() => StreakStat.Calculate(_bestStreak);
-    public BurstStat CalculateTopSpeed() => _bestBurst;
-
-    private bool TryValidateStreak(KeyTile correctKeyTile)
+    private bool TryValidateRepeats(KeyTile correctKeyTile)
     {
-        var isRepeat = _currentStreakCheckedPositions.TryGetValue(correctKeyTile.Position, out var _);
+        var isRepeat = _checkedRepeatPositions.TryGetValue(correctKeyTile.Position, out var _);
         if (isRepeat)
-            _currentStreakRepeats++;
+            _currentRepeats++;
 
-        return _currentStreakRepeats < _streakRepeatsTolerated;
+        return _currentRepeats < _repeatsTolerated;
     }
 
-    private void IncreaseStreak(KeyTile correctKeyTile)
+    private void IncreaseCheckedRepeats(KeyTile correctKeyTile)
     {
-        _currentStreak.Add(new StreakInfo(Time.time));
-
-        _currentStreakCheckedPositions.Add(correctKeyTile.Position);
-        if (_currentStreakCheckedPositions.Count > _streakRepeatsChecked)
-            _currentStreakCheckedPositions.Remove(_currentStreakCheckedPositions.First());
-
-        if (_currentStreak.Count > _bestStreak)
-        {
-            _bestStreak = _currentStreak.Count;
-        }
-
-        OnStreakIncreased?.Invoke(StreakStat.Calculate(_currentStreak.Count));
-
-        //Debug.Log($"{nameof(TypingRecorder)}: Streak increased to {_currentStreak.Count}");
+        _checkedRepeatPositions.Add(correctKeyTile.Position);
+        if (_checkedRepeatPositions.Count > _repeatsChecked)
+            _checkedRepeatPositions.Remove(_checkedRepeatPositions.First());
     }
 
-    private void ResetStreak()
+    private void ResetRepeats()
     {
-        //Debug.Log($"{nameof(TypingRecorder)}: Streak reset");
-        _currentStreak.Clear();
-        _currentStreakCheckedPositions.Clear();
-        _currentStreakRepeats = 0;
-
-        OnStreakReset?.Invoke();
+        _checkedRepeatPositions.Clear();
+        _currentRepeats = 0;
     }
 
-    private struct StreakInfo
-    {
-        public StreakInfo(float time)
-        {
-            Time = time;
-        }
-
-        public float Time { get; }
-    }
+    private void HandleStreakIncreased(StreakStat streak) => OnStreakIncreased?.Invoke(streak);
+    private void HandleStreakReset() => OnStreakReset?.Invoke();
+    private void HandleBurstMeasured(BurstStat streak) => OnBurstMeasured?.Invoke(streak);
+    private void HandleBurstReset() => OnBurstReset?.Invoke();
 }
 

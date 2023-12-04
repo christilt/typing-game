@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4851392215012740534}
   - component: {fileID: 5819519492746961401}
+  - component: {fileID: 8835552277664395117}
   - component: {fileID: 5871454338381770801}
   m_Layer: 0
   m_Name: TypingRecorder
@@ -45,8 +46,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3802a6e3419dd0b4988bb2b3f70f9753, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _streakRepeatsTolerated: 3
-  _streakRepeatsChecked: 10
+  _repeatsTolerated: 3
+  _repeatsChecked: 10
+--- !u!114 &8835552277664395117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 421928118155137321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8b6cf1f9a45af4abbdf1d3b3756573, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5871454338381770801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59,9 +72,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d524216a7d657a54895e3cd68cfe8417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _burstMinimumChecked: 5
-  _burstMaximumChecked: 7
+  _burstMinimumChecked: 7
+  _burstMaximumChecked: 9
   _burstProcessingInterval: 0.2
+  _burstMistakesTolerated: 2
 --- !u!1 &732694257627241145
 GameObject:
   m_ObjectHideFlags: 0

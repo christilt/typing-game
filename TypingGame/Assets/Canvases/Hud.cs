@@ -58,22 +58,21 @@ public class Hud : MonoBehaviour
     private bool _statsShown = false;
     private void Update()
     {
-        if (GameManager.Instance.State != GameState.LevelWon)
-            return;
-
-        if (Input.anyKeyDown)
+        var state = GameManager.Instance.State;
+        if (!(state.IsEndOfLevel() && Input.anyKeyDown))
         {
-            if (_statsShown)
-            {
-                LoadingManager.Instance.ReloadLevel();
-            }
-            else
-            {
-                var (statsText1, statsText2) = GetStatsText();
-                _textOverlay.FadeSwapText(statsText1, statsText2);
-                _statsShown = true;
-            }
+            return;
         }
+
+        if (state == GameState.LevelWon && !_statsShown)
+        {
+            var (statsText1, statsText2) = GetStatsText();
+            _textOverlay.FadeSwapText(statsText1, statsText2);
+            _statsShown = true;
+            return;
+        }
+
+        LoadingManager.Instance.ReloadLevel();
     }
 
     private void UpdateForGameState(GameState state)

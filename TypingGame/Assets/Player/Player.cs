@@ -37,7 +37,7 @@ public class Player : Singleton<Player>
     }
 
     private void HandleCorrectKeyTyped(KeyTile keyTile) => StatsManager.Instance.TypingRecorder.LogCorrectKey(keyTile);
-    private void HandleIncorrectKeyTyped(KeyTile keyTile) => StatsManager.Instance.TypingRecorder.LogIncorrectKey(keyTile);
+    private void HandleIncorrectKeyTyped(KeyTile keyTile) => StatsManager.Instance.TypingRecorder.LogIncorrectKey();
 
     public event Action<PlayerState> OnStateChanging;
     public event Action<PlayerState> OnStateChanged;
