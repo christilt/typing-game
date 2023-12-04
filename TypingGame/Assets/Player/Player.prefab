@@ -224,7 +224,7 @@ GameObject:
   - component: {fileID: 7267227260558673629}
   - component: {fileID: 4207527154940014597}
   - component: {fileID: 4818145970486386469}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CelebrationParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5214,7 +5214,7 @@ GameObject:
   - component: {fileID: 6176550253247425463}
   - component: {fileID: 6790316156021002046}
   - component: {fileID: 1764523070787639356}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player_Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5333,7 +5333,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7142849569738358438}
   - component: {fileID: 7211972778639226964}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pacman
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -57,7 +57,7 @@ public class RespawnPositioner : MonoBehaviour
             respawnPositionInfos = respawnPositionInfos.ThenByDescending(respawnPositionInfo => respawnPositionInfo.DistanceFromPlayer);
         }
 
-        //Debug.Log($"Respawn positions for {name}: {string.Join(", ", respawnPositionInfos.Select(rpi => rpi.ToString()))}");
+        Debug.Log($"Respawn positions for {name}: {string.Join(", ", respawnPositionInfos.Select(rpi => rpi.ToString()))}");
 
         return respawnPositionInfos.First();
     }

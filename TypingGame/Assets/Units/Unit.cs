@@ -9,7 +9,7 @@ public class Unit : MonoBehaviour
     [SerializeField] protected float _spawningSeconds;
     [SerializeField] protected Transform _centre;
     [SerializeField] protected bool _beginDestroyed;
-    [SerializeField] protected LayerMask _excludeCollisionLayersWhenSpawning;
+    [SerializeField] protected LayerMask _excludeCollisionLayersWhenSpawning; 
 
     protected UnitMovement _movement;
     protected UnitBrain _brain;
@@ -141,7 +141,7 @@ public class Unit : MonoBehaviour
     {
         _movement.enabled = false;
         _collider.enabled = true;
-        _collider.excludeLayers = _excludeCollisionLayersWhenSpawning;
+        _collider.excludeLayers = _excludeCollisionLayersWhenSpawning; 
     }
 }
 public enum UnitState
