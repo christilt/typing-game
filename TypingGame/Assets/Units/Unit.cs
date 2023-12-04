@@ -9,7 +9,7 @@ public class Unit : MonoBehaviour
     [SerializeField] protected float _spawningSeconds;
     [SerializeField] protected Transform _centre;
     [SerializeField] protected bool _beginDestroyed;
-    [SerializeField] protected LayerMask _excludeLayersWhenNotCollidable;
+    [SerializeField] protected LayerMask _excludeCollisionLayersWhenSpawning;
 
     protected UnitMovement _movement;
     protected UnitBrain _brain;
@@ -81,20 +81,20 @@ public class Unit : MonoBehaviour
         switch (state)
         {
             case UnitState.Spawning:
-                SetMoveableAndCollidable(false);
+                DisableMovementAndNonSpawningCollisions();
                 _brain.SetInitialMode();
                 this.DoAfterSeconds(_spawningSeconds, () => TryChangeState(UnitState.Normal));
                 break;
             case UnitState.Normal:
-                SetMoveableAndCollidable(true);
+                EnableMovementAndCollisions();
                 _brain.SetInitialMode();
                 break;
             case UnitState.FearPlayer:
-                SetMoveableAndCollidable(true);
+                EnableMovementAndCollisions();
                 _brain.MaybeEvadePlayer();
                 break;
             case UnitState.Destroyed:
-                SetMoveableAndCollidable(false);
+                DisableMovementAndAllCollisions();
                 _optionalRespawner?.RespawnLater();
                 break;
             default:
@@ -123,18 +123,25 @@ public class Unit : MonoBehaviour
         _optionalRespawner?.Stop();
     }
 
-    protected virtual void SetMoveableAndCollidable(bool enabled)
+    protected virtual void EnableMovementAndCollisions()
     {
-        _movement.enabled = enabled;
-        _collider.enabled = enabled;
+        _movement.enabled = true;
+        _collider.enabled = true;
+        _collider.excludeLayers = 0;
     }
 
-    protected void SetPlayerCollidable(bool enabled)
+    protected virtual void DisableMovementAndAllCollisions()
     {
-        if (enabled)
-            _collider.excludeLayers = 0;
-        else
-            _collider.excludeLayers = _excludeLayersWhenNotCollidable;
+        _movement.enabled = false;
+        _collider.enabled = false;
+        _collider.excludeLayers = 0;
+    }
+
+    protected virtual void DisableMovementAndNonSpawningCollisions()
+    {
+        _movement.enabled = false;
+        _collider.enabled = true;
+        _collider.excludeLayers = _excludeCollisionLayersWhenSpawning;
     }
 }
 public enum UnitState

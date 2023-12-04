@@ -112,7 +112,7 @@ public class UnitMovement : MonoBehaviour
 
     private Vector2Int[] GetDirectionOptions()
     {
-        if (_deflectedFromDirections.Count > 0 && !_centreMovement.Value.IsAlmostExceededBy(_centre.position, CornerCuttingDistanceTolerated))
+        if (_deflectedFromDirections.Count > 0 && _centreMovement?.IsAlmostExceededBy(_centre.position, CornerCuttingDistanceTolerated) == false)
         {
             var deflectedToDirections = _deflectedFromDirections.Select(d => d * -1);
 

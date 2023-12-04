@@ -319,7 +319,7 @@ MonoBehaviour:
   _spawningSeconds: 2
   _centre: {fileID: 1921477054113794594}
   _beginDestroyed: 0
-  _excludeLayersWhenNotCollidable:
+  _excludeCollisionLayersWhenSpawning:
     serializedVersion: 2
     m_Bits: 64
 --- !u!114 &6279949851714437955

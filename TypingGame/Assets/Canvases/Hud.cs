@@ -161,7 +161,6 @@ public class Hud : MonoBehaviour
         var timeText = WithColour(stats.Speed, $"{stats.Speed.TimeTaken,TextAlignment:mm\\:ss}");
         builder.AppendLine($"{"Time",-TextAlignment}{timeText}");
 
-
         var streakText = WithColour(stats.BestStreak, $"{stats.BestStreak.Count,TextAlignment}");
         builder.AppendLine($"{"Best streak",-TextAlignment}{streakText}");
 
