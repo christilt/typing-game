@@ -4,22 +4,17 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Linq;
 using UnityEngine.UIElements;
+using System;
 
 public class LevelTiles : Singleton<LevelTiles>
 {
     [SerializeField] private Tilemap _pathTiles;
     [SerializeField] private GameObject _keyIconPrefab;
+    [SerializeField] private int _tilesInstantiatedPerFrame;
 
     private IReadOnlyDictionary<Vector2Int, KeyTile> _keyTilesByPosition;
 
     public Tilemap PathTiles => _pathTiles;
-    protected override void Awake()
-    {
-        base.Awake();
-
-        _keyTilesByPosition = InstantiateKeyTilesByPosition();
-        Positions = _keyTilesByPosition.Keys.ToList();
-    }
 
     private void Start()
     {
@@ -46,6 +41,11 @@ public class LevelTiles : Singleton<LevelTiles>
 
     public IReadOnlyCollection<Vector2Int> Positions { get; private set; }
 
+    public void Initialise(Action onComplete = null)
+    {
+        StartCoroutine(InstantiateKeyTilesByPosition(onComplete));
+    }
+
     public IEnumerable<KeyTile> GetNeighboursOf(Vector3 position) => GetNeighboursOf((Vector2Int)_pathTiles.WorldToCell(position));
 
     public IEnumerable<KeyTile> GetNeighboursOf(Vector2Int position)
@@ -61,7 +61,7 @@ public class LevelTiles : Singleton<LevelTiles>
     }
 
     // Naive approach to ensuring uniqueness - could be more efficient
-    private Dictionary<Vector2Int, KeyTile> InstantiateKeyTilesByPosition()
+    private IEnumerator InstantiateKeyTilesByPosition(Action onComplete = null)
     {
         var positions = _pathTiles.GetPositions();
         var keyTilesByPosition = new Dictionary<Vector2Int, KeyTile>();
@@ -89,7 +89,15 @@ public class LevelTiles : Singleton<LevelTiles>
                     (Vector3Int)position, 
                     this.gameObject, 
                     deniedKeys: keysThatWouldBeDuplicates));
+
+            if (keyTilesByPosition.Count % _tilesInstantiatedPerFrame == 0)
+                yield return new WaitForEndOfFrame();
         }
-        return keyTilesByPosition;
+
+        _keyTilesByPosition = keyTilesByPosition;
+        Positions = _keyTilesByPosition.Keys.ToList();
+
+        if (onComplete != null)
+            onComplete();
     }
 }

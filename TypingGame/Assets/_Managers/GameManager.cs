@@ -37,7 +37,6 @@ public class GameManager : Singleton<GameManager>
         if (!ValidateOperation(nameof(PlayerExploded), state => state.InvolvesLevelLosing()))
             return;
 
-        // TODO
     }
 
     private void Start()
@@ -71,7 +70,8 @@ public class GameManager : Singleton<GameManager>
         {
             case GameState.LevelStarting:
                 _pauseHelper.Pause();
-                SceneHider.Instance.StartOfSceneFadeIn(() =>
+                SceneHider.Instance.StartOfSceneFadeIn();
+                LevelTiles.Instance.Initialise(() =>
                 {
                     TryChangeState(GameState.LevelIntroducing);
                 });
