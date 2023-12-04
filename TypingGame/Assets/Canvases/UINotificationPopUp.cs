@@ -1,18 +1,11 @@
 ﻿using TMPro;
 using UnityEngine;
 
-[RequireComponent(typeof(TextMeshProUGUI), typeof(Animator))]
 public class UINotificationPopUp : MonoBehaviour
 {
     [SerializeField] private int _hideAfterSeconds;
-    private TextMeshProUGUI _text;
-    private Animator _animator;
-
-    private void Awake()
-    {
-        _text = GetComponent<TextMeshProUGUI>();
-        _animator = GetComponent<Animator>();
-    }
+    [SerializeField] private TextMeshProUGUI _text;
+    [SerializeField] private Animator _animator;
 
     public void ShowText(string text)
     {
@@ -28,7 +21,6 @@ public class UINotificationPopUp : MonoBehaviour
     public void HideText()
     {
         CancelInvoke(nameof(HideText));
-        // TODO
         _text.text = "";
         ResetAnimator();
     }

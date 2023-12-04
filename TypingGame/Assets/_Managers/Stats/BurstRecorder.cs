@@ -59,6 +59,7 @@ public class BurstRecorder : MonoBehaviour
         _currentBurstMeasurements.Clear();
         _burstMeasurementRequests.Clear();
         _currentBurstMistakes = 0;
+        OnBurstReset?.Invoke();
 
         StartCoroutine(ProcessBurstMeasurement());
     }

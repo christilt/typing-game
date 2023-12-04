@@ -9,9 +9,9 @@ using UnityEngine;
 public class UIBurstPopUp : MonoBehaviour
 {
     [SerializeField] private StatCategory[] _notifyForCategories;
-    [SerializeField] private float _notifyInterval;
+    [SerializeField] private float _notifyIntervalSeconds;
 
-    private float _sincePreviousNotificationSeconds;
+    private float _notifyIntervalSecondsRemaining;
 
     private UINotificationPopUp _notificationPopUp;
 
@@ -22,20 +22,23 @@ public class UIBurstPopUp : MonoBehaviour
 
     private void Update()
     {
-        _sincePreviousNotificationSeconds -= Time.deltaTime;
+        _notifyIntervalSecondsRemaining -= Time.deltaTime;
     }
 
-    public void MaybeNotifyOfIncrease(BurstStat burst)
+    public void MaybeNotifyOfStat(BurstStat burst)
     {
-        if (_sincePreviousNotificationSeconds > 0)
+        if (_notifyIntervalSecondsRemaining > 0)
             return;
 
         if (!_notifyForCategories.Contains(burst.Category))
             return;
 
         var colour = burst.Category.GetColour();
-        var text = TextHelper.WithColour($"{burst.WordsPerMinute:n0} WPM", colour);
+        var floorWpm = Math.Floor(burst.WordsPerMinute); // Because if rounded this same rounding would not occur later
+        var text = TextHelper.WithColour($"{floorWpm} WPM", colour);
         _notificationPopUp.ShowText(text);
+
+        _notifyIntervalSecondsRemaining = _notifyIntervalSeconds;
     }
 
     public void HandleReset()

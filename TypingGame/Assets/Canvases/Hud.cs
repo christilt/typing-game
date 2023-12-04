@@ -11,12 +11,12 @@ public class Hud : MonoBehaviour
     [SerializeField] private UITextOverlay _textOverlay;
     [SerializeField] private Canvas _canvas;
     [SerializeField] private UIStreakPopUp _streakPopUp;
+    [SerializeField] private UIBurstPopUp _burstPopUp;
 
     private void Awake()
     {
         _canvas.worldCamera = Camera.main;
         _canvas.sortingLayerID = GetComponent<SortingGroup>().sortingLayerID;
-        _statsShown = false; // TODO remove
     }
 
     private void Start()
@@ -28,8 +28,11 @@ public class Hud : MonoBehaviour
         CollectableEffectManager.Instance.OnCollectableEffectUpdate += _statusEffectPanel.UpdateEffect;
         CollectableEffectManager.Instance.OnCollectableEffectRemoved += _statusEffectPanel.RemoveEffect;
 
-        StatsManager.Instance.TypingRecorder.OnStreakIncreased += _streakPopUp.MaybeNotifyOfIncrease;
+        StatsManager.Instance.TypingRecorder.OnStreakIncreased += _streakPopUp.MaybeNotifyOfStat;
         StatsManager.Instance.TypingRecorder.OnStreakReset += _streakPopUp.HandleReset;
+
+        StatsManager.Instance.TypingRecorder.OnBurstMeasured += _burstPopUp.MaybeNotifyOfStat;
+        StatsManager.Instance.TypingRecorder.OnBurstReset += _burstPopUp.HandleReset;
 
     }
 
@@ -49,8 +52,11 @@ public class Hud : MonoBehaviour
 
         if (StatsManager.Instance?.TypingRecorder != null)
         {
-            StatsManager.Instance.TypingRecorder.OnStreakIncreased -= _streakPopUp.MaybeNotifyOfIncrease;
+            StatsManager.Instance.TypingRecorder.OnStreakIncreased -= _streakPopUp.MaybeNotifyOfStat;
             StatsManager.Instance.TypingRecorder.OnStreakReset -= _streakPopUp.HandleReset;
+
+            StatsManager.Instance.TypingRecorder.OnBurstMeasured -= _burstPopUp.MaybeNotifyOfStat;
+            StatsManager.Instance.TypingRecorder.OnBurstReset -= _burstPopUp.HandleReset;
         }
     }
 

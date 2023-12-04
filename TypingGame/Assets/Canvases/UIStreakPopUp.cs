@@ -18,7 +18,7 @@ public class UIStreakPopUp : MonoBehaviour
         _notificationPopUp = GetComponent<UINotificationPopUp>();
     }
 
-    public void MaybeNotifyOfIncrease(StreakStat streak)
+    public void MaybeNotifyOfStat(StreakStat streak)
     {
         if (streak.Count < _notifyAfterMinimumCount)
             return;
