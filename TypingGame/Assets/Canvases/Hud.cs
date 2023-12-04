@@ -88,6 +88,7 @@ public class Hud : MonoBehaviour
         if (state.EndsPlayerControl())
         {
             _statusEffectPanel.gameObject.SetActive(false);
+            _burstPopUp.gameObject.SetActive(false);
             _streakPopUp.gameObject.SetActive(false);
         }
     }

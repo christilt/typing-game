@@ -8,19 +8,31 @@ public class RespawnPositioner : MonoBehaviour
 {
     [SerializeField] private LayerMask _positionObstaclesMask;
     [SerializeField] private float _positionObstaclesCheckRadius;
+    [SerializeField] private int _additionalRandomPositionsCount;
 
     private object _respawnPositionsTakenLock = new();
 
-    private readonly HashSet<PositionWithCentre> _startLocations = new();
-    private readonly HashSet<Vector3> _startPositionsTaken = new();
+    private readonly HashSet<AllowedPosition> _allowedPositions = new();
+    private readonly HashSet<Vector3> _positionsTaken = new();
 
-    private List<PositionWithCentre> StartLocationsAvailable => _startLocations
-        .Where(l => _startPositionsTaken.All(p => p != l.Position))
+    private void Start()
+    {
+        LevelTiles.Instance.OnInitialised += AddRandomTilePositions;
+    }
+
+    private void OnDestroy()
+    {
+        if (LevelTiles.Instance != null)
+            LevelTiles.Instance.OnInitialised += AddRandomTilePositions;
+    }
+
+    private List<AllowedPosition> AllowedPositionsAvailable => _allowedPositions
+        .Where(l => _positionsTaken.All(p => p != l.PositionWithCentre.Position))
         .ToList();
 
     public void RegisterStartPosition(Unit unit)
     {
-        _startLocations.Add(unit.PositionWithCentre);
+        _allowedPositions.Add(new AllowedPosition(unit.PositionWithCentre, isRandom: false));
     }
 
     public Vector3 GetRespawnPosition(RespawnMode mode)
@@ -28,7 +40,7 @@ public class RespawnPositioner : MonoBehaviour
         lock (_respawnPositionsTakenLock) // Ensure respawn positions taken synchronously within the same frame
         {
             var positionInfo = GetRespawnPositionWithoutLock(mode);
-            _startPositionsTaken.Add(positionInfo.Position);
+            _positionsTaken.Add(positionInfo.Position);
 
             StartCoroutine(RemovePositionTakenCoroutine(positionInfo.Position));
 
@@ -39,14 +51,15 @@ public class RespawnPositioner : MonoBehaviour
         {
             yield return new WaitForEndOfFrame();
 
-            _startPositionsTaken.Remove(position);
+            _positionsTaken.Remove(position);
         }
     }
 
     private RespawnPositionInfo GetRespawnPositionWithoutLock(RespawnMode mode)
     {
         var respawnPositionInfos = GetRespawnPositionsWithoutLock()
-            .OrderBy(respawnPositionInfo => respawnPositionInfo.ObstaclesNearbyCount);
+            .OrderBy(respawnPositionInfo => respawnPositionInfo.ObstaclesNearbyCount)
+            .ThenBy(respawnPositionInfo => respawnPositionInfo.IsRandom);
 
         if (mode == RespawnMode.ClosestToPlayer)
         {
@@ -57,7 +70,7 @@ public class RespawnPositioner : MonoBehaviour
             respawnPositionInfos = respawnPositionInfos.ThenByDescending(respawnPositionInfo => respawnPositionInfo.DistanceFromPlayer);
         }
 
-        Debug.Log($"Respawn positions for {name}: {string.Join(", ", respawnPositionInfos.Select(rpi => rpi.ToString()))}");
+        //Debug.Log($"Respawn positions for {name}: {string.Join(Environment.NewLine, respawnPositionInfos.Select(rpi => rpi.ToString()))}");
 
         return respawnPositionInfos.First();
     }
@@ -65,31 +78,59 @@ public class RespawnPositioner : MonoBehaviour
     private List<RespawnPositionInfo> GetRespawnPositionsWithoutLock()
     {
         var list = new List<RespawnPositionInfo>();
-        foreach (var location in StartLocationsAvailable)
+        foreach (var allowed in AllowedPositionsAvailable)
         {
-            var colliders = Physics2D.OverlapCircleAll(location.Centre, _positionObstaclesCheckRadius, _positionObstaclesMask);
-            var distance = Vector2.Distance(location.Centre, Player.Instance.Centre);
-            list.Add(new RespawnPositionInfo(location.Position, colliders.Length, distance));
+            var colliders = Physics2D.OverlapCircleAll(allowed.PositionWithCentre.Centre, _positionObstaclesCheckRadius, _positionObstaclesMask);
+            var distanceFromPlayer = Vector2.Distance(allowed.PositionWithCentre.Centre, Player.Instance.Centre);
+            if (distanceFromPlayer < _positionObstaclesCheckRadius)
+                continue; // Exclude positions right next to player e.g. when all positions have obstacles
+
+            list.Add(new RespawnPositionInfo(allowed.PositionWithCentre.Position, allowed.IsRandom, colliders.Length, distanceFromPlayer));
         }
         return list;
+    }
+
+    private void AddRandomTilePositions()
+    {
+        var randomPositionsAllowed = LevelTiles.Instance.GetRandomTiles(_additionalRandomPositionsCount)
+            .Select(t => new PositionWithCentre(t.Position, t.Centre));
+
+        foreach (var position in randomPositionsAllowed)
+        {
+            _allowedPositions.Add(new AllowedPosition(position, isRandom: true));
+        }
+    }
+
+    private struct AllowedPosition
+    {
+        public AllowedPosition(PositionWithCentre positionWithCentre, bool isRandom)
+        {
+            PositionWithCentre = positionWithCentre;
+            IsRandom = isRandom;
+        }
+
+        public PositionWithCentre PositionWithCentre { get; }
+        public bool IsRandom { get; }
     }
 }
 
 public struct RespawnPositionInfo
 {
-    public RespawnPositionInfo(Vector3 position, int unitsNearbyCount, float distanceFromPlayer)
+    public RespawnPositionInfo(Vector3 position, bool isRandom, int unitsNearbyCount, float distanceFromPlayer)
     {
         Position = position;
+        IsRandom = isRandom;
         ObstaclesNearbyCount = unitsNearbyCount;
         DistanceFromPlayer = distanceFromPlayer;
     }
 
     public Vector3 Position { get; }
+    public bool IsRandom { get; }
     public int ObstaclesNearbyCount { get; }
     public float DistanceFromPlayer { get; }
     public override string ToString()
     {
-        return $"{Position}; {ObstaclesNearbyCount} obstacles; {DistanceFromPlayer} from player";
+        return $"{Position}; IsRandom:{IsRandom}; {ObstaclesNearbyCount} obstacles; {DistanceFromPlayer} from player";
     }
 }
 

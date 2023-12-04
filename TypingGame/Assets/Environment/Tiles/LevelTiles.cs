@@ -27,6 +27,8 @@ public class LevelTiles : Singleton<LevelTiles>
             GameManager.Instance.OnStateChanging -= OnGameStateChanging;
     }
 
+    public event Action OnInitialised;
+
     private void OnGameStateChanging(GameState state)
     {
         if (state.EndsPlayerControl())
@@ -46,6 +48,8 @@ public class LevelTiles : Singleton<LevelTiles>
         StartCoroutine(InstantiateKeyTilesByPosition(onComplete));
     }
 
+    public Vector3 WorldPositionCentre(Vector3Int position) => _pathTiles.GetCellCenterWorld(position);
+
     public IEnumerable<KeyTile> GetNeighboursOf(Vector3 position) => GetNeighboursOf((Vector2Int)_pathTiles.WorldToCell(position));
 
     public IEnumerable<KeyTile> GetNeighboursOf(Vector2Int position)
@@ -58,6 +62,26 @@ public class LevelTiles : Singleton<LevelTiles>
             yield return leftTile;
         if (_keyTilesByPosition.TryGetValue(position + Vector2Int.right, out KeyTile rightTile))
             yield return rightTile;
+    }
+
+    public List<KeyTile> GetRandomTiles(int count)
+    {
+        count = Math.Min(count, _keyTilesByPosition.Count);
+
+        var chosenIndicies = new List<int>();
+
+        for (var i = 0; i < count; i++)
+        {
+            var candidateIndex = UnityEngine.Random.Range(0, _keyTilesByPosition.Count);
+            if (chosenIndicies.Contains(candidateIndex))
+                continue;
+
+            chosenIndicies.Add(candidateIndex);
+        }
+
+        return chosenIndicies
+            .Select(i => _keyTilesByPosition.ElementAt(i).Value)
+            .ToList();
     }
 
     // Naive approach to ensuring uniqueness - could be more efficient
@@ -82,11 +106,14 @@ public class LevelTiles : Singleton<LevelTiles>
                     keysThatWouldBeDuplicates.Add(keyTile.Key);
             }
 
+            var positionInt = (Vector3Int)position;
+            var centre = WorldPositionCentre(positionInt);
             keyTilesByPosition.Add(
                 position,
                 KeyTile.Instantiate(
-                    _keyIconPrefab, 
-                    (Vector3Int)position, 
+                    _keyIconPrefab,
+                    positionInt, 
+                    centre,
                     this.gameObject, 
                     deniedKeys: keysThatWouldBeDuplicates));
 
@@ -96,6 +123,8 @@ public class LevelTiles : Singleton<LevelTiles>
 
         _keyTilesByPosition = keyTilesByPosition;
         Positions = _keyTilesByPosition.Keys.ToList();
+
+        OnInitialised?.Invoke();
 
         if (onComplete != null)
             onComplete();

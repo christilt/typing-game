@@ -6,16 +6,18 @@ using System.Linq;
 
 public class KeyTile
 {
-    private KeyTile(Vector3Int position, char key)
+    private KeyTile(Vector3Int position, Vector3 centre, char key)
     {
         Key = key;
         Position = position;
+        Centre = centre;
     }
 
     public char Key { get; }
     public Vector3Int Position { get; }
+    public Vector3 Centre { get; }
 
-    public static KeyTile Instantiate(GameObject iconPrefab, Vector3Int position, GameObject parent, IEnumerable<char> deniedKeys)
+    public static KeyTile Instantiate(GameObject iconPrefab, Vector3Int position, Vector3 centre, GameObject parent, IEnumerable<char> deniedKeys)
     {
         var key = RandomKey(deniedKeys);
 
@@ -23,7 +25,7 @@ public class KeyTile
         var iconText = icon.GetComponentInChildren<TextMeshProUGUI>();
         iconText.text = $"{key}";
 
-        return new KeyTile(position, key);
+        return new KeyTile(position, centre, key);
     }
 
     // TODO make this clever

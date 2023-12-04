@@ -62,3 +62,4 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 448
   _positionObstaclesCheckRadius: 1.75
+  _additionalRandomPositionsCount: 5

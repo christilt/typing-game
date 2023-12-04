@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2928496592829403666}
   - component: {fileID: 4088692949322632907}
   - component: {fileID: 4062436451222288264}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,9 +118,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Visual
       objectReference: {fileID: 0}
+    - target: {fileID: 292167801566448277, guid: 6628dbcfb4f2ffb4c8b01afe578f0fcd, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1249159870447007943, guid: 6628dbcfb4f2ffb4c8b01afe578f0fcd, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1346971043963385448, guid: 6628dbcfb4f2ffb4c8b01afe578f0fcd, type: 3}
       propertyPath: m_Color.b
@@ -136,7 +140,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1539792022579404375, guid: 6628dbcfb4f2ffb4c8b01afe578f0fcd, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1703634273346474713, guid: 6628dbcfb4f2ffb4c8b01afe578f0fcd, type: 3}
       propertyPath: _mode
@@ -366,7 +370,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5806970423844439451, guid: e499e00a494966843b410dfbc5506988, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7554157760836880752, guid: e499e00a494966843b410dfbc5506988, type: 3}
       propertyPath: _target
