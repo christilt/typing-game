@@ -23,7 +23,7 @@ public class RespawnPositioner : MonoBehaviour
     private void OnDestroy()
     {
         if (LevelTiles.Instance != null)
-            LevelTiles.Instance.OnInitialised += AddRandomTilePositions;
+            LevelTiles.Instance.OnInitialised -= AddRandomTilePositions;
     }
 
     private List<AllowedPosition> AllowedPositionsAvailable => _allowedPositions
@@ -90,6 +90,7 @@ public class RespawnPositioner : MonoBehaviour
         return list;
     }
 
+    // Reduce the chance of collisions when choosing respawn positions by adding random tile positions
     private void AddRandomTilePositions()
     {
         var randomPositionsAllowed = LevelTiles.Instance.GetRandomTiles(_additionalRandomPositionsCount)

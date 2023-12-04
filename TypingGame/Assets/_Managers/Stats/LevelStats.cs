@@ -6,7 +6,7 @@ using UnityEngine;
 // TODO: Achievement for high accuracy over period?
 public class LevelStats : IStat
 {
-    private LevelStats(AccuracyStat accuracy, SpeedStat speed, LevelRank rank, float rating, StatCategory category, StreakStat bestStreak, BurstStat topSpeed)
+    private LevelStats(AccuracyStat accuracy, SpeedStat speed, LevelRank rank, float rating, int score, StatCategory category, StreakStat bestStreak, BurstStat topSpeed)
     {
         if (accuracy is null) throw new ArgumentException(nameof(accuracy));
         if (speed is null) throw new ArgumentException(nameof(speed));
@@ -15,6 +15,7 @@ public class LevelStats : IStat
         Speed = speed;
         Rank = rank;
         Rating = rating;
+        Score = score;
         Category = category;
         BestStreak = bestStreak;
         TopSpeed = topSpeed;
@@ -25,7 +26,8 @@ public class LevelStats : IStat
     public SpeedStat Speed { get; }
     public StreakStat BestStreak { get; }
     public BurstStat TopSpeed { get; }
-    public float Rating { get;}
+    public float Rating { get; }
+    public int Score { get; }
     public StatCategory Category { get; }
 
     public static LevelStats Calculate(TypingRecorder typingRecorder, SpeedRecorder speedRecorder, LevelSettings settings)
@@ -33,12 +35,13 @@ public class LevelStats : IStat
         var accuracy = typingRecorder.CalculateAccuracy();
         var speed = speedRecorder.CalculateSpeed(settings.BenchmarkDurationSeconds);
         var rating = CalculateRating(accuracy, speed);
+        var score = CalculateScore(rating);
         var rank = CalculateRank(rating);
         var category = CalculateCategory(rank);
         var bestStreak = typingRecorder.CalculateBestStreak();
         var topSpeed = typingRecorder.CalculateTopSpeed();
 
-        return new LevelStats(accuracy, speed, rank, rating, category, bestStreak, topSpeed);
+        return new LevelStats(accuracy, speed, rank, rating, score, category, bestStreak, topSpeed);
     }
 
     private static float CalculateRating(AccuracyStat accuracy, SpeedStat speed)
@@ -56,6 +59,12 @@ public class LevelStats : IStat
         var maxScore = maxAccuracyScore + maxSpeedScore;
 
         return score / maxScore;
+    }
+
+    private static int CalculateScore(float rating)
+    {
+        var unrounded = rating * 100;
+        return (int)Math.Floor(unrounded);
     }
 
     private static LevelRank CalculateRank(float rating)

@@ -146,18 +146,21 @@ public class Hud : MonoBehaviour
         var builder = new StringBuilder();
 
         builder.Append(SettingsManager.Instance.LevelSettings.LevelName);
-        builder.AppendLine(" stats");
+        builder.AppendLine(" result");
 
         var rankText = WithColour(stats, $"{stats.Rank,TextAlignment}");
         builder.AppendLine($"{"Rank",-TextAlignment}{rankText}");
 
-        var accuracyText = WithColour(stats.Accuracy, $"{stats.Accuracy.Proportion,TextAlignment:P0}");
-        builder.AppendLine($"{"Accuracy",-TextAlignment}{accuracyText}");
-        
+
+        builder.AppendLine($"{"Score",-TextAlignment}{$"{stats.Score,TextAlignment}"}");
+
         var text1 = builder.ToString();
         builder.Clear();
 
         builder.AppendLine();
+
+        var accuracyText = WithColour(stats.Accuracy, $"{stats.Accuracy.Proportion,TextAlignment:P0}");
+        builder.AppendLine($"{"Accuracy",-TextAlignment}{accuracyText}");
 
         var timeText = WithColour(stats.Speed, $"{stats.Speed.TimeTaken,TextAlignment:mm\\:ss}");
         builder.AppendLine($"{"Time",-TextAlignment}{timeText}");

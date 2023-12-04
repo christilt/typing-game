@@ -7,6 +7,11 @@ public class UINotificationPopUp : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _text;
     [SerializeField] private Animator _animator;
 
+    private void OnDisable()
+    {
+        CancelInvoke(nameof(HideText));
+    }
+
     public void ShowText(string text)
     {
         CancelInvoke(nameof(HideText));
