@@ -117,15 +117,16 @@ public class Hud : MonoBehaviour
 
     private (string, string) GetWinText()
     {
-        const int TextAlignment = 8;
-        var settings = SettingsManager.Instance.LevelSettings;
         var stats = StatsManager.Instance.CalculateEndOfLevelStats();
-        var rankText = WithColour(stats, $"{stats.Rank,TextAlignment}");
+        var rankText = WithColour(stats, $"{stats.Rank}");
 
-        var text1 = $"{settings.LevelName}  complete!";
+        var text1 = $"{SettingsManager.Instance.LevelSettings.LevelName}  complete!";
 
         var builder = new StringBuilder();
-        builder.AppendLine($"{"Rank",-TextAlignment}{rankText}");
+        builder.AppendLine();
+        builder.AppendLine("Rank");
+        builder.AppendLine();
+        builder.AppendLine(rankText);
         var text2 = builder.ToString();
 
         return (text1, text2);
@@ -138,19 +139,22 @@ public class Hud : MonoBehaviour
 
         var builder = new StringBuilder();
 
+        builder.Append(SettingsManager.Instance.LevelSettings.LevelName);
+        builder.AppendLine(" stats");
+
         var rankText = WithColour(stats, $"{stats.Rank,TextAlignment}");
         builder.AppendLine($"{"Rank",-TextAlignment}{rankText}");
 
-        var timeText = WithColour(stats.Speed, $"{stats.Speed.TimeTaken,TextAlignment:mm\\:ss}");
-        builder.AppendLine($"{"Time",-TextAlignment}{timeText}");
-
-        var accuracyText = WithColour(stats.Accuracy, $"{stats.Accuracy.Proportion,TextAlignment:P1}");
+        var accuracyText = WithColour(stats.Accuracy, $"{stats.Accuracy.Proportion,TextAlignment:P0}");
         builder.AppendLine($"{"Accuracy",-TextAlignment}{accuracyText}");
         
         var text1 = builder.ToString();
         builder.Clear();
 
         builder.AppendLine();
+
+        var timeText = WithColour(stats.Speed, $"{stats.Speed.TimeTaken,TextAlignment:mm\\:ss}");
+        builder.AppendLine($"{"Time",-TextAlignment}{timeText}");
 
         if (stats.BestStreak.Category.IsAtLeastGood())
         {
@@ -164,9 +168,7 @@ public class Hud : MonoBehaviour
             builder.AppendLine($"{"Top speed",-TextAlignment}{topSpeedText}");
         }
 
-        // TODO
-        var nearMissesText = $"{"3",TextAlignment}";
-        builder.AppendLine($"{"Near misses",-TextAlignment}{nearMissesText}");
+        // Maybe add misc stats?
 
         var text2 = builder.ToString();
 

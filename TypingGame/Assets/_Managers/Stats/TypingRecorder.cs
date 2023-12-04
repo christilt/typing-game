@@ -52,7 +52,6 @@ public class TypingRecorder : MonoBehaviour
         {
             ResetStreak();
 
-            // TODO allow some mistakes?
             _burstRecorder.ResetBursts();
         }
     }
@@ -62,6 +61,8 @@ public class TypingRecorder : MonoBehaviour
         _keysTyped++;
 
         ResetStreak();
+        // TODO allow some mistakes?
+        _burstRecorder.ResetBursts();
     }
 
     public AccuracyStat CalculateAccuracy() => AccuracyStat.Calculate(_keysCorrect, _keysTyped);
