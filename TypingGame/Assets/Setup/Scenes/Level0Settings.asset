@@ -12,7 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38531dd8483370d4b94e377b0a149d2e, type: 3}
   m_Name: Level0Settings
   m_EditorClassIdentifier: 
+  _difficultyOverrides:
+  - Difficulty: 0
+    CharacterSet: {fileID: 11400000, guid: aaa0a2f2ccbec154ca0caa0303ba12f5, type: 2}
+    BenchmarkDurationSeconds:
+      Value: 0
+      HasValue: 0
+    UnitSpeedModifier:
+      Value: 0
+      HasValue: 0
   _namePart1: World 0
   _namePart2: 0
-  _namePartSeparator: '-'
+  _namePartSeparator: ' - '
   _benchmarkDurationSeconds: 60
+  _characterSet: {fileID: 11400000, guid: 7b8d998525760ea49a3134b14edc838b, type: 2}

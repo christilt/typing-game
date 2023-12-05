@@ -30,10 +30,10 @@ public class LevelStats : IStat
     public int Score { get; }
     public StatCategory Category { get; }
 
-    public static LevelStats Calculate(TypingRecorder typingRecorder, SpeedRecorder speedRecorder, LevelSettings settings)
+    public static LevelStats Calculate(TypingRecorder typingRecorder, SpeedRecorder speedRecorder)
     {
         var accuracy = typingRecorder.CalculateAccuracy();
-        var speed = speedRecorder.CalculateSpeed(settings.BenchmarkDurationSeconds);
+        var speed = speedRecorder.CalculateSpeed(SettingsManager.Instance.BenchmarkDurationSeconds.Value);
         var rating = CalculateRating(accuracy, speed);
         var score = CalculateScore(rating);
         var rank = CalculateRank(rating);

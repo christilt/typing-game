@@ -85,6 +85,7 @@ public class LevelTiles : Singleton<LevelTiles>
     }
 
     // Naive approach to ensuring uniqueness - could be more efficient
+    // TODO: Sometimes not working for smaller character sets (with 4 but even with 8 keys)
     private IEnumerator InstantiateKeyTilesByPosition(Action onComplete = null)
     {
         var positions = _pathTiles.GetPositions();

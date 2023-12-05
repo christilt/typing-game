@@ -28,11 +28,10 @@ public class KeyTile
         return new KeyTile(position, centre, key);
     }
 
-    // TODO make this clever
     private static char RandomKey(IEnumerable<char> deniedKeys)
     {
-        const string Keys = "abcdefghijklmnopqrstuvwxyz";
-        var allowedKeys = Keys.Except(deniedKeys).ToArray();
+        var keys = SettingsManager.Instance.CharacterSet.Value.Characters;
+        var allowedKeys = keys.Except(deniedKeys).ToArray();
 
         return allowedKeys[Random.Range(0, allowedKeys.Length)];
     }

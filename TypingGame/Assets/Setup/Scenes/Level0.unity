@@ -7818,6 +7818,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4179382368771550321, guid: 3f35f0e68d0768148b57d1a016e182e3, type: 3}
+      propertyPath: _difficulty
+      value: 
+      objectReference: {fileID: 11400000, guid: 70079c4248084984fb98716f68d61006, type: 2}
+    - target: {fileID: 4179382368771550321, guid: 3f35f0e68d0768148b57d1a016e182e3, type: 3}
       propertyPath: _levelSettings
       value: 
       objectReference: {fileID: 11400000, guid: 90f249d53d2cd9c45a03916d953ade3d, type: 2}

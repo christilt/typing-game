@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class Palette : ScriptableObject
+public class PaletteSO : ScriptableObject
 {
     [SerializeField] private Color _greatColour;
     public Color GreatColour => _greatColour;

@@ -21,7 +21,7 @@ public class StatsManager : Singleton<StatsManager>
             return _endOfLevelStats;
         }
 
-        _endOfLevelStats = LevelStats.Calculate(TypingRecorder, _speedRecorder, SettingsManager.Instance.LevelSettings);
+        _endOfLevelStats = LevelStats.Calculate(TypingRecorder, _speedRecorder);
         return _endOfLevelStats;
     }
 }

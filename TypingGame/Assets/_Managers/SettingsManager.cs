@@ -7,9 +7,17 @@ using UnityEngine;
 
 public class SettingsManager : Singleton<SettingsManager>
 {
-    [SerializeField] private LevelSettings _levelSettings;
-    public LevelSettings LevelSettings => _levelSettings;
+    // TODO: Have this selected instead of serialised
+    [SerializeField] private DifficultySO _difficulty;
+    public DifficultySO Difficulty => _difficulty;
 
-    [SerializeField] private Palette _palette;
-    public Palette Palette => _palette;
+    [SerializeField] private LevelSettingsSO _levelSettings;
+    public LevelSettingsSO LevelSettings => _levelSettings;
+
+    [SerializeField] private PaletteSO _palette;
+    public PaletteSO Palette => _palette;
+
+    public Lazy<CharacterSetSO> CharacterSet => new(() => LevelSettings.GetCharacterSet(Difficulty.Difficulty));
+    public Lazy<float> BenchmarkDurationSeconds => new(() => LevelSettings.GetBenchmarkDurationSeconds(Difficulty.Difficulty));
+    public Lazy<float> UnitSpeedModifier => new(() => LevelSettings.GetUnitSpeedModifier(Difficulty.Difficulty));
 }
