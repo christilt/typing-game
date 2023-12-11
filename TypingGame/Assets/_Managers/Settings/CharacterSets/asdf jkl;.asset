@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58074c07fd0c7d0408c163e6bbe89c92, type: 3}
   m_Name: asdf jkl;
   m_EditorClassIdentifier: 
-  _characters: asdfjkl;
-  _name: asdf jkl;
+  _characters: asdf
+  _name: asdf

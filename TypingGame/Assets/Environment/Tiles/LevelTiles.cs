@@ -85,25 +85,16 @@ public class LevelTiles : Singleton<LevelTiles>
     }
 
     // Naive approach to ensuring uniqueness - could be more efficient
-    // TODO: Sometimes not working for smaller character sets (with 4 but even with 8 keys)
     private IEnumerator InstantiateKeyTilesByPosition(Action onComplete = null)
     {
         var positions = _pathTiles.GetPositions();
         var keyTilesByPosition = new Dictionary<Vector2Int, KeyTile>();
         foreach (var position in positions)
         {
-            var uniqueKeyBounds = new BoundsInt(
-                xMin: position.x - 2,
-                yMin: position.y - 2,
-                zMin: 0,
-                sizeX: 5,
-                sizeY: 5,
-                sizeZ: 1);
-
             var keysThatWouldBeDuplicates = new List<char>();
-            foreach(var uniqueKeyBoundsPosition in uniqueKeyBounds.allPositionsWithin)
+            foreach (var uniqueKeyBoundsPosition in Preceding2StepPositions(position))
             {
-                if (keyTilesByPosition.TryGetValue((Vector2Int) uniqueKeyBoundsPosition, out KeyTile keyTile))
+                if (keyTilesByPosition.TryGetValue((Vector2Int)uniqueKeyBoundsPosition, out KeyTile keyTile))
                     keysThatWouldBeDuplicates.Add(keyTile.Key);
             }
 
@@ -129,5 +120,21 @@ public class LevelTiles : Singleton<LevelTiles>
 
         if (onComplete != null)
             onComplete();
+    }
+
+    /// <summary>
+    /// The positions "less than" the given position, that reach the given position in 2 vertical and or horizontal steps.
+    /// "less than" is based on ordering used by tilemap.cellBounds.allPositionsWithin.
+    /// </summary>
+    private IEnumerable<Vector2Int> Preceding2StepPositions(Vector2Int position)
+    {
+        // 2 1 0
+        // 3 2 1 2 3
+        // 4 3 2 3 4
+
+        yield return new Vector2Int(position.x, position.y - 2);
+        yield return new Vector2Int(position.x - 1, position.y - 1);
+        yield return new Vector2Int(position.x + 1, position.y - 1);
+        yield return new Vector2Int(position.x - 2, position.y);
     }
 }
