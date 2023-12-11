@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58074c07fd0c7d0408c163e6bbe89c92, type: 3}
-  m_Name: asdf jkl;
+  m_Name: asdf
   m_EditorClassIdentifier: 
   _characters: asdf
   _name: asdf

@@ -19,10 +19,6 @@ public class KeyTile
 
     public static KeyTile Instantiate(GameObject iconPrefab, Vector3Int position, Vector3 centre, GameObject parent, IEnumerable<char> deniedKeys)
     {
-        // TODO remove
-        var allowedKeys = SettingsManager.Instance.CharacterSet.Value.Characters.Except(deniedKeys).ToArray();
-        Debug.Log($"Instantiating key at {position} based on allowed keys of {string.Join(", ", allowedKeys)}");
-
         var key = RandomKey(deniedKeys);
 
         var icon = Object.Instantiate(original: iconPrefab, position: position, rotation: Quaternion.identity, parent: parent.transform);

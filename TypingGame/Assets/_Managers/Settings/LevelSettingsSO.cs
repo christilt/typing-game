@@ -17,14 +17,14 @@ public class LevelSettingsSO : ScriptableObject
 
 
     [SerializeField] private float _benchmarkDurationSeconds;
-    public float GetBenchmarkDurationSeconds(Difficulty difficulty) => GetDifficultyValue(difficulty, x => x.BenchmarkDurationSeconds, _benchmarkDurationSeconds);
+    public float GetBenchmarkDurationSeconds(DifficultySO difficulty) => GetDifficultyValue(difficulty.Difficulty, x => x.BenchmarkDurationSeconds, _benchmarkDurationSeconds);
 
 
     [SerializeField] private CharacterSetSO _characterSet;
-    public CharacterSetSO GetCharacterSet(Difficulty difficulty) => GetDifficultyValue(difficulty, x => x.CharacterSet, _characterSet);
+    public CharacterSetSO GetCharacterSet(DifficultySO difficulty) => GetDifficultyValue(difficulty.Difficulty, x => x.CharacterSet, _characterSet);
 
 
-    public float GetUnitSpeedModifier(Difficulty difficulty) => GetDifficultyValue(difficulty, x => x.UnitSpeedModifier, 1);
+    public float GetUnitSpeedModifier(DifficultySO difficulty) => GetDifficultyValue(difficulty.Difficulty, x => x.UnitSpeedModifier, difficulty.DefaultSpeedModifier);
 
 
 
