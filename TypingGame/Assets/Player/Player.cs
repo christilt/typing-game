@@ -7,6 +7,7 @@ public class Player : Singleton<Player>
 {
     [SerializeField] private PlayerVisual _visual;
     [SerializeField] private PlayerTypingMovement _typingMovement;
+    [SerializeField] private PlayerAttackController _attackController;
     [SerializeField] private Collider2D _collider;
 
     private void Start()
@@ -177,9 +178,15 @@ public class Player : Singleton<Player>
     private void SetMoveable(bool enabled)
     {
         if (enabled)
+        {
             _typingMovement.EnableComponent();
+            _attackController.EnableComponent();
+        }
         else
+        {
             _typingMovement.DisableComponent();
+            _attackController.DisableComponent();
+        }
     }
 }
 

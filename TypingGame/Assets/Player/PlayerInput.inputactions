@@ -6,9 +6,9 @@
             "id": "458a1d1e-cf75-4048-bb51-296069abcb3a",
             "actions": [
                 {
-                    "name": "TypingMovement",
+                    "name": "Trigger",
                     "type": "Button",
-                    "id": "3f3b250d-6eed-4387-a09f-b370b5936ce7",
+                    "id": "7d5fa726-6712-4528-976c-b9c19fede9f2",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -18,12 +18,12 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "11746b7c-eeed-4691-b27a-eb8621bf9435",
-                    "path": "<Keyboard>/anyKey",
-                    "interactions": "Press",
+                    "id": "0be50d79-711c-4b8b-8e18-94918f67b3b0",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "TypingMovement",
+                    "action": "Trigger",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
