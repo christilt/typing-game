@@ -8,7 +8,10 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class PlayerAttackController : MonoBehaviour
 {
+    [SerializeField] private PlayerAttack _playerAttackPrefab;
+
     private PlayerInput _input;
+    private PlayerAttack _currentAttack;
 
     private void Awake()
     {
@@ -29,10 +32,15 @@ public class PlayerAttackController : MonoBehaviour
     public void DisableComponent()
     {
         _input.Main.Disable();
+
+        if (_currentAttack != null)
+        {
+            GameObject.Destroy(_currentAttack.gameObject);
+        }
     }
 
     private void Attack(CallbackContext context)
     {
-        Debug.Log("Attack"); // TODO: remove
+        _currentAttack = GameObject.Instantiate(_playerAttackPrefab, transform);
     }
 }
