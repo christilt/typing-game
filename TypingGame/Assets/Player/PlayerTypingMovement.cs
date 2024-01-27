@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,7 +27,14 @@ public class PlayerTypingMovement : MonoBehaviour
             if (value == "")
                 return;
 
+            _inputField.text = "";
+
             var key = value[0];
+            if (!IsTypingKey(key))
+            {
+                return;
+            }
+
             if (TryMoveToKey(key, out var keyTile))
             {
                 OnCorrectKeyTyped?.Invoke(keyTile);
@@ -35,8 +43,6 @@ public class PlayerTypingMovement : MonoBehaviour
             {
                 OnIncorrectKeyTyped?.Invoke(keyTile);
             }
-
-            _inputField.text = "";
         });
         _inputField.onEndEdit.RemoveAllListeners();
         _inputField.onEndEdit.AddListener(value =>
@@ -49,6 +55,15 @@ public class PlayerTypingMovement : MonoBehaviour
     {
         _inputField?.onValueChanged.RemoveAllListeners();
         _inputField?.onEndEdit.RemoveAllListeners();
+    }
+
+    private bool IsTypingKey(char key)
+    {
+        var nonTypingKeys = new[] 
+        {
+            ' '  // Ignore spaces because they trigger attacks
+        };
+        return !nonTypingKeys.Contains(key);
     }
 
     private bool TryMoveToKey(char key, out KeyTile keyTile)
