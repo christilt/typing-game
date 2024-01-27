@@ -24,5 +24,6 @@ MonoBehaviour:
   _namePart1: World 0
   _namePart2: 0
   _namePartSeparator: ' - '
+  _wallColor: {r: 0.3529412, g: 1, b: 0.3882353, a: 1}
   _benchmarkDurationSeconds: 60
   _characterSet: {fileID: 11400000, guid: aaa0a2f2ccbec154ca0caa0303ba12f5, type: 2}

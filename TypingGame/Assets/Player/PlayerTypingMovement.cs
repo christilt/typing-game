@@ -74,8 +74,6 @@ public class PlayerTypingMovement : MonoBehaviour
             {
                 keyTile = candidateKeyTile;
                 Direction = (Vector2)(candidateKeyTile.Position - transform.position).normalized;
-                // TODO
-                //_visual.transform.eulerAngles = GetEulerAnglesTowards(keyTile.Position);
                 _centre.transform.eulerAngles = GetEulerAnglesTowards(candidateKeyTile.Position);
                 transform.position = candidateKeyTile.Position;
                 return true;

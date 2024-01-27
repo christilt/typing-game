@@ -1,23 +1,23 @@
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-[RequireComponent(typeof(Tilemap))]
-public class tilemaptest : MonoBehaviour
+public class TilemapTinter : MonoBehaviour
 {
-    [SerializeField] private Tilemap[] _tilemaps;
-    [SerializeField] private Color _tint;
-
     private void Start()
     {
-        foreach(var tilemap in _tilemaps)
+        var tilemaps = GetComponentsInChildren<Tilemap>();
+        foreach(var tilemap in tilemaps)
         {
-            Tint(tilemap);
+            Tint(tilemap, SettingsManager.Instance.LevelSettings.WallColor);
         }
     }
 
-    private void Tint(Tilemap tilemap)
+    private void Tint(Tilemap tilemap, Color color)
     {
         for (int i = tilemap.cellBounds.x; i < tilemap.cellBounds.size.x; i++)
         {
@@ -25,12 +25,12 @@ public class tilemaptest : MonoBehaviour
             {
                 for (int k = tilemap.cellBounds.z; k < tilemap.cellBounds.size.z; k++)
                 {
-                    Vector3Int tilePosition = new Vector3Int(i, j, k);
-                    TileBase tile = tilemap.GetTile(tilePosition);
+                    var tilePosition = new Vector3Int(i, j, k);
+                    var tile = tilemap.GetTile(tilePosition);
                     if (tile != null)
                     {
                         tilemap.RemoveTileFlags(tilePosition, TileFlags.LockColor);
-                        tilemap.SetColor(tilePosition, _tint);
+                        tilemap.SetColor(tilePosition, color);
                         tilemap.SetTileFlags(tilePosition, TileFlags.LockColor);
                     }
                 }

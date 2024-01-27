@@ -33,6 +33,7 @@ public class LevelTiles : Singleton<LevelTiles>
     {
         if (state.EndsPlayerControl())
         {
+            // TODO: Disable only the key tiles, not the tilemaps as well
             gameObject.SetActive(false);
         }
         else

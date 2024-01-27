@@ -15,6 +15,9 @@ public class LevelSettingsSO : ScriptableObject
     [SerializeField] private string _namePartSeparator;
     public string LevelName => $"{_namePart1}{_namePartSeparator}{_namePart2}";
 
+    [SerializeField] private Color _wallColor;
+    public Color WallColor => _wallColor;
+
 
     [SerializeField] private float _benchmarkDurationSeconds;
     public float GetBenchmarkDurationSeconds(DifficultySO difficulty) => GetDifficultyValue(difficulty.Difficulty, x => x.BenchmarkDurationSeconds, _benchmarkDurationSeconds);
