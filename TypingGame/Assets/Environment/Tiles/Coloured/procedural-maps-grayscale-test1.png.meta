@@ -1,0 +1,941 @@
+fileFormatVersion: 2
+guid: 500244991c75af54ca282ab0f624eba0
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 812
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63340c041bde79d4ebc4b19d19468077
+      internalID: -1114137912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 812
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7015536153a93d4994f8a1e4ecae566
+      internalID: 194026457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 812
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 51c42ca3ef0bcdd42adfffa536f354cf
+      internalID: -614136210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 812
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca68ee406966aec45aac33c5164254d0
+      internalID: 390512186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_4
+      rect:
+        serializedVersion: 2
+        x: 1264
+        y: 812
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb8e6d5645df834449f6ce9f731a6a64
+      internalID: -838799541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 796
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3244b8a92159da409c679938e6eabb0
+      internalID: -1336941995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_6
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 796
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9a03688c6afe9144a35938eae800664
+      internalID: 300200420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_7
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 796
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07df976760622494388c020e8ba0f050
+      internalID: 1021896097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_8
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 796
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72928e8442ca4584aa2aa6dc70a5ca1b
+      internalID: 1931190818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 780
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 754e72f7763bdc941b5bad78e0285da1
+      internalID: 1660922183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_10
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 780
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa558bd515a287e4a81d775aea4fc20e
+      internalID: 242168494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_11
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 780
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10b8c7d750dd98e4bb03a9273a5ac9f8
+      internalID: -485676524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_12
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 780
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98e2405fecd52874899183d1c7171e07
+      internalID: -806018617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_13
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 764
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aabee5aa98d89024185edb0779add869
+      internalID: 1095795137
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_14
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 764
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 784a8bf322d49804e97adc98d4163c1c
+      internalID: 127716914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_15
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 764
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a7021a48ca5d714baf3e54da4af58c3
+      internalID: -473668920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_16
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 764
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f5af5b1fb4758949980654d13d2cfc1
+      internalID: -2106557314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_17
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 748
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1eb15de0dd4d5a84789192864627db4a
+      internalID: -1837330065
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_18
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 748
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7662210d4ae1e3448b02c53e4cdc2fc
+      internalID: 1891735237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_19
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 684
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7beb1e7df2e1663449532a1cf61977d1
+      internalID: 1596660847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_20
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 684
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 583d828573f760a4eaa75874c8a53499
+      internalID: 883670172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_21
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 684
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df4749eb374aead4aa59992b537af0cf
+      internalID: 2014329309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_22
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 668
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6222437f09ef09b4489f784164f818d3
+      internalID: 743859516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_23
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 668
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2bdcc9782163cb241b427d064c252ce8
+      internalID: -1220266319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_24
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 668
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8024d9b794302444cb1b7be818195cc0
+      internalID: -888008612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_25
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 652
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63c51df9b05a94a4ab45e032701a6de9
+      internalID: -769174008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_26
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 652
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ae67c613a1588a4a8f1020cb983bfb1
+      internalID: 1184303569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_27
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 652
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b16998b2316454645a3d87ae7ecaf177
+      internalID: -376768318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_28
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 652
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a4197fe6fa0ab048aae17e3c5582e86
+      internalID: -1562943337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_29
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 652
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d7e4909abf23b6449f9832e7b0e8f6e
+      internalID: 600050222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_30
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 636
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ecfb25d0975fa24e8ef7c6905dce99f
+      internalID: -1683954910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_31
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 636
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c6cedd4ece195e4da83a2aec4500b26
+      internalID: 19830419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_32
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 636
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c36859a049f77245914c62131aa6b8e
+      internalID: -1304919800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_33
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 364
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33278c7b45b030446b3a5e26a09cbf40
+      internalID: 1035800215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_34
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 364
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae0c7fb91371d184d9c9f76138765d0c
+      internalID: 120271905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_35
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 348
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c715492f15eaf0549846dcf882cd7749
+      internalID: 901035160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: procedural-maps-grayscale-test1_36
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 348
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b4702323a3b9f148b7cea7c004d6ef7
+      internalID: 466790508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      procedural-maps-grayscale-test1_0: -1114137912
+      procedural-maps-grayscale-test1_1: 194026457
+      procedural-maps-grayscale-test1_10: 242168494
+      procedural-maps-grayscale-test1_11: -485676524
+      procedural-maps-grayscale-test1_12: -806018617
+      procedural-maps-grayscale-test1_13: 1095795137
+      procedural-maps-grayscale-test1_14: 127716914
+      procedural-maps-grayscale-test1_15: -473668920
+      procedural-maps-grayscale-test1_16: -2106557314
+      procedural-maps-grayscale-test1_17: -1837330065
+      procedural-maps-grayscale-test1_18: 1891735237
+      procedural-maps-grayscale-test1_19: 1596660847
+      procedural-maps-grayscale-test1_2: -614136210
+      procedural-maps-grayscale-test1_20: 883670172
+      procedural-maps-grayscale-test1_21: 2014329309
+      procedural-maps-grayscale-test1_22: 743859516
+      procedural-maps-grayscale-test1_23: -1220266319
+      procedural-maps-grayscale-test1_24: -888008612
+      procedural-maps-grayscale-test1_25: -769174008
+      procedural-maps-grayscale-test1_26: 1184303569
+      procedural-maps-grayscale-test1_27: -376768318
+      procedural-maps-grayscale-test1_28: -1562943337
+      procedural-maps-grayscale-test1_29: 600050222
+      procedural-maps-grayscale-test1_3: 390512186
+      procedural-maps-grayscale-test1_30: -1683954910
+      procedural-maps-grayscale-test1_31: 19830419
+      procedural-maps-grayscale-test1_32: -1304919800
+      procedural-maps-grayscale-test1_33: 1035800215
+      procedural-maps-grayscale-test1_34: 120271905
+      procedural-maps-grayscale-test1_35: 901035160
+      procedural-maps-grayscale-test1_36: 466790508
+      procedural-maps-grayscale-test1_4: -838799541
+      procedural-maps-grayscale-test1_5: -1336941995
+      procedural-maps-grayscale-test1_6: 300200420
+      procedural-maps-grayscale-test1_7: 1021896097
+      procedural-maps-grayscale-test1_8: 1931190818
+      procedural-maps-grayscale-test1_9: 1660922183
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

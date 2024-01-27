@@ -6,21 +6,33 @@ using UnityEngine.Tilemaps;
 [RequireComponent(typeof(Tilemap))]
 public class tilemaptest : MonoBehaviour
 {
-    private Tilemap _tilemap;
-    void Start()
-    {
-        _tilemap = GetComponent<Tilemap>();
+    [SerializeField] private Tilemap[] _tilemaps;
+    [SerializeField] private Color _tint;
 
-        for (int i = 0; i < _tilemap.cellBounds.size.x; i++)
+    private void Start()
+    {
+        foreach(var tilemap in _tilemaps)
         {
-            for (int j = 0; j < _tilemap.cellBounds.size.y; j++)
+            Tint(tilemap);
+        }
+    }
+
+    private void Tint(Tilemap tilemap)
+    {
+        for (int i = tilemap.cellBounds.x; i < tilemap.cellBounds.size.x; i++)
+        {
+            for (int j = tilemap.cellBounds.y; j < tilemap.cellBounds.size.y; j++)
             {
-                Vector3Int tilePosition = new Vector3Int(i, j, 0);
-                TileBase tile = _tilemap.GetTile(tilePosition);
-                if (tile != null)
+                for (int k = tilemap.cellBounds.z; k < tilemap.cellBounds.size.z; k++)
                 {
-                    Tile tileData = (Tile)tile;
-                    Debug.Log(tileData.color);
+                    Vector3Int tilePosition = new Vector3Int(i, j, k);
+                    TileBase tile = tilemap.GetTile(tilePosition);
+                    if (tile != null)
+                    {
+                        tilemap.RemoveTileFlags(tilePosition, TileFlags.LockColor);
+                        tilemap.SetColor(tilePosition, _tint);
+                        tilemap.SetTileFlags(tilePosition, TileFlags.LockColor);
+                    }
                 }
             }
         }
