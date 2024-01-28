@@ -68,7 +68,7 @@ public class PlayerTypingMovement : MonoBehaviour
 
     private bool TryMoveToKey(char key, out KeyTile keyTile)
     {
-        foreach (var candidateKeyTile in LevelTiles.Instance.GetNeighboursOf(transform.position))
+        foreach (var candidateKeyTile in KeyTiles.Instance.GetNeighboursOf(transform.position))
         {
             if (candidateKeyTile.Key == key)
             {

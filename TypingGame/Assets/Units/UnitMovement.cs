@@ -40,7 +40,7 @@ public class UnitMovement : MonoBehaviour
 
     private void Start()
     {
-        _allowedPositions = new HashSet<Vector2Int>(LevelTiles.Instance.PathTiles.GetPositions());
+        _allowedPositions = new HashSet<Vector2Int>(KeyTiles.Instance.PathTiles.GetPositions());
     }
 
     private void FixedUpdate()
@@ -158,7 +158,7 @@ public class UnitMovement : MonoBehaviour
         return _allowedPositions.TryGetValue(cell + direction, out neighbourCell);
     }
 
-    private Vector2Int GetCell(Vector3 position) => (Vector2Int)LevelTiles.Instance.PathTiles.WorldToCell(position);
+    private Vector2Int GetCell(Vector3 position) => (Vector2Int)KeyTiles.Instance.PathTiles.WorldToCell(position);
     private Vector3 GetCentre(Vector3 position) => position + _centre.localPosition;
     private Vector3 GetCellCentre(Vector2Int cell) => new Vector3(cell.x, cell.y, 0) + _centre.localPosition;
 

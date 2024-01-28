@@ -6,7 +6,7 @@ using System.Linq;
 using UnityEngine.UIElements;
 using System;
 
-public class LevelTiles : Singleton<LevelTiles>
+public class KeyTiles : Singleton<KeyTiles>
 {
     [SerializeField] private Tilemap _pathTiles;
     [SerializeField] private GameObject _keyIconPrefab;
@@ -33,7 +33,6 @@ public class LevelTiles : Singleton<LevelTiles>
     {
         if (state.EndsPlayerControl())
         {
-            // TODO: Disable only the key tiles, not the tilemaps as well
             gameObject.SetActive(false);
         }
         else

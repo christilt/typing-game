@@ -71,7 +71,7 @@ public class GameManager : Singleton<GameManager>
             case GameState.LevelStarting:
                 _pauseHelper.Pause();
                 SceneHider.Instance.StartOfSceneFadeIn();
-                LevelTiles.Instance.Initialise(() =>
+                KeyTiles.Instance.Initialise(() =>
                 {
                     TryChangeState(GameState.LevelIntroducing);
                 });
