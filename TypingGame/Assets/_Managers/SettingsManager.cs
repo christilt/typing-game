@@ -20,4 +20,5 @@ public class SettingsManager : Singleton<SettingsManager>
     public Lazy<CharacterSetSO> CharacterSet => new(() => LevelSettings.GetCharacterSet(Difficulty));
     public Lazy<float> BenchmarkDurationSeconds => new(() => LevelSettings.GetBenchmarkDurationSeconds(Difficulty));
     public Lazy<float> UnitSpeedModifier => new(() => LevelSettings.GetUnitSpeedModifier(Difficulty));
+    public Lazy<PlayerAttackSetting> PlayerAttackSetting => new(() => LevelSettings.GetPlayerAttackSetting(Difficulty));
 }

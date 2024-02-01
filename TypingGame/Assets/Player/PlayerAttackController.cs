@@ -16,12 +16,12 @@ public class PlayerAttackController : MonoBehaviour
     private void Awake()
     {
         _input = new();
-        _input.Main.Trigger.performed += Attack;
+        _input.Main.Trigger.performed += MaybeAttack;
     }
 
     private void OnDestroy()
     {
-        _input.Main.Trigger.performed -= Attack;
+        _input.Main.Trigger.performed -= MaybeAttack;
     }
 
     public void EnableComponent()
@@ -39,7 +39,15 @@ public class PlayerAttackController : MonoBehaviour
         }
     }
 
-    private void Attack(CallbackContext context)
+    private void MaybeAttack(CallbackContext context)
+    {
+        if (PlayerAttackManager.Instance.TryPlayerAttack())
+        {
+            Attack();
+        }
+    }
+
+    private void Attack()
     {
         _currentAttack = GameObject.Instantiate(_playerAttackPrefab, transform);
     }

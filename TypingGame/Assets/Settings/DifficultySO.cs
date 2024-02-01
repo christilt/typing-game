@@ -11,6 +11,9 @@ public class DifficultySO : ScriptableObject
 
     [SerializeField] private float _defaultSpeedModifier;
     public float DefaultSpeedModifier => _defaultSpeedModifier;
+
+    [SerializeField] private PlayerAttackSetting _defaultPlayerAttackSetting;
+    public PlayerAttackSetting DefaultPlayerAttackSetting => _defaultPlayerAttackSetting;
 }
 
 public enum Difficulty

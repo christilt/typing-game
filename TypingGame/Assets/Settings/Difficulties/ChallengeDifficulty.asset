@@ -15,3 +15,4 @@ MonoBehaviour:
   _difficulty: 1
   _name: Challenge
   _defaultSpeedModifier: 1
+  _defaultPlayerAttackSetting: 1

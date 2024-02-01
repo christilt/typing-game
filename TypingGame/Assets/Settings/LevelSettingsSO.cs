@@ -29,34 +29,41 @@ public class LevelSettingsSO : ScriptableObject
 
     public float GetUnitSpeedModifier(DifficultySO difficulty) => GetDifficultyValue(difficulty.Difficulty, x => x.UnitSpeedModifier, difficulty.DefaultSpeedModifier);
 
+    public PlayerAttackSetting GetPlayerAttackSetting(DifficultySO difficulty) => GetDifficultyValue(difficulty.Difficulty, x => x.PlayerAttackSetting, difficulty.DefaultPlayerAttackSetting);
 
-
-
-
-    private TValue GetDifficultyValue<TValue>(Difficulty difficulty, Func<DifficultyOverride, TValue> overriddenValueSelector, TValue defaultValue)
+    private TValue GetDifficultyValue<TValue>(Difficulty difficulty, Func<DifficultyOverride,  TValue> overriddenValueSelector, TValue defaultValue)
     {
         var difficultyValue = _difficultyOverrides.FirstOrDefault(x => x.Difficulty == difficulty);
+        if (difficultyValue == null)
+            return defaultValue;
 
-        if (difficultyValue != null)
-        {
-            return overriddenValueSelector(difficultyValue);
-        }
-
-        return defaultValue;
+        return overriddenValueSelector(difficultyValue);
     }
 
     private float GetDifficultyValue(Difficulty difficulty, Func<DifficultyOverride, UnityNullableFloat> overriddenValueSelector, float defaultValue)
     {
         var difficultyValue = _difficultyOverrides.FirstOrDefault(x => x.Difficulty == difficulty);
+        if (difficultyValue == null)
+            return defaultValue;
 
-        if (difficultyValue != null)
-        {
-            var overriddenValue = overriddenValueSelector(difficultyValue);
-            if (overriddenValue.HasValue)
-                return overriddenValue.Value;
-        }
+        var overriddenValue = overriddenValueSelector(difficultyValue);
+        if (!overriddenValue.HasValue)
+            return defaultValue;
 
-        return defaultValue;
+        return overriddenValue.Value;
+    }
+
+    private T GetDifficultyValue<T>(Difficulty difficulty, Func<DifficultyOverride, UnityNullableEnum<T>> overriddenValueSelector, T defaultValue) where T : Enum
+    {
+        var difficultyValue = _difficultyOverrides.FirstOrDefault(x => x.Difficulty == difficulty);
+        if (difficultyValue == null)
+            return defaultValue;
+
+        var overriddenValue = overriddenValueSelector(difficultyValue);
+        if (!overriddenValue.HasValue)
+            return defaultValue;
+
+        return overriddenValue.Value;
     }
 
     [Serializable]
@@ -66,5 +73,6 @@ public class LevelSettingsSO : ScriptableObject
         public CharacterSetSO CharacterSet;
         public UnityNullableFloat BenchmarkDurationSeconds;
         public UnityNullableFloat UnitSpeedModifier;
+        public UnityNullableEnum<PlayerAttackSetting> PlayerAttackSetting;
     }
 }

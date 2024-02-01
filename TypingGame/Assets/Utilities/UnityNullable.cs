@@ -18,3 +18,11 @@ public class UnityNullableFloat
     public float Value;
     public bool HasValue;
 }
+
+[Serializable]
+public class UnityNullableEnum<T>
+    where T : Enum
+{
+    public T Value;
+    public bool HasValue;
+}

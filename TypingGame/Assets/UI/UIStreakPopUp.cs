@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 [RequireComponent(typeof(UINotificationPopUp))]
 public class UIStreakPopUp : MonoBehaviour
@@ -29,6 +30,7 @@ public class UIStreakPopUp : MonoBehaviour
         var colour = streak.Category.GetColour();
         var text = TextHelper.WithColour($"Streak x{streak.Count}", colour);
         _notificationPopUp.ShowText(text);
+        PlayerAttackManager.Instance.NotifyOfStat(streak);
     }
 
     public void HandleReset()
