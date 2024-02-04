@@ -60,6 +60,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed8b6cf1f9a45af4abbdf1d3b3756573, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _notifyAfterMinimumCount: 20
+  _notifyAfterIntervalCount: 10
 --- !u!114 &5871454338381770801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,6 +78,8 @@ MonoBehaviour:
   _burstMaximumChecked: 9
   _burstProcessingInterval: 0.2
   _burstMistakesTolerated: 2
+  _notifyForCategories: 0000000001000000
+  _notifyIntervalSeconds: 7
 --- !u!1 &732694257627241145
 GameObject:
   m_ObjectHideFlags: 0

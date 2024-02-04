@@ -14,18 +14,28 @@ public class BurstRecorder : MonoBehaviour
     [SerializeField] private float _burstProcessingInterval;
     [SerializeField] private int _burstMistakesTolerated;
 
+    [SerializeField] private StatCategory[] _notifyForCategories;
+    [SerializeField] private float _notifyIntervalSeconds;
+
     private readonly Queue<MeasureBurstsRequest> _burstMeasurementRequests = new();
     private readonly List<BurstMeasurement> _currentBurstMeasurements = new();
 
     private BurstStat _bestBurst;
     private int _currentBurstMistakes;
+    private float _notifyIntervalSecondsRemaining;
 
     private void Start()
     {
         StartCoroutine(ProcessBurstMeasurement());
     }
 
+    private void Update()
+    {
+        _notifyIntervalSecondsRemaining -= Time.deltaTime;
+    }
+
     public event Action<BurstStat> OnBurstMeasured;
+    public event Action<BurstStat> OnBurstNotification;
     public event Action OnBurstReset;
 
     public BurstStat CalculateTopSpeed() => _bestBurst;
@@ -35,7 +45,7 @@ public class BurstRecorder : MonoBehaviour
         _burstMeasurementRequests.Enqueue(new MeasureBurstsRequest(keyNumber, timeKeyLogged, measuredBurst =>
         {
             OnBurstMeasured?.Invoke(measuredBurst);
-
+            MaybeNotify(measuredBurst);
             if (measuredBurst.IsBetterThan(_bestBurst))
             {
                 _bestBurst = measuredBurst;
@@ -114,13 +124,17 @@ public class BurstRecorder : MonoBehaviour
         }
     }
 
-    private void MaybeIncreaseBestBurst(BurstStat measuredBurst)
+    private void MaybeNotify(BurstStat burst)
     {
-        if (measuredBurst.IsBetterThan(_bestBurst))
-        {
-            _bestBurst = measuredBurst;
-            Debug.Log($"New best burst: {measuredBurst}"); // TODO remove
-        }
+        if (_notifyIntervalSecondsRemaining > 0)
+            return;
+
+        if (!_notifyForCategories.Contains(burst.Category))
+            return;
+
+        OnBurstNotification?.Invoke(burst);
+
+        _notifyIntervalSecondsRemaining = _notifyIntervalSeconds;
     }
 
     private class BurstMeasurement

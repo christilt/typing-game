@@ -19,9 +19,11 @@ public class TypingRecorder : MonoBehaviour
     private int _keysTyped;
 
     public event Action<StreakStat> OnStreakIncreased;
+    public event Action<StreakStat> OnStreakNotification;
     public event Action OnStreakReset;
 
     public event Action<BurstStat> OnBurstMeasured;
+    public event Action<BurstStat> OnBurstNotification;
     public event Action OnBurstReset;
 
     private void Awake()
@@ -33,8 +35,10 @@ public class TypingRecorder : MonoBehaviour
     private void Start()
     {
         _streakRecorder.OnStreakIncreased += HandleStreakIncreased;
+        _streakRecorder.OnStreakNotification += HandleStreakNotification;
         _streakRecorder.OnStreakReset += HandleStreakReset;
         _burstRecorder.OnBurstMeasured += HandleBurstMeasured;
+        _burstRecorder.OnBurstNotification += HandleBurstNotification;
         _burstRecorder.OnBurstReset += HandleBurstReset;
     }
 
@@ -43,11 +47,13 @@ public class TypingRecorder : MonoBehaviour
         if (_streakRecorder != null)
         {
             _streakRecorder.OnStreakIncreased -= HandleStreakIncreased;
+            _streakRecorder.OnStreakNotification -= HandleStreakNotification;
             _streakRecorder.OnStreakReset -= HandleStreakReset;
         }
         if ( _burstRecorder != null)
         {
             _burstRecorder.OnBurstMeasured -= HandleBurstMeasured;
+            _burstRecorder.OnBurstNotification -= HandleBurstNotification;
             _burstRecorder.OnBurstReset -= HandleBurstReset;
         }
     }
@@ -108,8 +114,10 @@ public class TypingRecorder : MonoBehaviour
     }
 
     private void HandleStreakIncreased(StreakStat streak) => OnStreakIncreased?.Invoke(streak);
+    private void HandleStreakNotification(StreakStat streak) => OnStreakNotification?.Invoke(streak);
     private void HandleStreakReset() => OnStreakReset?.Invoke();
     private void HandleBurstMeasured(BurstStat streak) => OnBurstMeasured?.Invoke(streak);
+    private void HandleBurstNotification(BurstStat streak) => OnBurstNotification?.Invoke(streak);
     private void HandleBurstReset() => OnBurstReset?.Invoke();
 }
 

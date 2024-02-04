@@ -8,11 +8,6 @@ using UnityEngine;
 [RequireComponent(typeof(UINotificationPopUp))]
 public class UIBurstPopUp : MonoBehaviour
 {
-    [SerializeField] private StatCategory[] _notifyForCategories;
-    [SerializeField] private float _notifyIntervalSeconds;
-
-    private float _notifyIntervalSecondsRemaining;
-
     private UINotificationPopUp _notificationPopUp;
 
     private void Awake()
@@ -20,26 +15,12 @@ public class UIBurstPopUp : MonoBehaviour
         _notificationPopUp = GetComponent<UINotificationPopUp>();
     }
 
-    private void Update()
+    public void Notify(BurstStat burst)
     {
-        _notifyIntervalSecondsRemaining -= Time.deltaTime;
-    }
-
-    public void MaybeNotifyOfStat(BurstStat burst)
-    {
-        if (_notifyIntervalSecondsRemaining > 0)
-            return;
-
-        if (!_notifyForCategories.Contains(burst.Category))
-            return;
-
         var colour = burst.Category.GetColour();
         var floorWpm = Math.Floor(burst.WordsPerMinute); // Because if rounded this same rounding would not occur later
         var text = TextHelper.WithColour($"{floorWpm} WPM", colour);
         _notificationPopUp.ShowText(text);
-        PlayerAttackManager.Instance.NotifyOfStat(burst); // TODO: Maybe make this more central
-
-        _notifyIntervalSecondsRemaining = _notifyIntervalSeconds;
     }
 
     public void HandleReset()

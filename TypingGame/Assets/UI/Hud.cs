@@ -29,10 +29,10 @@ public class Hud : MonoBehaviour
         CollectableEffectManager.Instance.OnCollectableEffectUpdate += _statusEffectPanel.UpdateEffect;
         CollectableEffectManager.Instance.OnCollectableEffectRemoved += _statusEffectPanel.RemoveEffect;
 
-        StatsManager.Instance.TypingRecorder.OnStreakIncreased += _streakPopUp.MaybeNotifyOfStat;
+        StatsManager.Instance.TypingRecorder.OnStreakNotification += _streakPopUp.Notify;
         StatsManager.Instance.TypingRecorder.OnStreakReset += _streakPopUp.HandleReset;
 
-        StatsManager.Instance.TypingRecorder.OnBurstMeasured += _burstPopUp.MaybeNotifyOfStat;
+        StatsManager.Instance.TypingRecorder.OnBurstNotification += _burstPopUp.Notify;
         StatsManager.Instance.TypingRecorder.OnBurstReset += _burstPopUp.HandleReset;
 
         PlayerAttackManager.Instance.OnReadinessChanged += _attackBar.UpdateReadiness;
@@ -54,10 +54,10 @@ public class Hud : MonoBehaviour
 
         if (StatsManager.Instance?.TypingRecorder != null)
         {
-            StatsManager.Instance.TypingRecorder.OnStreakIncreased -= _streakPopUp.MaybeNotifyOfStat;
+            StatsManager.Instance.TypingRecorder.OnStreakNotification -= _streakPopUp.Notify;
             StatsManager.Instance.TypingRecorder.OnStreakReset -= _streakPopUp.HandleReset;
 
-            StatsManager.Instance.TypingRecorder.OnBurstMeasured -= _burstPopUp.MaybeNotifyOfStat;
+            StatsManager.Instance.TypingRecorder.OnBurstNotification -= _burstPopUp.Notify;
             StatsManager.Instance.TypingRecorder.OnBurstReset -= _burstPopUp.HandleReset;
         }
 

@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
 
 public class PlayerAttackManager : Singleton<PlayerAttackManager>
 {
@@ -24,6 +19,18 @@ public class PlayerAttackManager : Singleton<PlayerAttackManager>
         if (SettingsManager.Instance.PlayerAttackSetting.Value == PlayerAttackSetting.StartFull)
         {
             MaybeUpdateReadiness(1, forceEvent: true);
+        }
+
+        StatsManager.Instance.TypingRecorder.OnBurstNotification += NotifyOfStat;
+        StatsManager.Instance.TypingRecorder.OnStreakNotification += NotifyOfStat;
+    }
+
+    private void OnDestroy()
+    {
+        if (StatsManager.Instance?.TypingRecorder != null)
+        {
+            StatsManager.Instance.TypingRecorder.OnBurstNotification -= NotifyOfStat;
+            StatsManager.Instance.TypingRecorder.OnStreakNotification -= NotifyOfStat;
         }
     }
 
