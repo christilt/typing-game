@@ -185,6 +185,11 @@ public static class GameStateExtensions
         return state == GameState.LevelIntroducing;
     }
 
+    public static bool StartsPlayerControl(this GameState state)
+    {
+        return state == GameState.LevelPlaying;
+    }
+
     public static bool EndsPlayerControl(this GameState state)
     {
         return state.InvolvesLevelWinning()

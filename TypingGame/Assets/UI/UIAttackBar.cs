@@ -15,18 +15,18 @@ public class UIAttackBar : MonoBehaviour
 
     private void Start()
     {
-        _fillWidth = (_fill.rectTransform.offsetMax).x * -1; // rectTransform.width = 0 at start, so offsetMax needed instead.  offsetMax changes so value should be recorded
-        PlayerAttackManager.Instance.OnReadinessChanged += UpdateReadiness;
+        // rectTransform.width sometimes = 0 at start, so offsetMax needed instead in those cases.  offsetMax changes so value should be recorded and max taken
+        _fillWidth = Math.Max((_fill.rectTransform.offsetMax).x * -1f, _fill.rectTransform.rect.width); 
     }
 
-    private void OnDestroy()
+    private void OnEnable()
     {
-        PlayerAttackManager.Instance.OnReadinessChanged -= UpdateReadiness;
+        UpdateReadiness(PlayerAttackManager.Instance.Readiness);
     }
 
-    private void UpdateReadiness(float increase)
+    public void UpdateReadiness(PlayerAttackReadiness attackReadiness)
     {
-        if (PlayerAttackManager.Instance.IsReady)
+        if (attackReadiness.IsReady)
         {
             _readyText.SetActive(true);
         }
@@ -37,14 +37,16 @@ public class UIAttackBar : MonoBehaviour
 
         // See https://stackoverflow.com/questions/30782829/how-to-access-recttransforms-left-right-top-bottom-positions-via-code
         // Right = -1 * offsetMax.x
-        _fill.rectTransform.offsetMax = new Vector2(GetFillRight() * -1, _fill.rectTransform.offsetMax.y);
+        var x = GetFillRight(attackReadiness.Proportion) * -1f;
+        Debug.Log($"Attackbar x={x}");
+        _fill.rectTransform.offsetMax = new Vector2(x, _fill.rectTransform.offsetMax.y);
     }
 
     // If width = 400, 400 is 0% and 0 is 100%
-    private float GetFillRight()
+    private float GetFillRight(float readinessProportion)
     {
         var fillMultiplier = _fillWidth / 100f;
-        var readinessWidth = fillMultiplier * PlayerAttackManager.Instance.ReadinessProportion * 100;
+        var readinessWidth = fillMultiplier * readinessProportion * 100f;
         return _fillWidth - readinessWidth;
     }
 }

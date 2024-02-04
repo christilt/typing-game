@@ -51,6 +51,7 @@ MonoBehaviour:
   _canvas: {fileID: 152894855208625596}
   _streakPopUp: {fileID: 657023010247050686}
   _burstPopUp: {fileID: 8723457578066073929}
+  _attackBar: {fileID: 4278791453753365087}
 --- !u!210 &9133539413101618968
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -81,7 +82,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3848367283848370851
 RectTransform:
   m_ObjectHideFlags: 0
@@ -521,6 +522,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AttackBar
       objectReference: {fileID: 0}
+    - target: {fileID: 7604475988456922749, guid: 865ce3b3f84af6549a9b549ea6481eeb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -531,6 +536,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3391463851238763432, guid: 865ce3b3f84af6549a9b549ea6481eeb, type: 3}
   m_PrefabInstance: {fileID: 897411885049825320}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4278791453753365087 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3969198986973780599, guid: 865ce3b3f84af6549a9b549ea6481eeb, type: 3}
+  m_PrefabInstance: {fileID: 897411885049825320}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 662ce5e911b25da4790849ae37a98d6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1296054411483831474
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -542,6 +558,10 @@ PrefabInstance:
     - target: {fileID: 1501735514894807095, guid: f104ac327696c644eac32297fa30d427, type: 3}
       propertyPath: m_Name
       value: BurstPopUp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1501735514894807095, guid: f104ac327696c644eac32297fa30d427, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4327802430514661620, guid: f104ac327696c644eac32297fa30d427, type: 3}
       propertyPath: m_Pivot.x
@@ -666,6 +686,10 @@ PrefabInstance:
     - target: {fileID: 1501735514894807095, guid: f104ac327696c644eac32297fa30d427, type: 3}
       propertyPath: m_Name
       value: StreakPopUp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1501735514894807095, guid: f104ac327696c644eac32297fa30d427, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2970528472526708124, guid: f104ac327696c644eac32297fa30d427, type: 3}
       propertyPath: m_text

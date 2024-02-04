@@ -12,6 +12,7 @@ public class Hud : MonoBehaviour
     [SerializeField] private Canvas _canvas;
     [SerializeField] private UIStreakPopUp _streakPopUp;
     [SerializeField] private UIBurstPopUp _burstPopUp;
+    [SerializeField] private UIAttackBar _attackBar;
 
     private void Awake()
     {
@@ -34,6 +35,7 @@ public class Hud : MonoBehaviour
         StatsManager.Instance.TypingRecorder.OnBurstMeasured += _burstPopUp.MaybeNotifyOfStat;
         StatsManager.Instance.TypingRecorder.OnBurstReset += _burstPopUp.HandleReset;
 
+        PlayerAttackManager.Instance.OnReadinessChanged += _attackBar.UpdateReadiness;
     }
 
     private void OnDestroy()
@@ -57,6 +59,11 @@ public class Hud : MonoBehaviour
 
             StatsManager.Instance.TypingRecorder.OnBurstMeasured -= _burstPopUp.MaybeNotifyOfStat;
             StatsManager.Instance.TypingRecorder.OnBurstReset -= _burstPopUp.HandleReset;
+        }
+
+        if (PlayerAttackManager.Instance != null)
+        {
+            PlayerAttackManager.Instance.OnReadinessChanged -= _attackBar.UpdateReadiness;
         }
     }
 
@@ -85,11 +92,20 @@ public class Hud : MonoBehaviour
     {
         UpdateTextForGameState(state);
 
+        if (state.StartsPlayerControl())
+        {
+            _statusEffectPanel.gameObject.SetActive(true);
+            _burstPopUp.gameObject.SetActive(true);
+            _streakPopUp.gameObject.SetActive(true);
+            _attackBar.gameObject.SetActive(true);
+        }
+
         if (state.EndsPlayerControl())
         {
             _statusEffectPanel.gameObject.SetActive(false);
             _burstPopUp.gameObject.SetActive(false);
             _streakPopUp.gameObject.SetActive(false);
+            _attackBar.gameObject.SetActive(false);
         }
     }
 

@@ -7,11 +7,11 @@ using UnityEngine;
 
 public class PlayerAttackManager : Singleton<PlayerAttackManager>
 {
-    public event Action<float> OnReadinessChanged;
+    public event Action<PlayerAttackReadiness> OnReadinessChanged;
 
-    public float ReadinessProportion { get; private set; }
-
-    public bool IsReady => gameObject.activeInHierarchy && ReadinessProportion == 1;
+    private bool IsReady => gameObject.activeInHierarchy && _readinessProportion == 1;
+    private float _readinessProportion;
+    public PlayerAttackReadiness Readiness => new PlayerAttackReadiness(_readinessProportion, IsReady);
 
     private void Start()
     {
@@ -61,19 +61,30 @@ public class PlayerAttackManager : Singleton<PlayerAttackManager>
         }
     }
 
-    private void MaybeIncreaseReadiness(float change) => MaybeUpdateReadiness(ReadinessProportion + change);
+    private void MaybeIncreaseReadiness(float change) => MaybeUpdateReadiness(_readinessProportion + change);
 
     private void MaybeUpdateReadiness(float value, bool forceEvent = false)
     {
-        var previousReadiness = ReadinessProportion;
+        var previousReadiness = _readinessProportion;
 
-        ReadinessProportion = Math.Clamp(value, 0, 1);
-        // TODO remove
-        Debug.Log($"Player attack readiness={ReadinessProportion}; IsReady={IsReady}");
-        var actualChange = ReadinessProportion - previousReadiness;
+        _readinessProportion = Math.Clamp(value, 0, 1);
+        var actualChange = _readinessProportion - previousReadiness;
         if (forceEvent || actualChange != 0)
         {
-            OnReadinessChanged?.Invoke(actualChange);
+            OnReadinessChanged?.Invoke(Readiness);
         }
     }
+}
+
+public struct PlayerAttackReadiness
+{
+    public PlayerAttackReadiness(float proportion, bool isReady)
+    {
+        Proportion = proportion;
+        IsReady = isReady;
+    }
+
+    public float Proportion { get; }
+    public bool IsReady { get; }
+    public float Percentage => Proportion * 100;
 }
