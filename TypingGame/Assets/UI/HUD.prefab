@@ -563,6 +563,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2970528472526708124, guid: f104ac327696c644eac32297fa30d427, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4327802430514661620, guid: f104ac327696c644eac32297fa30d427, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -668,8 +672,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50246ebc90b24f74ab423f2a949b6544, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _notifyForCategories: 0000000001000000
-  _notifyIntervalSeconds: 7
 --- !u!224 &3311258429048509510 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4327802430514661620, guid: f104ac327696c644eac32297fa30d427, type: 3}
@@ -697,7 +699,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2970528472526708124, guid: f104ac327696c644eac32297fa30d427, type: 3}
       propertyPath: m_fontSize
-      value: 54
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 2970528472526708124, guid: f104ac327696c644eac32297fa30d427, type: 3}
       propertyPath: m_fontAsset
@@ -705,12 +707,16 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: e3863deb86e93ea43b45aad04d728ab8, type: 2}
     - target: {fileID: 2970528472526708124, guid: f104ac327696c644eac32297fa30d427, type: 3}
       propertyPath: m_fontSizeBase
-      value: 54
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 2970528472526708124, guid: f104ac327696c644eac32297fa30d427, type: 3}
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 9054935546618221901, guid: e3863deb86e93ea43b45aad04d728ab8, type: 2}
+    - target: {fileID: 2970528472526708124, guid: f104ac327696c644eac32297fa30d427, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 3238002687
+      objectReference: {fileID: 0}
     - target: {fileID: 2970528472526708124, guid: f104ac327696c644eac32297fa30d427, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
@@ -825,8 +831,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57b3c2400943a4e4db8564b1998d92c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _notifyAfterMinimumCount: 20
-  _notifyAfterIntervalCount: 10
 --- !u!1001 &4784847321324781463
 PrefabInstance:
   m_ObjectHideFlags: 0
