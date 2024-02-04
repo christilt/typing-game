@@ -30,7 +30,7 @@ public class UIStreakPopUp : MonoBehaviour
         var colour = streak.Category.GetColour();
         var text = TextHelper.WithColour($"Streak x{streak.Count}", colour);
         _notificationPopUp.ShowText(text);
-        PlayerAttackManager.Instance.NotifyOfStat(streak);
+        PlayerAttackManager.Instance.NotifyOfStat(streak); // TODO: Maybe make this more central
     }
 
     public void HandleReset()

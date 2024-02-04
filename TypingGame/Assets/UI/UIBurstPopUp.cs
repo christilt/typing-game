@@ -37,7 +37,7 @@ public class UIBurstPopUp : MonoBehaviour
         var floorWpm = Math.Floor(burst.WordsPerMinute); // Because if rounded this same rounding would not occur later
         var text = TextHelper.WithColour($"{floorWpm} WPM", colour);
         _notificationPopUp.ShowText(text);
-        PlayerAttackManager.Instance.NotifyOfStat(burst);
+        PlayerAttackManager.Instance.NotifyOfStat(burst); // TODO: Maybe make this more central
 
         _notifyIntervalSecondsRemaining = _notifyIntervalSeconds;
     }

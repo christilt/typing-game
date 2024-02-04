@@ -9,9 +9,9 @@ public class PlayerAttackManager : Singleton<PlayerAttackManager>
 {
     public event Action<float> OnReadinessChanged;
 
-    public float Readiness { get; private set; }
+    public float ReadinessProportion { get; private set; }
 
-    public bool IsReady => gameObject.activeInHierarchy && Readiness == 1;
+    public bool IsReady => gameObject.activeInHierarchy && ReadinessProportion == 1;
 
     private void Start()
     {
@@ -23,7 +23,7 @@ public class PlayerAttackManager : Singleton<PlayerAttackManager>
 
         if (SettingsManager.Instance.PlayerAttackSetting.Value == PlayerAttackSetting.StartFull)
         {
-            MaybeUpdateReadiness(1);
+            MaybeUpdateReadiness(1, forceEvent: true);
         }
     }
 
@@ -61,17 +61,17 @@ public class PlayerAttackManager : Singleton<PlayerAttackManager>
         }
     }
 
-    private void MaybeIncreaseReadiness(float change) => MaybeUpdateReadiness(Readiness + change);
+    private void MaybeIncreaseReadiness(float change) => MaybeUpdateReadiness(ReadinessProportion + change);
 
-    private void MaybeUpdateReadiness(float value)
+    private void MaybeUpdateReadiness(float value, bool forceEvent = false)
     {
-        var previousReadiness = Readiness;
+        var previousReadiness = ReadinessProportion;
 
-        Readiness = Math.Clamp(value, 0, 1);
+        ReadinessProportion = Math.Clamp(value, 0, 1);
         // TODO remove
-        Debug.Log($"Player attack readiness={Readiness}; IsReady={IsReady}");
-        var actualChange = Readiness - previousReadiness;
-        if (actualChange != 0)
+        Debug.Log($"Player attack readiness={ReadinessProportion}; IsReady={IsReady}");
+        var actualChange = ReadinessProportion - previousReadiness;
+        if (forceEvent || actualChange != 0)
         {
             OnReadinessChanged?.Invoke(actualChange);
         }
