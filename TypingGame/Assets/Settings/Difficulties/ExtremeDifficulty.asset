@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _difficulty: 2
   _name: Extreme
-  _defaultSpeedModifier: 1.25
+  _defaultSpeedModifier: 1.15
+  _defaultPlayerAttackSetting: 0

@@ -54,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4503203035267578828, guid: 71274cf167d82d748b880dd83444ec13, type: 3}
       propertyPath: _movesPerSecond
-      value: 1.25
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4698284116297293900, guid: 71274cf167d82d748b880dd83444ec13, type: 3}
       propertyPath: m_Controller

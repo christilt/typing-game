@@ -20,22 +20,22 @@ public class UIAttackBar : MonoBehaviour
 
     private float _fillWidth;
 
-    private void Start()
-    {
-        // rectTransform.width sometimes = 0 at start, so offsetMax needed instead in those cases.  offsetMax changes so value should be recorded and max taken
-        _fillWidth = Math.Max((_fill.rectTransform.offsetMax).x * -1f, _fill.rectTransform.rect.width); 
-    }
-
     private void OnEnable()
     {
+        // rectTransform.width sometimes = 0 at start, so offsetMax needed instead in those cases.  offsetMax changes so value should be recorded and max taken
+        _fillWidth = Math.Max((_fill.rectTransform.offsetMax).x * -1f, _fill.rectTransform.rect.width);
         UpdateReadiness(PlayerAttackManager.Instance.Readiness);
+    }
+
+    private void OnDisable()
+    {
+        _pulseWhiteTween?.Kill();
     }
 
     public void UpdateReadiness(PlayerAttackReadiness attackReadiness)
     {
         _readyText.gameObject.SetActive(attackReadiness.IsReady);
         SetPulsing(attackReadiness.IsReady);
-
         // See https://stackoverflow.com/questions/30782829/how-to-access-recttransforms-left-right-top-bottom-positions-via-code
         // Right = -1 * offsetMax.x
         var x = GetFillRight(attackReadiness.Proportion) * -1f;

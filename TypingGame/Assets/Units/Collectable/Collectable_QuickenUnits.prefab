@@ -62,7 +62,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4067859757378895231, guid: 17c0940ab09ba974db781441cddde25c, type: 3}
       propertyPath: _movesPerSecond
-      value: 1.25
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4088692949322632907, guid: 17c0940ab09ba974db781441cddde25c, type: 3}
       propertyPath: m_Sprite

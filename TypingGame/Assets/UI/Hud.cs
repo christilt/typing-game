@@ -35,7 +35,10 @@ public class Hud : MonoBehaviour
         StatsManager.Instance.TypingRecorder.OnBurstNotification += _burstPopUp.Notify;
         StatsManager.Instance.TypingRecorder.OnBurstReset += _burstPopUp.HandleReset;
 
-        PlayerAttackManager.Instance.OnReadinessChanged += _attackBar.UpdateReadiness;
+        if (SettingsManager.Instance.PlayerAttackSetting.Value.IsDisplayable())
+            PlayerAttackManager.Instance.OnReadinessChanged += _attackBar.UpdateReadiness;
+        else
+            Destroy(_attackBar.gameObject);
     }
 
     private void OnDestroy()
@@ -97,7 +100,8 @@ public class Hud : MonoBehaviour
             _statusEffectPanel.gameObject.SetActive(true);
             _burstPopUp.gameObject.SetActive(true);
             _streakPopUp.gameObject.SetActive(true);
-            _attackBar.gameObject.SetActive(true);
+            if (_attackBar != null)
+                _attackBar.gameObject.SetActive(true);
         }
 
         if (state.EndsPlayerControl())
@@ -105,7 +109,8 @@ public class Hud : MonoBehaviour
             _statusEffectPanel.gameObject.SetActive(false);
             _burstPopUp.gameObject.SetActive(false);
             _streakPopUp.gameObject.SetActive(false);
-            _attackBar.gameObject.SetActive(false);
+            if (_attackBar != null)
+                _attackBar.gameObject.SetActive(false);
         }
     }
 

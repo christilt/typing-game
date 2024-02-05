@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _difficulty: 0
   _name: Normal
-  _defaultSpeedModifier: 0.75
+  _defaultSpeedModifier: 0.85
   _defaultPlayerAttackSetting: 2
