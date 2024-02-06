@@ -14,6 +14,7 @@ public class Unit : MonoBehaviour
     protected UnitMovement _movement;
     protected UnitBrain _brain;
 
+    protected UnitBoundary _optionalBoundary;
     protected UnitRespawner _optionalRespawner;
 
     public event Action<UnitState> OnStateChanging;
@@ -21,9 +22,11 @@ public class Unit : MonoBehaviour
     public UnitState State { get; protected set; }
     public Vector2 Centre => _centre.position;
     public PositionWithCentre PositionWithCentre => new PositionWithCentre(transform.position, Centre);
+    public bool HasBoundary => _optionalBoundary != null;
 
     protected virtual void Awake()
     {
+        _optionalBoundary = GetComponent<UnitBoundary>();   
         _optionalRespawner = GetComponent<UnitRespawner>();
         _movement = GetComponent<UnitMovement>();
         _brain = GetComponent<UnitBrain>();

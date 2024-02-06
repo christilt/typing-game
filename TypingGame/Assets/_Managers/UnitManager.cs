@@ -82,7 +82,7 @@ public class UnitManager : Singleton<UnitManager>
     }
 
     // TODO: Sometimes causing things to position on top of each other.  Maybe don't allow > 0 collisions when checking for obstacles
-    public Vector3 GetRespawnPosition(RespawnMode mode) => _respawnPositioner.GetRespawnPosition(mode);
+    public Vector3 GetRespawnPosition(Unit unit, RespawnMode mode) => _respawnPositioner.GetRespawnPosition(unit, mode);
 
     private void OnDestroy()
     {

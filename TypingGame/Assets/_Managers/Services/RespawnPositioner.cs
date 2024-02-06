@@ -13,7 +13,8 @@ public class RespawnPositioner : MonoBehaviour
     private object _respawnPositionsTakenLock = new();
 
     private readonly HashSet<AllowedPosition> _allowedPositions = new();
-    private readonly HashSet<Vector3> _positionsTaken = new();
+    private readonly HashSet<Vector3> _allowedPositionsTaken = new();
+    private readonly Dictionary<int, Vector3> _reservedPositions = new();
 
     private void Start()
     {
@@ -27,20 +28,31 @@ public class RespawnPositioner : MonoBehaviour
     }
 
     private List<AllowedPosition> AllowedPositionsAvailable => _allowedPositions
-        .Where(l => _positionsTaken.All(p => p != l.PositionWithCentre.Position))
+        .Where(l => _allowedPositionsTaken.All(p => p != l.PositionWithCentre.Position))
         .ToList();
 
     public void RegisterStartPosition(Unit unit)
     {
+        if (unit.HasBoundary)
+        {
+            _reservedPositions.Add(unit.transform.GetInstanceID(), unit.transform.position);
+            return;
+        }
+
         _allowedPositions.Add(new AllowedPosition(unit.PositionWithCentre, isRandom: false));
     }
 
-    public Vector3 GetRespawnPosition(RespawnMode mode)
+    public Vector3 GetRespawnPosition(Unit unit, RespawnMode mode)
     {
+        if (unit.HasBoundary && _reservedPositions.ContainsKey(unit.transform.GetInstanceID()))
+        {
+            return _reservedPositions[unit.transform.GetInstanceID()];
+        }
+
         lock (_respawnPositionsTakenLock) // Ensure respawn positions taken synchronously within the same frame
         {
             var positionInfo = GetRespawnPositionWithoutLock(mode);
-            _positionsTaken.Add(positionInfo.Position);
+            _allowedPositionsTaken.Add(positionInfo.Position);
 
             StartCoroutine(RemovePositionTakenCoroutine(positionInfo.Position));
 
@@ -51,7 +63,7 @@ public class RespawnPositioner : MonoBehaviour
         {
             yield return new WaitForEndOfFrame();
 
-            _positionsTaken.Remove(position);
+            _allowedPositionsTaken.Remove(position);
         }
     }
 

@@ -52,7 +52,7 @@ public class UnitRespawner : MonoBehaviour
 
     private void Respawn()
     {
-        transform.position = UnitManager.Instance.GetRespawnPosition(_mode);
+        transform.position = UnitManager.Instance.GetRespawnPosition(_unit, _mode);
         _unit.BeSpawned();
     }
 

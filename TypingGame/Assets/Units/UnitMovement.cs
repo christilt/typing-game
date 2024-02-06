@@ -18,6 +18,7 @@ public class UnitMovement : MonoBehaviour
 
     private UnitBrain _brain;
     private Rigidbody2D _rigidbody;
+    private UnitBoundary _optionalBoundary;
 
     private HashSet<Vector2Int> _allowedPositions;
 
@@ -36,6 +37,7 @@ public class UnitMovement : MonoBehaviour
     {
         _brain = GetComponent<UnitBrain>();
         _rigidbody = GetComponent<Rigidbody2D>();
+        _optionalBoundary = GetComponent<UnitBoundary>();
     }
 
     private void Start()
@@ -77,7 +79,6 @@ public class UnitMovement : MonoBehaviour
         foreach (var direction in otherStrictGridDirections)
             _deflectedFromDirections.Add(direction);
 
-        // TODO remove
         //Debug.Log($"[{name}]:otherDirection: {otherDirection}; relative velocity magnitude: {collision.relativeVelocity.magnitude}; _collisionPushDirections: {string.Join(", ", _collisionPushDirections)}");
     }
     private static Vector2Int Round(Vector2 velocity) => new Vector2Int((int)Math.Round(velocity.x), (int)Math.Round(velocity.y));
@@ -113,18 +114,20 @@ public class UnitMovement : MonoBehaviour
 
     private Vector2Int[] GetDirectionOptions()
     {
+        var directions = GetNeighbourCells(_centre.position)
+                .Where(c => _optionalBoundary == null || _optionalBoundary.Contains(GetCellCentre(c))) // TODO: What if the unit finds itself out of bounds?
+                .Select(GetDirectionToCell);
+
         if (_deflectedFromDirections.Count > 0 && _centreMovement?.IsAlmostExceededBy(_centre.position, CornerCuttingDistanceTolerated) == false)
         {
             var deflectedToDirections = _deflectedFromDirections.Select(d => d * -1);
 
-            return GetNeighbourCells(_centre.position)
-                .Select(GetDirectionToCell)
+            return directions
                 .Intersect(deflectedToDirections)
                 .ToArray();
         }
 
-        return GetNeighbourCells(_centre.position)
-            .Select(GetDirectionToCell)
+        return directions
             .Where(d => d != PreviousDirectionOpposite)
             .Except(_deflectedFromDirections)
             .ToArray();
