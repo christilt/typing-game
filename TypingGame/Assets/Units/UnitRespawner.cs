@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class UnitRespawner : MonoBehaviour
 {
@@ -11,9 +12,12 @@ public class UnitRespawner : MonoBehaviour
     private bool _isRespawning;
     private float _nextRespawnInSeconds;
 
+    private RandomUnit _optionalRandomUnit;
+
     private void Start()
     {
         _nextRespawnInSeconds = TotalRespawnSeconds();
+        _optionalRandomUnit = GetComponent<RandomUnit>();
     }
 
     public void RespawnLater()
@@ -52,8 +56,17 @@ public class UnitRespawner : MonoBehaviour
 
     private void Respawn()
     {
-        transform.position = UnitManager.Instance.GetRespawnPosition(_unit, _mode);
-        _unit.BeSpawned();
+        var position = UnitManager.Instance.GetRespawnPosition(_unit, _mode);
+
+        if (_optionalRandomUnit != null)
+        {
+            _optionalRandomUnit.Spawn(position);
+        }
+        else
+        {
+            transform.position = position;
+            _unit.BeSpawned();
+        }
     }
 
     private float TotalRespawnSeconds() => _respawnSeconds + Random.Range(0, _respawnAdditionalRandomSeconds);

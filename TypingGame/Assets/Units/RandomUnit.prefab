@@ -131,3 +131,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _units:
   - {fileID: 0}
+  _isRandomOnRespawn: 1
