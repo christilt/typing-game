@@ -115,7 +115,7 @@ public class UnitMovement : MonoBehaviour
     private Vector2Int[] GetDirectionOptions()
     {
         var directions = GetNeighbourCells(_centre.position)
-                .Where(c => _optionalBoundary == null || _optionalBoundary.Contains(GetCellCentre(c))) // TODO: What if the unit finds itself out of bounds?
+                .Where(c => _optionalBoundary == null || _optionalBoundary.Contains(GetCellCentre(c)))
                 .Select(GetDirectionToCell);
 
         if (_deflectedFromDirections.Count > 0 && _centreMovement?.IsAlmostExceededBy(_centre.position, CornerCuttingDistanceTolerated) == false)

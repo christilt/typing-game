@@ -11,6 +11,11 @@ public class UnitBoundary : MonoBehaviour
         {
             throw new ArgumentException($"{gameObject.name}: {nameof(_areas)} should not be empty");
         }
+        if (!Contains(transform.position))
+        {
+            // CONSIDER: If this misfires could be because we're not checking the centre
+            throw new ArgumentException($"{gameObject.name}: {nameof(_areas)} should contain object"); 
+        }
     }
 
     private void Start()
