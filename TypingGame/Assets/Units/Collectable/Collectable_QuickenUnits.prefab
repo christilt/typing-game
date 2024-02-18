@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Collectable_QuickenUnits
       objectReference: {fileID: 0}
+    - target: {fileID: 719926438917200436, guid: 17c0940ab09ba974db781441cddde25c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1796011768281060333, guid: 17c0940ab09ba974db781441cddde25c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

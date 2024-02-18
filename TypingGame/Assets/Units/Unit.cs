@@ -16,6 +16,7 @@ public class Unit : MonoBehaviour
 
     protected UnitBoundary _optionalBoundary;
     protected UnitRespawner _optionalRespawner;
+    protected RandomUnit _optionalRandomUnit;
 
     public event Action<UnitState> OnStateChanging;
     public event Action<UnitState> OnStateChanged;
@@ -28,13 +29,16 @@ public class Unit : MonoBehaviour
     {
         _optionalBoundary = GetComponent<UnitBoundary>();   
         _optionalRespawner = GetComponent<UnitRespawner>();
+        _optionalRandomUnit = GetComponent<RandomUnit>();
         _movement = GetComponent<UnitMovement>();
         _brain = GetComponent<UnitBrain>();
     }
 
     protected virtual void Start()
     {
-        var startState = _beginDestroyed ? UnitState.Destroyed : UnitState.Spawning;
+        var startState = _beginDestroyed && !HasBeenRandomUnitBefore
+            ? UnitState.Destroyed 
+            : UnitState.Spawning;
         TryChangeState(startState);
     }
 
@@ -144,8 +148,10 @@ public class Unit : MonoBehaviour
     {
         _movement.enabled = false;
         _collider.enabled = true;
-        _collider.excludeLayers = _excludeCollisionLayersWhenSpawning; 
+        _collider.excludeLayers = _excludeCollisionLayersWhenSpawning;
     }
+
+    protected bool HasBeenRandomUnitBefore => _optionalRandomUnit != null && _optionalRandomUnit.HasReplacedAUnit;
 }
 public enum UnitState
 {

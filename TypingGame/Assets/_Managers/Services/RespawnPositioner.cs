@@ -42,6 +42,15 @@ public class RespawnPositioner : MonoBehaviour
         _allowedPositions.Add(new AllowedPosition(unit.PositionWithCentre, isRandom: false));
     }
 
+    public void UnregisterStartPosition(Unit unit)
+    {
+        if (unit.HasBoundary)
+        {
+            _reservedPositions.Remove(unit.transform.GetInstanceID());
+            return;
+        }
+    }
+
     public Vector3 GetRespawnPosition(Unit unit, RespawnMode mode)
     {
         if (unit.HasBoundary && _reservedPositions.ContainsKey(unit.transform.GetInstanceID()))

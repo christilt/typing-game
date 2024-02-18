@@ -60,7 +60,7 @@ public class UnitRespawner : MonoBehaviour
 
         if (_optionalRandomUnit != null)
         {
-            _optionalRandomUnit.Spawn(position);
+            _optionalRandomUnit.ReplaceGameObject(position);
         }
         else
         {
