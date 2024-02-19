@@ -158,6 +158,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UnitExploder
       objectReference: {fileID: 0}
+    - target: {fileID: 5806970423844439451, guid: e499e00a494966843b410dfbc5506988, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7554157760836880752, guid: e499e00a494966843b410dfbc5506988, type: 3}
       propertyPath: _target
       value: 

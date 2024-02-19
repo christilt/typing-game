@@ -45,6 +45,16 @@ public class UnitMovement : MonoBehaviour
         _allowedPositions = new HashSet<Vector2Int>(KeyTiles.Instance.PathTiles.GetPositions());
     }
 
+    private void OnEnable()
+    {
+        _brain.enabled = true;
+    }
+
+    private void OnDisable()
+    {
+        _brain.enabled = false;
+    }
+
     private void FixedUpdate()
     {
         if (_centreMovement is null || _centreMovement.Value.IsExceededBy(_centre.position) || _deflectedFromDirections.Count > 0)

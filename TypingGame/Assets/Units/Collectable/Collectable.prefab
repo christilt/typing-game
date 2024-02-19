@@ -124,7 +124,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1249159870447007943, guid: 6628dbcfb4f2ffb4c8b01afe578f0fcd, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1346971043963385448, guid: 6628dbcfb4f2ffb4c8b01afe578f0fcd, type: 3}
       propertyPath: m_Color.b
@@ -140,7 +140,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1539792022579404375, guid: 6628dbcfb4f2ffb4c8b01afe578f0fcd, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1703634273346474713, guid: 6628dbcfb4f2ffb4c8b01afe578f0fcd, type: 3}
       propertyPath: _mode
@@ -370,7 +370,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5806970423844439451, guid: e499e00a494966843b410dfbc5506988, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7554157760836880752, guid: e499e00a494966843b410dfbc5506988, type: 3}
       propertyPath: _target

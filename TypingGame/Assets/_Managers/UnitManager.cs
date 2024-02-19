@@ -35,16 +35,6 @@ public class UnitManager : Singleton<UnitManager>
         return true;
     }
 
-    public bool TryUnregister(Collectable collectable)
-    {
-        if (!_collectables.Contains(collectable))
-            return false;
-
-        _collectables.Remove(collectable);
-        _respawnPositioner.UnregisterStartPosition(collectable);
-        return true;
-    }
-
     public bool TryRegister(Enemy enemy)
     {
         if (_enemies.Contains(enemy))
@@ -52,16 +42,6 @@ public class UnitManager : Singleton<UnitManager>
 
         _enemies.Add(enemy);
         _respawnPositioner.RegisterStartPosition(enemy);
-        return true;
-    }
-
-    public bool TryUnregister(Enemy enemy)
-    {
-        if (!_enemies.Contains(enemy))
-            return false;
-
-        _enemies.Remove(enemy);
-        _respawnPositioner.UnregisterStartPosition(enemy);
         return true;
     }
 

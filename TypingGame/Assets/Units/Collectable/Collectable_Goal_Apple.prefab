@@ -20,6 +20,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Collectable_Goal_Apple
       objectReference: {fileID: 0}
+    - target: {fileID: 3187212402825559623, guid: bdb219bbedac24f4e9049bd3b486ca98, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4407412920399493022, guid: bdb219bbedac24f4e9049bd3b486ca98, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

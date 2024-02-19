@@ -9,6 +9,7 @@ public class UnitBrain : MonoBehaviour
     [SerializeField] private Transform _centre;
     [SerializeField] private float _waypointMarginDistance = 0.2f;
     [SerializeField] private UnitBrainMode _mode;
+    [SerializeField] private Collider2D _fieldOfVisionCollider;
 
     private Seeker _seeker;
     private Path _path;
@@ -25,6 +26,16 @@ public class UnitBrain : MonoBehaviour
     {
         _seeker = GetComponent<Seeker>();
         _currentMode = _mode;
+    }
+
+    private void OnEnable()
+    {
+        _fieldOfVisionCollider.enabled = true;
+    }
+
+    private void OnDisable()
+    {
+        _fieldOfVisionCollider.enabled = false;
     }
 
     public Vector2Int ChooseDirection(Vector2Int[] directionOptions)

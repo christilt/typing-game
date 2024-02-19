@@ -176,7 +176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3655392608251745119}
   - component: {fileID: 6526149300475761732}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: FieldOfVision
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -242,7 +242,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4648561822870921576}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Centre
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -445,6 +445,7 @@ MonoBehaviour:
   _centre: {fileID: 4648561822870921576}
   _waypointMarginDistance: 0.2
   _mode: 0
+  _fieldOfVisionCollider: {fileID: 6526149300475761732}
 --- !u!114 &6303125168967630250
 MonoBehaviour:
   m_ObjectHideFlags: 0
