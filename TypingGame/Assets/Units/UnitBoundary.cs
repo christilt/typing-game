@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 
 public class UnitBoundary : MonoBehaviour
@@ -34,5 +35,13 @@ public class UnitBoundary : MonoBehaviour
                 return true;
         }
         return false;
+    }
+
+    public bool CopyTo(UnitBoundary other)
+    {
+        if (other == null) throw new ArgumentNullException(nameof(other));
+
+        other._areas = _areas.ToArray();
+        return true;
     }
 }

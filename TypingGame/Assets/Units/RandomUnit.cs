@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class RandomUnit : MonoBehaviour
@@ -23,25 +25,38 @@ public class RandomUnit : MonoBehaviour
     public void ReplaceGameObject(Vector3? position = null)
     {
         position ??= this.transform.position;
+        _replacementCount++;
 
         var randomIndex = UnityEngine.Random.Range(0, _units.Length);
         var unit = _units[randomIndex];
+
         unit.gameObject.SetActive(false);
         var instance = GameObject.Instantiate(unit, position.Value, this.transform.rotation, this.transform.parent);
-        _replacementCount++;
         if (TryGetComponent<Unit>(out var _))
         {
             UnitReplacementCount++;
         }
-        if (_isRandomOnRespawn)
-        {
-            CopyComponentTo(instance);
-        }
+        CopyOriginalComponentsTo(instance);
+
         instance.gameObject.SetActive(true);
         GameObject.Destroy(this.gameObject);
     }
 
-    private void CopyComponentTo(Unit unit)
+    private void CopyOriginalComponentsTo(Unit unit)
+    {
+        if (_isRandomOnRespawn)
+        {
+            CopyRandomUnitTo(unit);
+        }
+
+        if (TryGetComponent<UnitBoundary>(out var existingUnitBoundary))
+        {
+            var newUnitBoundary = unit.gameObject.AddComponent<UnitBoundary>();
+            existingUnitBoundary.CopyTo(newUnitBoundary);
+        }
+    }
+
+    private void CopyRandomUnitTo(Unit unit)
     {
         var instanceRandomUnit = unit.gameObject.AddComponent<RandomUnit>();
         instanceRandomUnit._units = _units;
