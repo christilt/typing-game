@@ -7,7 +7,7 @@ using static System.Net.Mime.MediaTypeNames;
 [RequireComponent(typeof(TextMeshProUGUI))]
 public class UIText : MonoBehaviour
 {
-    [SerializeField] private Canvas _screenSpaceCanvas;
+    [SerializeField] private CanvasScaler _screenSpaceCanvasScaler;
     [SerializeField] private Ease _textMoveInIntroEase;
     [SerializeField] private Ease _textMoveInPositiveEase;
     [SerializeField] private Ease _textMoveInNegativeEase;
@@ -30,8 +30,8 @@ public class UIText : MonoBehaviour
     private void Start()
     {
         _textMovedInPositionLocal = _text.transform.localPosition;
-        _textStartPositionLocal = _text.transform.localPosition + new Vector3(0, _screenSpaceCanvas.pixelRect.yMax, 0);
-        _textMovedOutPositionLocal = _text.transform.localPosition - new Vector3(0, _screenSpaceCanvas.pixelRect.yMax, 0);
+        _textStartPositionLocal = _text.transform.localPosition + new Vector3(0, _screenSpaceCanvasScaler.referenceResolution.y, 0);
+        _textMovedOutPositionLocal = _text.transform.localPosition - new Vector3(0, _screenSpaceCanvasScaler.referenceResolution.y, 0);
         _text.transform.localPosition = _textStartPositionLocal;
     }
 
