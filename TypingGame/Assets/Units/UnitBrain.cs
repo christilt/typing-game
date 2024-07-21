@@ -30,12 +30,14 @@ public class UnitBrain : MonoBehaviour
 
     private void OnEnable()
     {
-        _fieldOfVisionCollider.enabled = true;
+        if (_fieldOfVisionCollider != null)
+            _fieldOfVisionCollider.enabled = true;
     }
 
     private void OnDisable()
     {
-        _fieldOfVisionCollider.enabled = false;
+        if (_fieldOfVisionCollider != null)
+            _fieldOfVisionCollider.enabled = false;
     }
 
     public Vector2Int ChooseDirection(Vector2Int[] directionOptions)
