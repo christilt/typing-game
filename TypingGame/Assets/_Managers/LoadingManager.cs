@@ -45,7 +45,7 @@ public class LoadingManager : PersistentSingleton<LoadingManager>
         }
     }
 
-    private void StartLoad(string sceneName)
+    public void StartLoad(string sceneName)
     {
         if (LoadingSceneIsCurrent)
             throw new InvalidOperationException($"Not valid from Loading scene: {nameof(StartLoad)}");
@@ -60,8 +60,9 @@ public class LoadingManager : PersistentSingleton<LoadingManager>
 
     private bool LoadingSceneIsCurrent => SceneManager.GetActiveScene().name == SceneNames.Loading;
 
-    private class SceneNames
+    public static class SceneNames
     {
         public const string Loading = "Loading";
+        public const string NewGameLevel = "TestMain";
     }
 }
