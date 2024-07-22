@@ -30,7 +30,7 @@ public class KeyTile
 
     private static char RandomKey(IEnumerable<char> deniedKeys)
     {
-        var keys = SettingsManager.Instance.CharacterSet.Value.Characters;
+        var keys = LevelSettingsManager.Instance.CharacterSet.Value.Characters;
         var allowedKeys = keys.Except(deniedKeys).ToArray();
 
         return allowedKeys[Random.Range(0, allowedKeys.Length)];

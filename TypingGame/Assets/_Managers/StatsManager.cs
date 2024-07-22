@@ -11,7 +11,7 @@ public class StatsManager : Singleton<StatsManager>
 
     public LevelStats CalculateEndOfLevelStats()
     {
-        if (!GameManager.Instance.State.EndsPlayerControl())
+        if (!GameplayManager.Instance.State.EndsPlayerControl())
         {
             throw new InvalidOperationException("Not end of level!");
         }

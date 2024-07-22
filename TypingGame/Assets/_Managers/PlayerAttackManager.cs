@@ -10,13 +10,13 @@ public class PlayerAttackManager : Singleton<PlayerAttackManager>
 
     private void Start()
     {
-        if (SettingsManager.Instance.PlayerAttackSetting.Value == PlayerAttackSetting.None)
+        if (LevelSettingsManager.Instance.PlayerAttackSetting.Value == PlayerAttackSetting.None)
         {
             gameObject.SetActive(false);
             return;
         }
 
-        if (SettingsManager.Instance.PlayerAttackSetting.Value == PlayerAttackSetting.StartFull)
+        if (LevelSettingsManager.Instance.PlayerAttackSetting.Value == PlayerAttackSetting.StartFull)
         {
             MaybeUpdateReadiness(1, forceEvent: true);
         }

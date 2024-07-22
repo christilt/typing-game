@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : Singleton<GameManager>
+public class GameplayManager : Singleton<GameplayManager>
 {
     [SerializeField] private SequenceDirector _sequenceDirector;
 

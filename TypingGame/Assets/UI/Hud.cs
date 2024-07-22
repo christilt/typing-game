@@ -22,8 +22,8 @@ public class Hud : MonoBehaviour
 
     private void Start()
     {
-        UpdateForGameState(GameManager.Instance.State);
-        GameManager.Instance.OnStateChanging += UpdateForGameState;
+        UpdateForGameState(GameplayManager.Instance.State);
+        GameplayManager.Instance.OnStateChanging += UpdateForGameState;
 
         CollectableEffectManager.Instance.OnCollectableEffectAdded += _statusEffectPanel.AddEffect;
         CollectableEffectManager.Instance.OnCollectableEffectUpdate += _statusEffectPanel.UpdateEffect;
@@ -35,7 +35,7 @@ public class Hud : MonoBehaviour
         StatsManager.Instance.TypingRecorder.OnBurstNotification += _burstPopUp.Notify;
         StatsManager.Instance.TypingRecorder.OnBurstReset += _burstPopUp.HandleReset;
 
-        if (SettingsManager.Instance.PlayerAttackSetting.Value.IsDisplayable())
+        if (LevelSettingsManager.Instance.PlayerAttackSetting.Value.IsDisplayable())
             PlayerAttackManager.Instance.OnReadinessChanged += _attackBar.UpdateReadiness;
         else
             Destroy(_attackBar.gameObject);
@@ -43,9 +43,9 @@ public class Hud : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (GameManager.Instance != null)
+        if (GameplayManager.Instance != null)
         {
-            GameManager.Instance.OnStateChanging -= UpdateForGameState;
+            GameplayManager.Instance.OnStateChanging -= UpdateForGameState;
         }
 
         if (CollectableEffectManager.Instance != null)
@@ -74,7 +74,7 @@ public class Hud : MonoBehaviour
     private bool _statsShown = false;
     private void Update()
     {
-        var state = GameManager.Instance.State;
+        var state = GameplayManager.Instance.State;
         if (!(state.IsEndOfLevel() && Input.anyKeyDown))
         {
             return;
@@ -139,7 +139,7 @@ public class Hud : MonoBehaviour
 
     private (string, string) GetIntroText()
     {
-        return (SettingsManager.Instance.LevelSettings.LevelName, "Get ready");
+        return (LevelSettingsManager.Instance.LevelSettings.LevelName, "Get ready");
     }
 
     private (string, string) GetWinText()
@@ -147,7 +147,7 @@ public class Hud : MonoBehaviour
         var stats = StatsManager.Instance.CalculateEndOfLevelStats();
         var rankText = WithColour(stats, $"{stats.Rank}");
 
-        var text1 = $"{SettingsManager.Instance.LevelSettings.LevelName}  complete!";
+        var text1 = $"{LevelSettingsManager.Instance.LevelSettings.LevelName}  complete!";
 
         var builder = new StringBuilder();
         builder.AppendLine();
@@ -166,7 +166,7 @@ public class Hud : MonoBehaviour
 
         var builder = new StringBuilder();
 
-        builder.Append(SettingsManager.Instance.LevelSettings.LevelName);
+        builder.Append(LevelSettingsManager.Instance.LevelSettings.LevelName);
         builder.AppendLine(" result");
 
         var rankText = WithColour(stats, $"{stats.Rank,TextAlignment}");

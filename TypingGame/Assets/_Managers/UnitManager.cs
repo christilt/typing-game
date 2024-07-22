@@ -22,7 +22,7 @@ public class UnitManager : Singleton<UnitManager>
 
     private void Start()
     {
-        GameManager.Instance.OnStateChanging += UpdateUnitsForState;
+        GameplayManager.Instance.OnStateChanging += UpdateUnitsForState;
     }
 
     public bool TryRegister(Collectable collectable)
@@ -86,8 +86,8 @@ public class UnitManager : Singleton<UnitManager>
 
     private void OnDestroy()
     {
-        if (GameManager.Instance != null)
-            GameManager.Instance.OnStateChanging -= UpdateUnitsForState;
+        if (GameplayManager.Instance != null)
+            GameplayManager.Instance.OnStateChanging -= UpdateUnitsForState;
     }
 
     private void UpdateUnitsForState(GameState state)

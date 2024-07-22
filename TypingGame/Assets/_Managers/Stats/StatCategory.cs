@@ -15,13 +15,13 @@ public static class StatCategoryExtensions
         switch (category)
         {
             case StatCategory.Great:
-                return SettingsManager.Instance.Palette.GreatColour;
+                return GameSettingsManager.Instance.Palette.GreatColour;
             case StatCategory.Good:
-                return SettingsManager.Instance.Palette.GoodColour;
+                return GameSettingsManager.Instance.Palette.GoodColour;
             case StatCategory.Average:
-                return SettingsManager.Instance.Palette.AverageColour;
+                return GameSettingsManager.Instance.Palette.AverageColour;
             default:
-                return SettingsManager.Instance.Palette.BadColour;
+                return GameSettingsManager.Instance.Palette.BadColour;
         }
     }
 

@@ -7,7 +7,7 @@ public class Exit : MonoBehaviour
         if (collision.TryGetRigidbodyComponent(out Player player))
         {
             // TODO - make this a goal?
-            GameManager.Instance.LevelWinning();
+            GameplayManager.Instance.LevelWinning();
         }
     }
 }

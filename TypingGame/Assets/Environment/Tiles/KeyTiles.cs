@@ -18,13 +18,13 @@ public class KeyTiles : Singleton<KeyTiles>
 
     private void Start()
     {
-        GameManager.Instance.OnStateChanging += OnGameStateChanging;
+        GameplayManager.Instance.OnStateChanging += OnGameStateChanging;
     }
 
     private void OnDestroy()
     {
-        if (GameManager.Instance != null)
-            GameManager.Instance.OnStateChanging -= OnGameStateChanging;
+        if (GameplayManager.Instance != null)
+            GameplayManager.Instance.OnStateChanging -= OnGameStateChanging;
     }
 
     public event Action OnInitialised;

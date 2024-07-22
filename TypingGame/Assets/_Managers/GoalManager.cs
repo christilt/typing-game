@@ -41,6 +41,6 @@ public class GoalManager : Singleton<GoalManager>
         if (!GoalsCompleted) 
             return;
 
-        GameManager.Instance.LevelWinning();
+        GameplayManager.Instance.LevelWinning();
     }
 }

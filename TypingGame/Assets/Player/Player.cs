@@ -12,7 +12,7 @@ public class Player : Singleton<Player>
 
     private void Start()
     {
-        GameManager.Instance.OnStateChanging += HandleGameStateChanging;
+        GameplayManager.Instance.OnStateChanging += HandleGameStateChanging;
         _visual.OnPacmanExploding += HandlePacmanExploding;
         _visual.OnPacmanExploded += HandlePacmanExploded;
         _typingMovement.OnCorrectKeyTyped += HandleCorrectKeyTyped;
@@ -21,9 +21,9 @@ public class Player : Singleton<Player>
 
     private void OnDestroy()
     {
-        if (GameManager.Instance != null)
+        if (GameplayManager.Instance != null)
         {
-            GameManager.Instance.OnStateChanging -= HandleGameStateChanging;
+            GameplayManager.Instance.OnStateChanging -= HandleGameStateChanging;
         }
         if (_visual != null)
         {
@@ -72,7 +72,7 @@ public class Player : Singleton<Player>
 
         if (TryChangeState(PlayerState.Dying))
         {
-            GameManager.Instance.PlayerDying();
+            GameplayManager.Instance.PlayerDying();
         }
     }
 
@@ -154,12 +154,12 @@ public class Player : Singleton<Player>
 
     private void HandlePacmanExploding()
     {
-        GameManager.Instance.PlayerExploding();
+        GameplayManager.Instance.PlayerExploding();
     }
 
     private void HandlePacmanExploded()
     {
-        GameManager.Instance.PlayerExploded();
+        GameplayManager.Instance.PlayerExploded();
         gameObject.SetActive(false);
     }
 

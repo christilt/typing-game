@@ -72,7 +72,7 @@ public class UnitMovement : MonoBehaviour
         if (_centreMovement is null)
             return;
 
-        var speedMultiplier = SpeedMultiplier * SettingsManager.Instance.UnitSpeedModifier.Value;
+        var speedMultiplier = SpeedMultiplier * LevelSettingsManager.Instance.UnitSpeedModifier.Value;
         var newPosition = transform.position + (_centreMovement.Value.Direction * Time.deltaTime * _movesPerSecond * speedMultiplier);
         _rigidbody.MovePosition(newPosition);
     }

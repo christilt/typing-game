@@ -13,7 +13,7 @@ public class TilemapTinter : MonoBehaviour
         var tilemaps = GetComponentsInChildren<Tilemap>();
         foreach(var tilemap in tilemaps)
         {
-            Tint(tilemap, SettingsManager.Instance.LevelSettings.WallColor);
+            Tint(tilemap, LevelSettingsManager.Instance.LevelSettings.WallColor);
         }
     }
 
