@@ -63,6 +63,6 @@ public class LoadingManager : PersistentSingleton<LoadingManager>
     public static class SceneNames
     {
         public const string Loading = "Loading";
-        public const string NewGameLevel = "Level";
+        public const string NewGameLevel = "Mid1";
     }
 }
