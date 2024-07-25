@@ -21,8 +21,11 @@ MonoBehaviour:
     UnitSpeedModifier:
       Value: 0
       HasValue: 0
-  _namePart1: World 0
-  _namePart2: 0
+    PlayerAttackSetting:
+      Value: 0
+      HasValue: 0
+  _namePart1: World 3
+  _namePart2: 1
   _namePartSeparator: ' - '
   _wallColor: {r: 1, g: 0.4862745, b: 0.7647059, a: 1}
   _benchmarkDurationSeconds: 90

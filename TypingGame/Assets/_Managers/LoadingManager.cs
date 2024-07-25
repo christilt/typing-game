@@ -59,10 +59,4 @@ public class LoadingManager : PersistentSingleton<LoadingManager>
     }
 
     private bool LoadingSceneIsCurrent => SceneManager.GetActiveScene().name == SceneNames.Loading;
-
-    public static class SceneNames
-    {
-        public const string Loading = "Loading";
-        public const string NewGameLevel = "Later1";
-    }
 }

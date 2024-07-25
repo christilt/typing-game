@@ -13,18 +13,23 @@ public class MainMenu : MonoBehaviour
         SceneHider.Instance.StartOfSceneFadeIn();
     }
 
-    public void SetNormalDifficulty() => SetDifficultyAndStartGame(NormalDifficultySO);
-    public void SetChallengeDifficulty() => SetDifficultyAndStartGame(ChallengeDifficultySO);
-    public void SetExtremeDifficulty() => SetDifficultyAndStartGame(ExtremeDifficultySO);
+    public void SetNormalDifficulty() => SetDifficulty(NormalDifficultySO);
+    public void SetChallengeDifficulty() => SetDifficulty(ChallengeDifficultySO);
+    public void SetExtremeDifficulty() => SetDifficulty(ExtremeDifficultySO);
+
+    public void World1Level1() => Load(SceneNames.Early1);
+    public void World2Level1() => Load(SceneNames.Mid1);
+    public void World3Level1() => Load(SceneNames.Later1);
 
     public void OnQuitButton()
     {
         Application.Quit();
     }
 
-    private void SetDifficultyAndStartGame(DifficultySO difficultySO)
+    private void SetDifficulty(DifficultySO difficultySO)
     {
         GameSettingsManager.Instance.Difficulty = difficultySO;
-        LoadingManager.Instance.StartLoad(LoadingManager.SceneNames.NewGameLevel);
     }
+
+    private void Load(string sceneName) => LoadingManager.Instance.StartLoad(sceneName);
 }
