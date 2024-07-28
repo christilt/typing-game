@@ -634,7 +634,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2850800136061403951, guid: ba7f2073a3e082844ba25858cdc6a0c8, type: 3}
       propertyPath: m_Name
-      value: World1LevelMenuPage Variant
+      value: MainMenuLevelPage
       objectReference: {fileID: 0}
     - target: {fileID: 2850800136061403951, guid: ba7f2073a3e082844ba25858cdc6a0c8, type: 3}
       propertyPath: m_IsActive
