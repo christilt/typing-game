@@ -219,8 +219,12 @@ namespace Pathfinding {
 						   "&unityversion="+Application.unityVersion +
 						   "&branch="+AstarPath.Branch;
 
+			// CT added:
+            Debug.LogWarning("Astar is checking for updates");
+
+
 #if UNITY_2018_1_OR_NEWER
-			updateCheckDownload = UnityWebRequest.Get(query);
+            updateCheckDownload = UnityWebRequest.Get(query);
 			updateCheckDownload.SendWebRequest();
 #else
 			updateCheckDownload = new WWW(query);

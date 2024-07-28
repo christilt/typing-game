@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
@@ -17,14 +18,13 @@ public class MainMenu : MonoBehaviour
     public void SetChallengeDifficulty() => SetDifficulty(ChallengeDifficultySO);
     public void SetExtremeDifficulty() => SetDifficulty(ExtremeDifficultySO);
 
+    public void Load(Scene scene) => LoadingManager.Instance.StartLoad(scene.name);
     public void World1Level1() => Load(SceneNames.Early1);
     public void World2Level1() => Load(SceneNames.Mid1);
     public void World3Level1() => Load(SceneNames.Later1);
 
-    public void OnQuitButton()
-    {
-        Application.Quit();
-    }
+    public void OnQuitButton() => Application.Quit();
+
 
     private void SetDifficulty(DifficultySO difficultySO)
     {

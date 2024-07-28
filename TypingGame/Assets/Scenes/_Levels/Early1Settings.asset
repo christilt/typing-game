@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 38531dd8483370d4b94e377b0a149d2e, type: 3}
-  m_Name: VEarly1Settings
+  m_Name: Early1Settings
   m_EditorClassIdentifier: 
   _difficultyOverrides:
   - Difficulty: 1
@@ -21,8 +21,11 @@ MonoBehaviour:
     UnitSpeedModifier:
       Value: 0
       HasValue: 0
-  _namePart1: World 0
-  _namePart2: 0
+    PlayerAttackSetting:
+      Value: 0
+      HasValue: 0
+  _namePart1: World 1
+  _namePart2: 1
   _namePartSeparator: ' - '
   _wallColor: {r: 0.3529412, g: 1, b: 0.3882353, a: 1}
   _benchmarkDurationSeconds: 30
