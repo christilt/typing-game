@@ -52,10 +52,17 @@ public class LoadingManager : PersistentSingleton<LoadingManager>
 
         _loadSceneName = sceneName;
 
-        SceneHider.Instance.EndOfSceneFadeOut(() =>
+        if (SceneHider.Instance != null)
+        {
+            SceneHider.Instance.EndOfSceneFadeOut(() =>
+            {
+                SceneManager.LoadScene(SceneNames.Loading);
+            });
+        }
+        else
         {
             SceneManager.LoadScene(SceneNames.Loading);
-        });
+        }
     }
 
     private bool LoadingSceneIsCurrent => SceneManager.GetActiveScene().name == SceneNames.Loading;
