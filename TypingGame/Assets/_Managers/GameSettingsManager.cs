@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GameSettingsManager : PersistentSingleton<GameSettingsManager>
 {
-    public DifficultySO Difficulty { get; set; }
+    [SerializeField] private DifficultySO _defaultDifficulty;
+    private DifficultySO _difficulty;
+    public DifficultySO Difficulty
+    {
+        get => _difficulty ?? _defaultDifficulty;
+        set => _difficulty = value;
+    }
 
     [SerializeField] private PaletteSO _palette;
     public PaletteSO Palette => _palette;
