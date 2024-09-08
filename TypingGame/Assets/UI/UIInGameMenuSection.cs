@@ -1,67 +1,76 @@
 ﻿using DG.Tweening;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static System.Net.Mime.MediaTypeNames;
 
-[RequireComponent(typeof(TextMeshProUGUI))]
-public class UIText : MonoBehaviour
+public class UIInGameMenuSection : MonoBehaviour
 {
     [SerializeField] private CanvasScaler _screenSpaceCanvasScaler;
-    [SerializeField] private Ease _textMoveInIntroEase;
-    [SerializeField] private Ease _textMoveInPositiveEase;
-    [SerializeField] private Ease _textMoveInNegativeEase;
-    [SerializeField] private Ease _textMoveOutEase;
+    [SerializeField] private Ease _moveInIntroEase;
+    [SerializeField] private Ease _moveInPositiveEase;
+    [SerializeField] private Ease _moveInNegativeEase;
+    [SerializeField] private Ease _moveOutEase;
     [SerializeField] private Ease _textFadeInEase;
     [SerializeField] private Ease _textFadeOutEase;
 
-    private TextMeshProUGUI _text;
-    private Vector3 _textStartPositionLocal;
-    private Vector3 _textMovedInPositionLocal;
-    private Vector3 _textMovedOutPositionLocal;
+    [SerializeField] private TextMeshProUGUI _text;
+
+    private Vector3 _startPositionLocal;
+    private Vector3 _movedInPositionLocal;
+    private Vector3 _movedOutPositionLocal;
 
     private Tween _tween;
 
+    private Button _focusButton;
+
     private void Awake()
     {
-        _text = GetComponent<TextMeshProUGUI>();
+        _focusButton = GetFirstButtonOrDefault();
     }
 
     private void Start()
     {
-        _textMovedInPositionLocal = _text.transform.localPosition;
-        _textStartPositionLocal = _text.transform.localPosition + new Vector3(0, _screenSpaceCanvasScaler.referenceResolution.y, 0);
-        _textMovedOutPositionLocal = _text.transform.localPosition - new Vector3(0, _screenSpaceCanvasScaler.referenceResolution.y, 0);
-        _text.transform.localPosition = _textStartPositionLocal;
+        _movedInPositionLocal = transform.localPosition;
+        _startPositionLocal = transform.localPosition + new Vector3(0, _screenSpaceCanvasScaler.referenceResolution.y, 0);
+        _movedOutPositionLocal = transform.localPosition - new Vector3(0, _screenSpaceCanvasScaler.referenceResolution.y, 0);
+        transform.localPosition = _startPositionLocal;
     }
 
     public Tween MoveInIntroText(string text, float duration, bool unscaledTime = true)
     {
-        return MoveInText(text, duration, _textMoveInIntroEase, unscaledTime);
+        return MoveInText(text, duration, _moveInIntroEase, unscaledTime);
     }
 
     public Tween MoveInPositiveText(string text, float duration, bool unscaledTime = true)
     {
-        return MoveInText(text, duration, _textMoveInPositiveEase, unscaledTime);
+        return MoveInText(text, duration, _moveInPositiveEase, unscaledTime);
     }
 
     public Tween MoveInNegativeText(string text, float duration, bool unscaledTime = true)
     {
-        return MoveInText(text, duration, _textMoveInNegativeEase, unscaledTime);
+        return MoveInText(text, duration, _moveInNegativeEase, unscaledTime);
     }
 
     private Tween MoveInText(string text, float duration, Ease? textEase = null, bool unscaledTime = true)
     {
-        textEase ??= _textMoveInIntroEase;
+        textEase ??= _moveInIntroEase;
 
-        _text.transform.localPosition = _textStartPositionLocal;
+        transform.localPosition = _startPositionLocal;
         SetText(text);
+
+        _focusButton?.Select();
 
         _tween?.Kill();
 
-        _tween = _text.transform.DOLocalMove(_textMovedInPositionLocal, duration)
+        _tween = transform.DOLocalMove(_movedInPositionLocal, duration)
             .SetEase(textEase.Value)
             .SetUpdate(unscaledTime);
+            
 
         return _tween;
     }
@@ -72,8 +81,8 @@ public class UIText : MonoBehaviour
         {
             _tween?.Kill();
 
-            _tween = _text.transform.DOLocalMove(_textMovedOutPositionLocal, duration)
-                .SetEase(_textMoveOutEase)
+            _tween = transform.DOLocalMove(_movedOutPositionLocal, duration)
+                .SetEase(_moveOutEase)
                 .SetUpdate(unscaledTime);
         }
 
@@ -97,7 +106,7 @@ public class UIText : MonoBehaviour
         _tween = DOTween.Sequence()
             .PrependCallback(() =>
             {
-                _text.transform.localPosition = _textMovedInPositionLocal;
+                transform.localPosition = _movedInPositionLocal;
                 SetText(text);
             })
             .Append(_text.DOFade(1, duration))
@@ -124,5 +133,14 @@ public class UIText : MonoBehaviour
         _text.text = TextHelper.WithPixelatedMonospaceText(text);
     }
 
-    private bool IsTextShown() => _text.transform.localPosition != _textStartPositionLocal && _text.transform.localPosition != _textMovedOutPositionLocal && _text.material.color.a > 0;
+    private bool IsTextShown() => transform.localPosition != _startPositionLocal && transform.localPosition != _movedOutPositionLocal && _text.material.color.a > 0;
+
+    private Button GetFirstButtonOrDefault()
+    {
+        return GetComponentsInChildren<Button>()
+            .Where(b => b.IsInteractable())
+            .OrderByDescending(b => b.transform.position.y) // top to bottom
+            .ThenBy(b => System.MathF.Abs(b.transform.position.x)) // middle to sides
+            .FirstOrDefault();
+    }
 }

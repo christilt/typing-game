@@ -4,11 +4,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UITextOverlay : MonoBehaviour
+public class UIInGameMenu : MonoBehaviour
 {
     [SerializeField] private Hider _hider;
-    [SerializeField] private UIText _text1;
-    [SerializeField] private UIText _text2;
+    [SerializeField] private UIInGameMenuSection _section1;
+    [SerializeField] private UIInGameMenuSection _section2;
     [SerializeField] private float _moveInIntroDuration;
     [SerializeField] private float _moveInPositiveDuration;
     [SerializeField] private float _moveInNegativeDuration;
@@ -21,19 +21,19 @@ public class UITextOverlay : MonoBehaviour
 
     public void MoveInIntroText(string text1, string text2, bool useOverlay = true, bool unscaledTime = true)
     {
-        Func<UIText, string, float, Tween> showTextAction = (uitext, text, duration) => uitext.MoveInIntroText(text, duration, unscaledTime);
+        Func<UIInGameMenuSection, string, float, Tween> showTextAction = (uisection, text, duration) => uisection.MoveInIntroText(text, duration, unscaledTime);
         MoveInText(text1, text2, _moveInIntroDuration, showTextAction, useOverlay, unscaledTime);
     }
 
     public void MoveInPositiveText(string text1, string text2, bool useOverlay = true, bool unscaledTime = true)
     {
-        Func<UIText, string, float, Tween> showTextAction = (uitext, text, duration) => uitext.MoveInPositiveText(text, duration, unscaledTime);
+        Func<UIInGameMenuSection, string, float, Tween> showTextAction = (uisection, text, duration) => uisection.MoveInPositiveText(text, duration, unscaledTime);
         MoveInText(text1, text2, _moveInPositiveDuration, showTextAction, useOverlay, unscaledTime);
     }
 
     public void MoveInNegativeText(string text1, string text2, bool useOverlay = true, bool unscaledTime = true)
     {
-        Func<UIText, string, float, Tween> showTextAction = (uitext, text, duration) => uitext.MoveInNegativeText(text, duration, unscaledTime);
+        Func<UIInGameMenuSection, string, float, Tween> showTextAction = (uisection, text, duration) => uisection.MoveInNegativeText(text, duration, unscaledTime);
         MoveInText(text1, text2, _moveInNegativeDuration, showTextAction, useOverlay, unscaledTime);
     }
 
@@ -43,8 +43,8 @@ public class UITextOverlay : MonoBehaviour
 
         _textSequence?.Kill();
 
-        _text1.MoveOutTextIfShown(_moveOutDuration, unscaledTime);
-        _text2.MoveOutTextIfShown(_moveOutDuration, unscaledTime);
+        _section1.MoveOutTextIfShown(_moveOutDuration, unscaledTime);
+        _section2.MoveOutTextIfShown(_moveOutDuration, unscaledTime);
     }
 
     public void FadeSwapText(string text1, string text2, bool unscaledTime = true)
@@ -52,14 +52,14 @@ public class UITextOverlay : MonoBehaviour
         _textSequence?.Kill();
 
         _textSequence = DOTween.Sequence()
-            .Append(_text1.FadeOutText(_textFadeOutDuration, unscaledTime))
-            .Join(_text2.FadeOutText(_textFadeOutDuration, unscaledTime))
-            .Append(_text1.FadeInText(text1, _textFadeInDuration, unscaledTime))
-            .Join(_text2.FadeInText(text2, _textFadeInDuration, unscaledTime))
+            .Append(_section1.FadeOutText(_textFadeOutDuration, unscaledTime))
+            .Join(_section2.FadeOutText(_textFadeOutDuration, unscaledTime))
+            .Append(_section1.FadeInText(text1, _textFadeInDuration, unscaledTime))
+            .Join(_section2.FadeInText(text2, _textFadeInDuration, unscaledTime))
             .SetUpdate(unscaledTime);
     }
 
-    private void MoveInText(string text1, string text2, float duration, Func<UIText, string, float, Tween> moveInTextAction, bool useOverlay = true, bool unscaledTime = true)
+    private void MoveInText(string text1, string text2, float duration, Func<UIInGameMenuSection, string, float, Tween> moveInTextAction, bool useOverlay = true, bool unscaledTime = true)
     {
         if (useOverlay)
             _hider.TransitionToOpaque(duration, unscaled: unscaledTime);
@@ -68,12 +68,12 @@ public class UITextOverlay : MonoBehaviour
         Tween tween1 = default;
         if (!string.IsNullOrWhiteSpace(text1))
         {
-            tween1 = moveInTextAction(_text1, text1, duration);
+            tween1 = moveInTextAction(_section1, text1, duration);
         }
 
         if (!string.IsNullOrWhiteSpace(text2))
         {
-            var tween2 = moveInTextAction(_text2, text2, duration);
+            var tween2 = moveInTextAction(_section2, text2, duration);
 
             if (tween1 != null)
             {

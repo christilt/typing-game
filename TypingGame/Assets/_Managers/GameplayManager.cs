@@ -13,6 +13,11 @@ public class GameplayManager : Singleton<GameplayManager>
 
     public GameState State { get; private set; }
 
+    public void LevelPLaying()
+    {
+        TryChangeState(GameState.LevelPlaying);
+    }
+
     public void LevelWinning()
     {
         TryChangeState(GameState.LevelWinning);
@@ -114,10 +119,6 @@ public class GameplayManager : Singleton<GameplayManager>
         switch (State)
         {
             case GameState.LevelIntroducing:
-                if (Input.anyKeyDown)
-                {
-                    TryChangeState(GameState.LevelPlaying);
-                }
                 break;
             case GameState.LevelPlaying:
                 break;

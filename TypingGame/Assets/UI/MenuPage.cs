@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -65,14 +66,10 @@ public class MenuPage : MonoBehaviour
 
     private Button GetFirstButtonOrDefault()
     {
-        var childButtons = GetComponentsInChildren<Button>()
+        return GetComponentsInChildren<Button>()
             .Where(b => b.IsInteractable())
             .OrderByDescending(b => b.transform.position.y) // top to bottom
-            .ThenBy(b => b.transform.position.x) // left to right
-            .ToArray();
-        if (childButtons.Length == 0)
-            return null;
-
-        return childButtons[0];
+            .ThenBy(b => MathF.Abs(b.transform.position.x)) // middle to sides
+            .FirstOrDefault();
     }
 }

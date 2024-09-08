@@ -8,7 +8,7 @@ using UnityEngine.Rendering;
 public class Hud : MonoBehaviour
 {
     [SerializeField] private UIStatusEffectPanel _statusEffectPanel;
-    [SerializeField] private UITextOverlay _textOverlay;
+    [SerializeField] private UIInGameMenu _textOverlay;
     [SerializeField] private Canvas _canvas;
     [SerializeField] private UIStreakPopUp _streakPopUp;
     [SerializeField] private UIBurstPopUp _burstPopUp;
@@ -70,6 +70,7 @@ public class Hud : MonoBehaviour
         }
     }
 
+    // TODO: Replace Update with navigation buttons
     // TODO: Find how people normally do this - do they use states or different menus?
     private bool _statsShown = false;
     private void Update()
@@ -90,6 +91,8 @@ public class Hud : MonoBehaviour
 
         LoadingManager.Instance.ReloadLevel();
     }
+
+    public void StartLevel() => GameplayManager.Instance.LevelPLaying();
 
     private void UpdateForGameState(GameState state)
     {
