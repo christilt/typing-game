@@ -39,38 +39,39 @@ public class Hider : MonoBehaviour
 
     // TODO Show / Hide based on rate rather than duration?
 
-    public void Unhide(float duration, Action onComplete = null, bool unscaled = false)
+    public Tween Unhide(float duration, Action onComplete = null, bool unscaled = false, Ease? ease = null)
     {
-        Transition(0, duration, onComplete, unscaled);
+        return Transition(0, duration, onComplete, unscaled, ease);
     }
 
-    public void TransitionToOpaque(float duration, Action onComplete = null, bool unscaled = false)
+    public Tween TransitionToOpaque(float duration, Action onComplete = null, bool unscaled = false)
     {
-        Transition(_opaqueAlphaFloat, duration, onComplete, unscaled);
+        return Transition(_opaqueAlphaFloat, duration, onComplete, unscaled);
     }
 
-    public void HideCompletely(float duration, Action onComplete = null, bool unscaled = false)
+    public Tween HideCompletely(float duration, Action onComplete = null, bool unscaled = false, Ease? ease = null)
     {
-        Transition(1, duration, onComplete, unscaled);
+        return Transition(1, duration, onComplete, unscaled, ease);
     }
 
-    public void Transition(float alpha, float duration, Action onComplete = null, bool unscaled = false)
+    public Tween Transition(float alpha, float duration, Action onComplete = null, bool unscaled = false, Ease? ease = null)
     {
         if (_hiderImage.color.a == alpha)
-            return;
+            return _tween;
 
         if (_transitioningToAlpha == alpha)
-            return;
+            return _tween;
 
         _tween?.Kill();
 
         _transitioningToAlpha = alpha;
 
-        var isHide = _hiderImage.color.a < alpha;
-        var ease = isHide ? _hideEase : _unhideEase;
+        ease ??= _hiderImage.color.a < alpha 
+            ? _hideEase 
+            : _unhideEase;
         _tween = _hiderImage
             .DOFade(alpha, duration)
-            .SetEase(ease)
+            .SetEase(ease.Value)
             .SetUpdate(unscaled);
 
         _tween.OnComplete(() =>
@@ -80,5 +81,6 @@ public class Hider : MonoBehaviour
                 onComplete();
         });
 
+        return _tween;
     }
 }

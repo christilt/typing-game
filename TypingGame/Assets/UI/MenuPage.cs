@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,6 +9,13 @@ public class MenuPage : MonoBehaviour
     [SerializeField] private MenuPage _nextPage;
     private MenuPage _previousPage;
     private Button _firstButton;
+
+    private Transitioner _optionalTransitioner;
+
+    private void Awake()
+    {
+        _optionalTransitioner = GetComponent<Transitioner>();
+    }
 
     private void OnEnable()
     {
@@ -19,6 +27,8 @@ public class MenuPage : MonoBehaviour
         }
 
         _firstButton.Select();
+
+        _optionalTransitioner?.TransitionIn();
     }
 
     public void OpenNext(MenuPage page)
@@ -47,6 +57,25 @@ public class MenuPage : MonoBehaviour
         _previousPage.OpenFromNext();
     }
 
+    // TODO: Added for test - Remove
+    public void DoDisable() => Disable();
+
+    public Tween Disable()
+    {
+        if (_optionalTransitioner != null)
+        {
+            return _optionalTransitioner
+                .TransitionOut()
+                .OnComplete(() => gameObject.SetActive(false));
+        }
+        else
+        {
+            gameObject.SetActive(false);
+
+            return DOTween.Sequence(); // TODO: Find a way to return an completed Tween?
+        }
+    }
+
     private void OpenFromPrevious(MenuPage previous)
     {
         if (_previousPage == null)
@@ -54,14 +83,14 @@ public class MenuPage : MonoBehaviour
 
         gameObject.SetActive(true);
 
-        _previousPage.gameObject.SetActive(false);
+        _previousPage.Disable();
     }
 
     private void OpenFromNext()
     {
         gameObject.SetActive(true);
 
-        _nextPage.gameObject.SetActive(false);
+        _nextPage.Disable();
     }
 
     private Button GetFirstButtonOrDefault()

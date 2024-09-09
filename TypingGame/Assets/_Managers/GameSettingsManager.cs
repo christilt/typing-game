@@ -12,4 +12,8 @@ public class GameSettingsManager : PersistentSingleton<GameSettingsManager>
 
     [SerializeField] private PaletteSO _palette;
     public PaletteSO Palette => _palette;
+
+
+    [SerializeField] private MenuTransitionsSO _menuTransitions;
+    public MenuTransitionsSO MenuTransitions => _menuTransitions;
 }

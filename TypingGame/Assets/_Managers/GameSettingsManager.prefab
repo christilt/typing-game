@@ -46,3 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _defaultDifficulty: {fileID: 11400000, guid: 70079c4248084984fb98716f68d61006, type: 2}
   _palette: {fileID: 11400000, guid: c696532cce4650742b9e18fdd75c51ed, type: 2}
+  _menuTransitions: {fileID: 11400000, guid: 3490590d26e9ba447b40d7b908dde365, type: 2}
