@@ -1342,6 +1342,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5748362201601548007, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4748116304203665893}
+    - target: {fileID: 5748362201601548007, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RetryLevel
+      objectReference: {fileID: 0}
+    - target: {fileID: 5748362201601548007, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Hud, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 5993007088385019112, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
       propertyPath: _screenSpaceCanvasScaler
       value: 
