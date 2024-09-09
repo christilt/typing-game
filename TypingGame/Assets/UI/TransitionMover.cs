@@ -25,7 +25,6 @@ public class TransitionMover : MonoBehaviour
         _shownPositionLocal = transform.localPosition;
         _hiddenAbovePositionLocal = transform.localPosition + new Vector3(0, _screenSpaceCanvasScaler.referenceResolution.y, 0);
         _hiddenBelowPositionLocal = transform.localPosition - new Vector3(0, _screenSpaceCanvasScaler.referenceResolution.y, 0);
-        transform.localPosition = _hiddenAbovePositionLocal;
     }
 
     public Tween MoveIn(float duration, Ease ease, bool unscaledTime = true)
@@ -51,9 +50,13 @@ public class TransitionMover : MonoBehaviour
                 .SetEase(ease)
                 .SetUpdate(unscaledTime);
         }
+        else
+        {
+            _transitionInTween = DOTween.Sequence();
+        }
 
         return _transitionInTween;
     }
 
-    private bool IsShown() => _transitionInTween.IsActive() || transform.localPosition == _shownPositionLocal;
+    private bool IsShown() => transform.localPosition != _hiddenAbovePositionLocal && transform.localPosition != _hiddenBelowPositionLocal;
 }

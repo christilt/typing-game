@@ -117,9 +117,10 @@ public class Transitioner : MonoBehaviour
     private Sequence FadeIn(float duration, Ease ease, bool unscaledTime = true)
     {
         _transitionSequence?.Kill();
+        _transitionSequence = DOTween.Sequence();
 
         var tween = _hider.Unhide(duration, unscaled: unscaledTime, ease: ease);
-        _transitionSequence.Append(tween);
+        _transitionSequence.AppendIfValid(tween);
         _transitionSequence.SetUpdate(unscaledTime);
 
         return _transitionSequence;
@@ -128,9 +129,10 @@ public class Transitioner : MonoBehaviour
     private Sequence FadeOut(float duration, Ease ease, bool unscaledTime = true)
     {
         _transitionSequence?.Kill();
+        _transitionSequence = DOTween.Sequence();
 
         var tween = _hider.HideCompletely(duration, unscaled: unscaledTime, ease: ease);
-        _transitionSequence.Append(tween);
+        _transitionSequence.AppendIfValid(tween);
         _transitionSequence.SetUpdate(unscaledTime);
 
         return _transitionSequence;

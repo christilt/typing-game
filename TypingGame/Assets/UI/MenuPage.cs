@@ -21,14 +21,18 @@ public class MenuPage : MonoBehaviour
     {
         _firstButton ??= GetFirstButtonOrDefault();
         if (_firstButton == null)
-        {
-            Debug.LogWarning("No buttons to select");
             return;
+
+        if (_optionalTransitioner != null)
+        {
+            _optionalTransitioner
+                .TransitionIn()
+                .OnComplete(() => _firstButton.Select());
         }
-
-        _firstButton.Select();
-
-        _optionalTransitioner?.TransitionIn();
+        else
+        {
+            _firstButton.Select();
+        }
     }
 
     public void OpenNext(MenuPage page)
