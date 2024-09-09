@@ -7,12 +7,13 @@ using UnityEngine.UI;
 
 public class Transitioner : MonoBehaviour
 {
-    [SerializeField] private Hider _hider;
-    [SerializeField] private MenuTransitionType _transitionType;
+    [SerializeField] private Fader _fader;
+    [SerializeField] private MenuTransitionType _transitionInType;
+    [SerializeField] private MenuTransitionType _transitionOutType;
 
     private TransitionMover[] _movers;
 
-    private Sequence _transitionSequence;
+    private Tween _transitionTween;
 
     private void Awake()
     {
@@ -20,12 +21,14 @@ public class Transitioner : MonoBehaviour
             .OrderByDescending(b => b.transform.position.y) // top to bottom
             .ToArray();
 
-        _transitionSequence = DOTween.Sequence();
+        _transitionTween = DOTween.Sequence();
     }
 
-    public Tween TransitionIn()
+    public Tween TransitionIn(MenuTransitionType? type = null)
     {
-        switch (_transitionType)
+        type ??= _transitionInType;
+
+        switch (type)
         {
             case MenuTransitionType.Move_Intro:
                 return MoveIn(
@@ -44,20 +47,22 @@ public class Transitioner : MonoBehaviour
                     GameSettingsManager.Instance.MenuTransitions.FadeInDuration,
                     GameSettingsManager.Instance.MenuTransitions.FadeInEase);
             default:
-                throw new ArgumentOutOfRangeException(nameof(_transitionType), _transitionType, null);
+                throw new ArgumentOutOfRangeException(nameof(type), type, null);
         }
     }
 
 
-    public Tween TransitionOut()
+    public Tween TransitionOut(MenuTransitionType? type = null)
     {
-        if (_transitionType.IsMove())
+        type ??= _transitionOutType;
+
+        if (type.Value.IsMove())
         {
             return MoveOut(
                 GameSettingsManager.Instance.MenuTransitions.MoveOutDuration,
                 GameSettingsManager.Instance.MenuTransitions.MoveOutEase);
         }
-        else if (_transitionType.IsFade())
+        else if (type.Value.IsFade())
         {
             return FadeOut(
                 GameSettingsManager.Instance.MenuTransitions.FadeOutDuration,
@@ -65,77 +70,79 @@ public class Transitioner : MonoBehaviour
         }
         else
         {
-            throw new ArgumentOutOfRangeException(nameof(_transitionType), _transitionType, null);
+            throw new ArgumentOutOfRangeException(nameof(type), type.Value, null);
         }
     }
 
-    private Sequence MoveIn(float duration, Ease ease, bool unscaledTime = true)
+    public Tween TransitionInRepeated() => TransitionIn(MenuTransitionType.Fade);
+
+    private Tween MoveIn(float duration, Ease ease, bool unscaledTime = true)
     {
         if (_movers.Length == 0)
-            return _transitionSequence;
+            return _transitionTween;
 
-        _transitionSequence?.Kill();
-        _transitionSequence = DOTween.Sequence();
+        _transitionTween?.Kill();
+        var sequence = DOTween.Sequence();
 
         for (var i = 0; i < _movers.Length; i++)
         {
             var mover = _movers[i];
 
             if (i > 0)
-                _transitionSequence.AppendInterval(GameSettingsManager.Instance.MenuTransitions.IntervalDuration);
+                sequence.AppendInterval(GameSettingsManager.Instance.MenuTransitions.IntervalDuration);
 
             var tween = mover.MoveIn(duration, ease, unscaledTime);
-            _transitionSequence.Join(tween);
+            sequence.Join(tween);
         }
 
-        _transitionSequence.SetUpdate(unscaledTime);
+        sequence.SetUpdate(unscaledTime);
 
-        return _transitionSequence;
+        _transitionTween = sequence;
+
+        return _transitionTween;
     }
 
-    private Sequence MoveOut(float duration, Ease ease, bool unscaledTime = true)
+    private Tween MoveOut(float duration, Ease ease, bool unscaledTime = true)
     {
         if (_movers.Length == 0)
-            return _transitionSequence;
+            return _transitionTween;
 
-        _transitionSequence?.Kill();
-        _transitionSequence = DOTween.Sequence();
+        _transitionTween?.Kill();
+        var sequence = DOTween.Sequence();
 
         for (var i = 0; i < _movers.Length; i++)
         {
             var mover = _movers[i];
 
             var tween = mover.MoveOutIfShown(duration, ease, unscaledTime);
-            _transitionSequence.Join(tween);
+            sequence.Join(tween);
         }
 
-        _transitionSequence.SetUpdate(unscaledTime);
+        sequence.SetUpdate(unscaledTime);
 
-        return _transitionSequence;
+        _transitionTween = sequence;
+
+        return _transitionTween;
     }
 
-    private Sequence FadeIn(float duration, Ease ease, bool unscaledTime = true)
+    private Tween FadeIn(float duration, Ease ease, bool unscaledTime = true)
     {
-        _transitionSequence?.Kill();
-        _transitionSequence = DOTween.Sequence();
+        _transitionTween?.Kill();
+        _transitionTween = _fader
+            .Show(duration, unscaled: unscaledTime, ease: ease)
+            .SetUpdate(unscaledTime); 
 
-        var tween = _hider.Unhide(duration, unscaled: unscaledTime, ease: ease);
-        _transitionSequence.AppendIfValid(tween);
-        _transitionSequence.SetUpdate(unscaledTime);
-
-        return _transitionSequence;
+        return _transitionTween;
     }
 
-    private Sequence FadeOut(float duration, Ease ease, bool unscaledTime = true)
+    private Tween FadeOut(float duration, Ease ease, bool unscaledTime = true)
     {
-        _transitionSequence?.Kill();
-        _transitionSequence = DOTween.Sequence();
+        _transitionTween?.Kill();
+        _transitionTween = _fader
+            .Hide(duration, unscaled: unscaledTime, ease: ease)
+            .SetUpdate(unscaledTime);
 
-        var tween = _hider.HideCompletely(duration, unscaled: unscaledTime, ease: ease);
-        _transitionSequence.AppendIfValid(tween);
-        _transitionSequence.SetUpdate(unscaledTime);
-
-        return _transitionSequence;
+        return _transitionTween;
     }
 }
 

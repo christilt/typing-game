@@ -9,6 +9,7 @@ public class MenuPage : MonoBehaviour
     [SerializeField] private MenuPage _nextPage;
     private MenuPage _previousPage;
     private Button _firstButton;
+    private int _enableCount;
 
     private Transitioner _optionalTransitioner;
 
@@ -19,15 +20,19 @@ public class MenuPage : MonoBehaviour
 
     private void OnEnable()
     {
+        _enableCount++;
+
         _firstButton ??= GetFirstButtonOrDefault();
         if (_firstButton == null)
             return;
 
         if (_optionalTransitioner != null)
         {
-            _optionalTransitioner
-                .TransitionIn()
-                .OnComplete(() => _firstButton.Select());
+            var tween = _enableCount == 1
+                ? _optionalTransitioner.TransitionIn()
+                : _optionalTransitioner.TransitionInRepeated();
+
+            tween.OnComplete(() => _firstButton.Select());
         }
         else
         {
@@ -61,9 +66,6 @@ public class MenuPage : MonoBehaviour
         _previousPage.OpenFromNext();
     }
 
-    // TODO: Added for test - Remove
-    public void DoDisable() => Disable();
-
     public Tween Disable()
     {
         if (_optionalTransitioner != null)
@@ -76,7 +78,7 @@ public class MenuPage : MonoBehaviour
         {
             gameObject.SetActive(false);
 
-            return DOTween.Sequence(); // TODO: Find a way to return an completed Tween?
+            return DOTween.Sequence(); // TODO: Find a way to return a completed Tween?
         }
     }
 
@@ -85,16 +87,18 @@ public class MenuPage : MonoBehaviour
         if (_previousPage == null)
             _previousPage = previous;
 
-        gameObject.SetActive(true);
-
-        _previousPage.Disable();
+        DOTween.Sequence()
+            .Append(_previousPage.Disable())
+            .OnComplete(() => gameObject.SetActive(true))
+            .SetUpdate(true);
     }
 
     private void OpenFromNext()
     {
-        gameObject.SetActive(true);
-
-        _nextPage.Disable();
+        DOTween.Sequence()
+            .Append(_nextPage.Disable())
+            .OnComplete(() => gameObject.SetActive(true))
+            .SetUpdate(true);
     }
 
     private Button GetFirstButtonOrDefault()

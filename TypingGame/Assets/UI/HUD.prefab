@@ -314,6 +314,8 @@ GameObject:
   - component: {fileID: 7378376439035844907}
   - component: {fileID: 2927943858445099463}
   - component: {fileID: 4611784807472098298}
+  - component: {fileID: 9157400268218804314}
+  - component: {fileID: 8499627207421225261}
   m_Layer: 5
   m_Name: InGameMenu
   m_TagString: Untagged
@@ -412,6 +414,31 @@ MonoBehaviour:
   _opaqueAlpha: 221
   _hideEase: 6
   _unhideEase: 5
+--- !u!114 &9157400268218804314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8031982667327081758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 113313c1b0b382047af056153bbaed41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _canvasGroup: {fileID: 8499627207421225261}
+--- !u!225 &8499627207421225261
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8031982667327081758}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 1
 --- !u!1001 &897411885049825320
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -906,6 +933,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2511300759043377229, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: _fader
+      value: 
+      objectReference: {fileID: 9157400268218804314}
+    - target: {fileID: 2511300759043377229, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
       propertyPath: _hider
       value: 
       objectReference: {fileID: 4611784807472098298}
@@ -1077,12 +1108,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2511300759043377229, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: _fader
+      value: 
+      objectReference: {fileID: 9157400268218804314}
+    - target: {fileID: 2511300759043377229, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
       propertyPath: _hider
       value: 
       objectReference: {fileID: 4611784807472098298}
     - target: {fileID: 2511300759043377229, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
       propertyPath: _transitionType
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2511300759043377229, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: _transitionInType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2511300759043377229, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: _transitionOutType
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2859520198295829402, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
       propertyPath: m_text
@@ -1276,9 +1319,21 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2511300759043377229, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: _fader
+      value: 
+      objectReference: {fileID: 9157400268218804314}
+    - target: {fileID: 2511300759043377229, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
       propertyPath: _hider
       value: 
       objectReference: {fileID: 4611784807472098298}
+    - target: {fileID: 2511300759043377229, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: _transitionInType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2511300759043377229, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: _transitionOutType
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5526166256258764789, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
       propertyPath: m_Name
       value: LevelLostPage
@@ -1417,11 +1472,23 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2511300759043377229, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: _fader
+      value: 
+      objectReference: {fileID: 9157400268218804314}
+    - target: {fileID: 2511300759043377229, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
       propertyPath: _hider
       value: 
       objectReference: {fileID: 4611784807472098298}
     - target: {fileID: 2511300759043377229, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
       propertyPath: _transitionType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2511300759043377229, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: _transitionInType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2511300759043377229, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: _transitionOutType
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2859520198295829402, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
