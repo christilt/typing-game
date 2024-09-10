@@ -8,6 +8,9 @@ using UnityEngine;
 [CreateAssetMenu]
 public class LevelSettingsSO : ScriptableObject
 {
+    [SerializeField] private string _id;
+    public string LevelId => _id;
+
     [SerializeField] private List<DifficultyOverride> _difficultyOverrides;
 
     [SerializeField] private string _namePart1;

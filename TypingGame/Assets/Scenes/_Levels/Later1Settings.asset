@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38531dd8483370d4b94e377b0a149d2e, type: 3}
   m_Name: Later1Settings
   m_EditorClassIdentifier: 
+  _id: later_01
   _difficultyOverrides:
   - Difficulty: 1
     CharacterSet: {fileID: 11400000, guid: a306241fe59deb74388220fd915b78f6, type: 2}

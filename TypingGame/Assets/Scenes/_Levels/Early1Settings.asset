@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38531dd8483370d4b94e377b0a149d2e, type: 3}
   m_Name: Early1Settings
   m_EditorClassIdentifier: 
+  _id: early_01
   _difficultyOverrides:
   - Difficulty: 1
     CharacterSet: {fileID: 11400000, guid: 04765f6220d92214e9fb2643957dff8c, type: 2}
