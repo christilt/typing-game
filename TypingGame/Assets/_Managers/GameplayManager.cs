@@ -101,7 +101,6 @@ public class GameplayManager : Singleton<GameplayManager>
                 });
                 break;
             case GameState.LifeLosing:
-                // TODO
                 break;
             case GameState.LevelWon:
                 break;
@@ -151,7 +150,6 @@ public class GameplayManager : Singleton<GameplayManager>
     }
 }
 
-// TODO - maybe 2 sets of states, one higher level so other components need to know less
 public enum GameState
 {
     LevelStarting,

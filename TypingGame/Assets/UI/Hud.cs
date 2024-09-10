@@ -79,7 +79,7 @@ public class Hud : MonoBehaviour
 
     private void UpdateForGameState(GameState state)
     {
-        UpdateTextForGameState(state);
+        UpdateMenusForGameState(state);
 
         if (state.StartsPlayerControl())
         {
@@ -100,7 +100,7 @@ public class Hud : MonoBehaviour
         }
     }
 
-    private void UpdateTextForGameState(GameState state)
+    private void UpdateMenusForGameState(GameState state)
     {
         switch (state)
         {
