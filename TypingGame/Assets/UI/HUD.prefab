@@ -322,7 +322,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2490465697625120617
 RectTransform:
   m_ObjectHideFlags: 0
@@ -946,7 +946,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5526166256258764789, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5748362201601548007, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -964,6 +964,18 @@ PrefabInstance:
       propertyPath: _screenSpaceCanvasScaler
       value: 
       objectReference: {fileID: 5156877882020553345}
+    - target: {fileID: 7091285889498812365, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -300
+      objectReference: {fileID: 0}
+    - target: {fileID: 7091285889498812365, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -300
+      objectReference: {fileID: 0}
+    - target: {fileID: 7971197566623643745, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 8886545981748973263, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
       propertyPath: m_text
       value: '<mspace=56>
@@ -1523,6 +1535,30 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 72
       objectReference: {fileID: 0}
+    - target: {fileID: 3009810101514800220, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7473716981361069571}
+    - target: {fileID: 3009810101514800220, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OpenPrevious
+      objectReference: {fileID: 0}
+    - target: {fileID: 3641481111833422179, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3857687169216059979, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4748116304203665893}
+    - target: {fileID: 3857687169216059979, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RetryLevel
+      objectReference: {fileID: 0}
+    - target: {fileID: 3857687169216059979, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Hud, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 5526166256258764789, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
       propertyPath: m_Name
       value: LevelStatsPage
@@ -1550,6 +1586,10 @@ PrefabInstance:
     - target: {fileID: 6538776097778358370, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
       propertyPath: m_SizeDelta.x
       value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 6913876616400227306, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7971197566623643745, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
       propertyPath: m_text

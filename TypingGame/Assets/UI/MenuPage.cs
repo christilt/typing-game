@@ -9,6 +9,7 @@ public class MenuPage : MonoBehaviour
     [SerializeField] private MenuPage _nextPage;
     private MenuPage _previousPage;
     private Button _firstButton;
+    private Animator[] _animators;
     private int _enableCount;
 
     private Transitioner _optionalTransitioner;
@@ -16,6 +17,7 @@ public class MenuPage : MonoBehaviour
     private void Awake()
     {
         _optionalTransitioner = GetComponent<Transitioner>();
+        _animators = GetComponentsInChildren<Animator>();
     }
 
     private void OnEnable()
@@ -72,13 +74,16 @@ public class MenuPage : MonoBehaviour
         {
             return _optionalTransitioner
                 .TransitionOut()
-                .OnComplete(() => gameObject.SetActive(false));
+                .OnComplete(() =>
+                {
+                    gameObject.SetActive(false);
+                });
         }
         else
         {
             gameObject.SetActive(false);
 
-            return DOTween.Sequence(); // TODO: Find a way to return a completed Tween?
+            return DOTween.Sequence();
         }
     }
 
@@ -105,8 +110,8 @@ public class MenuPage : MonoBehaviour
     {
         return GetComponentsInChildren<Button>()
             .Where(b => b.IsInteractable())
-            .OrderByDescending(b => b.transform.position.y) // top to bottom
-            .ThenBy(b => MathF.Abs(b.transform.position.x)) // middle to sides
+            .OrderByDescending(b => b.transform.localPosition.y) // top to bottom
+            .ThenBy(b => MathF.Abs(b.transform.localPosition.x)) // middle to sides
             .FirstOrDefault();
     }
 }
