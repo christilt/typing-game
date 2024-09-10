@@ -4,6 +4,6 @@ public class Startup : MonoBehaviour
 {
     private void Start()
     {
-        LoadingManager.Instance.StartLoad(SceneNames.MainMenu);
+        LoadSceneManager.Instance.StartLoad(SceneNames.MainMenu);
     }
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 980383536624999296}
   - component: {fileID: 6676220800957936587}
   m_Layer: 0
-  m_Name: LoadingManager
+  m_Name: LoadSceneManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

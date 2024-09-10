@@ -12,7 +12,7 @@ public class UILoadingScreen : MonoBehaviour
     {
         SceneHider.Instance.StartOfSceneFadeIn(() =>
         {
-            LoadingManager.Instance.LoadingSceneLoad();
+            LoadSceneManager.Instance.LoadingSceneLoad();
         });
     }
 
@@ -23,7 +23,7 @@ public class UILoadingScreen : MonoBehaviour
 
     private void Update()
     {
-        var progress = LoadingManager.Instance.LoadingProgress;
+        var progress = LoadSceneManager.Instance.LoadingProgress;
         UpdateProgress(progress);
     }
 

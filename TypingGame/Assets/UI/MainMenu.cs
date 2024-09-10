@@ -18,7 +18,7 @@ public class MainMenu : MonoBehaviour
     public void SetChallengeDifficulty() => SetDifficulty(ChallengeDifficultySO);
     public void SetExtremeDifficulty() => SetDifficulty(ExtremeDifficultySO);
 
-    public void Load(Scene scene) => LoadingManager.Instance.StartLoad(scene.name);
+    public void Load(Scene scene) => LoadSceneManager.Instance.StartLoad(scene.name);
     public void World1Level1() => Load(SceneNames.Early1);
     public void World2Level1() => Load(SceneNames.Mid1);
     public void World3Level1() => Load(SceneNames.Later1);
@@ -31,5 +31,5 @@ public class MainMenu : MonoBehaviour
         GameSettingsManager.Instance.Difficulty = difficultySO;
     }
 
-    private void Load(string sceneName) => LoadingManager.Instance.StartLoad(sceneName);
+    private void Load(string sceneName) => LoadSceneManager.Instance.StartLoad(sceneName);
 }

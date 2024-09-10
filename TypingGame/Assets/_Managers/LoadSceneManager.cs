@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 // TODO do things like load level tiles in loading screen?
 // Based on https://www.youtube.com/watch?v=3I5d2rUJ0pE
-public class LoadingManager : PersistentSingleton<LoadingManager>
+public class LoadSceneManager : PersistentSingleton<LoadSceneManager>
 {
     private string _loadSceneName;
     private AsyncOperation _loadingAsyncOperation;

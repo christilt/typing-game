@@ -205,7 +205,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7047443065942690569, guid: 07812035e012d2947a3c772c5c112ff1, type: 3}
       propertyPath: m_Name
-      value: LoadingManager
+      value: LoadSceneManager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
