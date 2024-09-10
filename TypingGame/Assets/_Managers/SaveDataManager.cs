@@ -9,15 +9,18 @@ using UnityEngine;
 
 public class SaveDataManager : PersistentSingleton<SaveDataManager>
 {
+    [SerializeField] private int _maxHighScoreEntriesPerLevel;
+
     private BinaryFormatter _formatter;
     private string _highScoresPath;
+
 
     protected override void Awake()
     {
         base.Awake();
 
         _formatter = new BinaryFormatter();
-        _highScoresPath = Path.Combine(Application.persistentDataPath, "typinggame.highscores.bin");
+        _highScoresPath = Path.Combine(Application.persistentDataPath, "highscores.bin");
     }
 
     public List<HighScore> SaveLevelHighScore(string levelId, string playerInitials, LevelStats stats)
@@ -29,16 +32,15 @@ public class SaveDataManager : PersistentSingleton<SaveDataManager>
             Value = stats.Score
         };
 
-        HighScores highScores;
-        if (!TryLoadHighScores(out highScores))
-            highScores = new HighScores();
+        var highScores = LoadHighScoresOrDefault() ?? new();
 
         if (highScores.LevelHighScores.TryGetValue(levelId, out var levelHighScores))
         {
             levelHighScores.Add(highScore);
-            levelHighScores = levelHighScores
+            highScores.LevelHighScores[levelId] = levelHighScores
                 .OrderByDescending(ps => ps.Value)
                 .ThenBy(ps => ps.Initials)
+                .Take(_maxHighScoreEntriesPerLevel)
                 .ToList();
             Save(highScores);
         }
@@ -54,6 +56,22 @@ public class SaveDataManager : PersistentSingleton<SaveDataManager>
         return highScores.LevelHighScores[levelId];
     }
 
+    public List<HighScore> LoadLevelHighScores(string levelId)
+    {
+        var highScores = LoadHighScoresOrDefault();
+        if (highScores == null)
+            return new();
+
+        if (highScores.LevelHighScores.TryGetValue(levelId, out var levelHighScores))
+        {
+            return levelHighScores;
+        }
+        else
+        {
+            return new();
+        }
+    }
+
     private void Save(HighScores highScores)
     {
         using var stream = new FileStream(_highScoresPath, FileMode.Create);
@@ -64,19 +82,17 @@ public class SaveDataManager : PersistentSingleton<SaveDataManager>
     }
 
 
-    private bool TryLoadHighScores(out HighScores highScores)
+    private HighScores LoadHighScoresOrDefault()
     {
-        highScores = null;
-
         if (!File.Exists(_highScoresPath))
-            return false;
+            return null;
 
         using var stream = new FileStream(_highScoresPath, FileMode.Open);
-        highScores = (HighScores)_formatter.Deserialize(stream);
+        var highScores = (HighScores)_formatter.Deserialize(stream);
 
         // TODO: Remove
         Debug.Log($"HighScores loaded from {_highScoresPath}: {highScores}");
 
-        return true;
+        return highScores;
     }
 }

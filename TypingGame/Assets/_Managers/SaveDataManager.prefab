@@ -44,3 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01c98e198d3956f4bb179c18310947ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxHighScoreEntriesPerLevel: 5
