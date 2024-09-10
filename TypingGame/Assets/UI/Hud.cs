@@ -75,7 +75,9 @@ public class Hud : MonoBehaviour
     }
 
     public void StartLevel() => GameplayManager.Instance.LevelPLaying();
+    public void NextLevel() => LoadSceneManager.Instance.LoadNextLevel();
     public void RetryLevel() => LoadSceneManager.Instance.ReloadLevel();
+    public void MainMenu() => LoadSceneManager.Instance.StartLoad(SceneNames.MainMenu);
 
     private void UpdateForGameState(GameState state)
     {

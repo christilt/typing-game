@@ -1032,6 +1032,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2490465697625120617}
     m_Modifications:
+    - target: {fileID: 217209666164267518, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5558760952785845391}
+    - target: {fileID: 217209666164267518, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OpenPrevious
+      objectReference: {fileID: 0}
+    - target: {fileID: 543468123435671617, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4748116304203665893}
+    - target: {fileID: 543468123435671617, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: NextLevel
+      objectReference: {fileID: 0}
+    - target: {fileID: 543468123435671617, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Hud, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 993404615173348856, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: m_text
+      value: main menu
+      objectReference: {fileID: 0}
     - target: {fileID: 1085192320609930551, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
       propertyPath: _screenSpaceCanvasScaler
       value: 
@@ -1116,6 +1140,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1909200854319007866, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1909200854319007866, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2263696404204082185, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: m_text
+      value: replay level
+      objectReference: {fileID: 0}
+    - target: {fileID: 2475438318845820792, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: m_text
+      value: back
+      objectReference: {fileID: 0}
     - target: {fileID: 2511300759043377229, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
       propertyPath: _fader
       value: 
@@ -1135,6 +1175,10 @@ PrefabInstance:
     - target: {fileID: 2511300759043377229, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
       propertyPath: _transitionOutType
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2797826511608006343, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: m_text
+      value: next level
       objectReference: {fileID: 0}
     - target: {fileID: 2859520198295829402, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
       propertyPath: m_text
@@ -1156,9 +1200,21 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OpenPrevious
       objectReference: {fileID: 0}
+    - target: {fileID: 3211173429844999038, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4748116304203665893}
+    - target: {fileID: 3211173429844999038, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MainMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 3211173429844999038, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Hud, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3641481111833422179, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3857687169216059979, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1169,6 +1225,18 @@ PrefabInstance:
       value: RetryLevel
       objectReference: {fileID: 0}
     - target: {fileID: 3857687169216059979, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Hud, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482043571588346511, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4748116304203665893}
+    - target: {fileID: 4482043571588346511, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RetryLevel
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482043571588346511, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: Hud, Assembly-CSharp
       objectReference: {fileID: 0}
@@ -1204,9 +1272,17 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7592539078934188290, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1500
+      objectReference: {fileID: 0}
     - target: {fileID: 7971197566623643745, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
       propertyPath: m_text
       value: ok
+      objectReference: {fileID: 0}
+    - target: {fileID: 8028989851583141092, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8886545981748973263, guid: 31c5619db51efca4ea8ddc81c985e6db, type: 3}
       propertyPath: m_text

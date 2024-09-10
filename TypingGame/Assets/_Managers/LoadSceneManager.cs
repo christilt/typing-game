@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class LoadSceneManager : PersistentSingleton<LoadSceneManager>
 {
     private string _loadSceneName;
+    private int? _loadBuildIndex;
     private AsyncOperation _loadingAsyncOperation;
 
     public float LoadingProgress => _loadingAsyncOperation?.progress ?? 0;
@@ -18,16 +19,31 @@ public class LoadSceneManager : PersistentSingleton<LoadSceneManager>
         StartLoad(currentSceneName);
     }
 
+    public void LoadNextLevel()
+    { 
+        // TODO: What should happen once on last scene / on a scene that should not go to the following one?
+        var nextSceneBuildIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        StartLoad(nextSceneBuildIndex);
+    }
+
     public void LoadingSceneLoad()
     {
         if (!LoadingSceneIsCurrent)
             throw new InvalidOperationException($"Not valid outside of Loading scene: {nameof(LoadingSceneLoad)}");
 
-        if (_loadSceneName == null)
-            throw new InvalidOperationException($"{nameof(_loadSceneName)} has not been set");
+        if (_loadSceneName == null && _loadBuildIndex == null)
+            throw new InvalidOperationException($"Neither {nameof(_loadSceneName)} nor {nameof(_loadBuildIndex)} have been set");
 
-
-        _loadingAsyncOperation = SceneManager.LoadSceneAsync(_loadSceneName);
+        if (_loadSceneName != null)
+        {
+            _loadingAsyncOperation = SceneManager.LoadSceneAsync(_loadSceneName);
+            _loadSceneName = null;
+        }
+        else if (_loadBuildIndex != null)
+        {
+            _loadingAsyncOperation = SceneManager.LoadSceneAsync(_loadBuildIndex.Value);
+            _loadBuildIndex = null;
+        }
         // See https://docs.unity3d.com/ScriptReference/AsyncOperation-allowSceneActivation.html
         _loadingAsyncOperation.allowSceneActivation = false;
         StartCoroutine(AwaitSceneLoadedCoroutine());
@@ -45,12 +61,15 @@ public class LoadSceneManager : PersistentSingleton<LoadSceneManager>
         }
     }
 
-    public void StartLoad(string sceneName)
+    public void StartLoad(string sceneName) => StartLoad(() => _loadSceneName = sceneName);
+    public void StartLoad(int sceneBuildIndex) => StartLoad(() => _loadBuildIndex = sceneBuildIndex);
+
+    private void StartLoad(Action setSceneNameOrSceneBuildIndex)
     {
         if (LoadingSceneIsCurrent)
             throw new InvalidOperationException($"Not valid from Loading scene: {nameof(StartLoad)}");
 
-        _loadSceneName = sceneName;
+        setSceneNameOrSceneBuildIndex();
 
         if (SceneHider.Instance != null)
         {

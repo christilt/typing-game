@@ -10,6 +10,7 @@ public class EventSystemMouseFocusLossPreventer : Singleton<EventSystemMouseFocu
     private void Update()
     {
         // Similar to https://gamedev.stackexchange.com/a/188291
+        // TODO: This is a little slow - could consider using Input system to detect mouse clicks instead?
         if (EventSystem.current.currentSelectedGameObject != null)
         {
             _lastSelectedObject = EventSystem.current.currentSelectedGameObject;
