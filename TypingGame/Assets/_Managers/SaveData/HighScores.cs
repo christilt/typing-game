@@ -17,11 +17,14 @@ public class HighScores
 public class HighScore
 {
     public string Initials;
-    public int Value;
-    public string ColourHtmlString; // Reconsider serialising this if categorisation might change
+    public int Score;
+    public int Minutes;
+    public int Seconds;
+    public string RankColourHtmlString; // Reconsider serialising this if categorisation might change
+    public string TimeColourHtmlString; // Reconsider serialising this if categorisation might change
 
     public override string ToString()
     {
-        return $"{Initials}...{Value}";
+        return $"{Initials}...{Score}";
     }
 }

@@ -28,8 +28,11 @@ public class SaveDataManager : PersistentSingleton<SaveDataManager>
         var highScore = new HighScore
         {
             Initials = playerInitials,
-            ColourHtmlString = ColorUtility.ToHtmlStringRGB(stats.Category.GetColour()),
-            Value = stats.Score
+            Score = stats.Score,
+            RankColourHtmlString = ColorUtility.ToHtmlStringRGB(stats.Category.GetColour()),
+            Minutes = stats.Speed.TimeTaken.Minutes,
+            Seconds = stats.Speed.TimeTaken.Seconds,
+            TimeColourHtmlString = ColorUtility.ToHtmlStringRGB(stats.Speed.Category.GetColour()),
         };
 
         var highScores = LoadHighScoresOrDefault() ?? new();
@@ -38,7 +41,7 @@ public class SaveDataManager : PersistentSingleton<SaveDataManager>
         {
             levelHighScores.Add(highScore);
             highScores.LevelHighScores[levelId] = levelHighScores
-                .OrderByDescending(ps => ps.Value)
+                .OrderByDescending(ps => ps.Score)
                 .ThenBy(ps => ps.Initials)
                 .Take(_maxHighScoreEntriesPerLevel)
                 .ToList();

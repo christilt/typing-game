@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -18,12 +19,16 @@ public class TextInterpolatorLevelHighScores2 : TextInterpolator
                 var highScore = levelHighScores[i];
                 argsList.Add(i + 1);
                 argsList.Add(highScore.Initials);
-                argsList.Add(highScore.ColourHtmlString);
-                argsList.Add(highScore.Value);
+                argsList.Add(highScore.RankColourHtmlString);
+                argsList.Add(highScore.Score);
+                argsList.Add(highScore.TimeColourHtmlString);
+                argsList.Add(new TimeSpan(0, highScore.Minutes, highScore.Seconds));
             }
             else
             {
+                argsList.Add("..");
                 argsList.Add("...");
+                argsList.Add(whiteColourString);
                 argsList.Add("...");
                 argsList.Add(whiteColourString);
                 argsList.Add("...");
