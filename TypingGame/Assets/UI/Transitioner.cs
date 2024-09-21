@@ -18,6 +18,7 @@ public class Transitioner : MonoBehaviour
     private void Awake()
     {
         _movers = GetComponentsInChildren<TransitionMover>()
+            .Where(o => o.gameObject.transform.parent == transform) // immediate children only
             .OrderByDescending(b => b.transform.position.y) // top to bottom
             .ToArray();
 

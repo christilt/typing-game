@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!225 &48671131 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 3196782559361888270, guid: 4bf4520ef3d37e54399a631d09dce9c2, type: 3}
+  m_PrefabInstance: {fileID: 412329139}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &80061305
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -259,6 +264,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 47019574865214616, guid: 4bf4520ef3d37e54399a631d09dce9c2, type: 3}
+      propertyPath: _canvasGroup
+      value: 
+      objectReference: {fileID: 48671131}
     - target: {fileID: 988270974058585713, guid: 4bf4520ef3d37e54399a631d09dce9c2, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -290,10 +299,6 @@ PrefabInstance:
     - target: {fileID: 3472769679367219930, guid: 4bf4520ef3d37e54399a631d09dce9c2, type: 3}
       propertyPath: m_Name
       value: Units
-      objectReference: {fileID: 0}
-    - target: {fileID: 4456572593723238797, guid: 4bf4520ef3d37e54399a631d09dce9c2, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4491158409696404908, guid: 4bf4520ef3d37e54399a631d09dce9c2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -331,6 +336,10 @@ PrefabInstance:
       propertyPath: m_fontColor32.rgba
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 7984761228965161651, guid: 4bf4520ef3d37e54399a631d09dce9c2, type: 3}
+      propertyPath: _canvasGroup
+      value: 
+      objectReference: {fileID: 803323727}
     - target: {fileID: 9166457011061170785, guid: 4bf4520ef3d37e54399a631d09dce9c2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -465,6 +474,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4993880696689555671, guid: d64b0f39335ac4946943dd0fcda05019, type: 3}
   m_PrefabInstance: {fileID: 654845465}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &803323727 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 8820005590100775818, guid: 4bf4520ef3d37e54399a631d09dce9c2, type: 3}
+  m_PrefabInstance: {fileID: 412329139}
   m_PrefabAsset: {fileID: 0}
 --- !u!224 &1955760807 stripped
 RectTransform:

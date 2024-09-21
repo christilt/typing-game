@@ -854,6 +854,10 @@ PrefabInstance:
       propertyPath: _nextPage
       value: 
       objectReference: {fileID: 1113499016}
+    - target: {fileID: 3820548889245613078, guid: ba7f2073a3e082844ba25858cdc6a0c8, type: 3}
+      propertyPath: _skipTransitionOnFirstEnable
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 7227193958090396489, guid: ba7f2073a3e082844ba25858cdc6a0c8, type: 3}
@@ -1697,6 +1701,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2850800136061403951, guid: ba7f2073a3e082844ba25858cdc6a0c8, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3820548889245613078, guid: ba7f2073a3e082844ba25858cdc6a0c8, type: 3}
+      propertyPath: _skipTransitionOnFirstEnable
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -3518,6 +3526,10 @@ PrefabInstance:
     - target: {fileID: 2850800136061403951, guid: ba7f2073a3e082844ba25858cdc6a0c8, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3820548889245613078, guid: ba7f2073a3e082844ba25858cdc6a0c8, type: 3}
+      propertyPath: _skipTransitionOnFirstEnable
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7129882084603539975, guid: ba7f2073a3e082844ba25858cdc6a0c8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size

@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class MenuPage : MonoBehaviour
 {
     [SerializeField] private MenuPage _nextPage;
+    [SerializeField] private bool _skipTransitionOnFirstEnable;
+
     private MenuPage _previousPage;
     private Button _firstButton;
     private int _enableCount;
@@ -20,23 +22,22 @@ public class MenuPage : MonoBehaviour
 
     private void OnEnable()
     {
+        var isFirstEnable = _enableCount == 0;
         _enableCount++;
 
         _firstButton ??= GetFirstButtonOrDefault();
-        if (_firstButton == null)
-            return;
 
-        if (_optionalTransitioner != null)
+        if (_optionalTransitioner != null && (!isFirstEnable  || !_skipTransitionOnFirstEnable))
         {
-            var tween = _enableCount == 1
+            var tween = isFirstEnable
                 ? _optionalTransitioner.TransitionIn()
                 : _optionalTransitioner.TransitionInRepeated();
 
-            tween.OnComplete(() => _firstButton.Select());
+            tween.OnComplete(() => _firstButton?.Select());
         }
         else
         {
-            _firstButton.Select();
+            _firstButton?.Select();
         }
     }
 

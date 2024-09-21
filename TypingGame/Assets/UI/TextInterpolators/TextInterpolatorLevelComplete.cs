@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-
-public class TextInterpolatorLevelHighScores1 : TextInterpolator
+﻿public class TextInterpolatorLevelComplete : TextInterpolator
 {
     protected override object[] GetTextArgs()
     {

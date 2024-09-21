@@ -15,7 +15,7 @@ public class Hud : MonoBehaviour
 
     [SerializeField] private Hider _hider;
     [SerializeField] private MenuPage _introPage;
-    [SerializeField] private MenuPage _levelWonPage;
+    [SerializeField] private MenuPage _levelCompleteMenu;
     [SerializeField] private MenuPage _levelLostPage;
 
     private void Awake()
@@ -114,7 +114,7 @@ public class Hud : MonoBehaviour
                 _hider.Unhide(GameSettingsManager.Instance.MenuTransitions.FadeOutDuration);
                 break;
             case GameState.LevelWon:
-                _levelWonPage.gameObject.SetActive(true);
+                _levelCompleteMenu.gameObject.SetActive(true);
                 // TODO: Remove
                 var levelStats = StatsManager.Instance.CalculateEndOfLevelStats();
                 SaveDataManager.Instance.SaveLevelHighScore(LevelSettingsManager.Instance.LevelSettings.LevelId, "cjt", levelStats);
