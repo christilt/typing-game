@@ -117,7 +117,7 @@ public class Hud : MonoBehaviour
                 _levelCompleteMenu.gameObject.SetActive(true);
                 // TODO: Remove
                 var levelStats = StatsManager.Instance.CalculateEndOfLevelStats();
-                SaveDataManager.Instance.SaveLevelHighScore(LevelSettingsManager.Instance.LevelSettings.LevelId, "cjt", levelStats);
+                SaveDataManager.Instance.SaveLevelHighScore(LevelSettingsManager.Instance.LevelSettings.LevelId, GameSettingsManager.Instance.Difficulty.Difficulty, "cjt", levelStats);
                 break;
             case GameState.LevelLost:
                 _levelLostPage.gameObject.SetActive(true);

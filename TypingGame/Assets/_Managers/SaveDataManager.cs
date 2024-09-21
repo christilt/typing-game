@@ -23,8 +23,10 @@ public class SaveDataManager : PersistentSingleton<SaveDataManager>
         _highScoresPath = Path.Combine(Application.persistentDataPath, "highscores.bin");
     }
 
-    public List<HighScore> SaveLevelHighScore(string levelId, string playerInitials, LevelStats stats)
+    public List<HighScore> SaveLevelHighScore(string levelId, Difficulty difficulty, string playerInitials, LevelStats stats)
     {
+        var levelDifficultyKey = LevelDifficultyKey(levelId, difficulty);
+
         var highScore = new HighScore
         {
             Initials = playerInitials,
@@ -37,10 +39,10 @@ public class SaveDataManager : PersistentSingleton<SaveDataManager>
 
         var highScores = LoadHighScoresOrDefault() ?? new();
 
-        if (highScores.LevelHighScores.TryGetValue(levelId, out var levelHighScores))
+        if (highScores.LevelDifficultyHighScores.TryGetValue(levelDifficultyKey, out var levelHighScores))
         {
             levelHighScores.Add(highScore);
-            highScores.LevelHighScores[levelId] = levelHighScores
+            highScores.LevelDifficultyHighScores[levelDifficultyKey] = levelHighScores
                 .OrderByDescending(ps => ps.Score)
                 .ThenBy(ps => ps.Initials)
                 .Take(_maxHighScoreEntriesPerLevel)
@@ -49,23 +51,25 @@ public class SaveDataManager : PersistentSingleton<SaveDataManager>
         }
         else
         {
-            highScores.LevelHighScores.Add(levelId, new List<HighScore>
+            highScores.LevelDifficultyHighScores.Add(levelDifficultyKey, new List<HighScore>
             {
                 highScore
             });
             Save(highScores);
         }
 
-        return highScores.LevelHighScores[levelId];
+        return highScores.LevelDifficultyHighScores[levelDifficultyKey];
     }
 
-    public List<HighScore> LoadLevelHighScores(string levelId)
+    public List<HighScore> LoadLevelHighScores(string levelId, Difficulty difficulty)
     {
+        var levelDifficultyKey = LevelDifficultyKey(levelId, difficulty);
+
         var highScores = LoadHighScoresOrDefault();
         if (highScores == null)
             return new();
 
-        if (highScores.LevelHighScores.TryGetValue(levelId, out var levelHighScores))
+        if (highScores.LevelDifficultyHighScores.TryGetValue(levelDifficultyKey, out var levelHighScores))
         {
             return levelHighScores;
         }
@@ -74,6 +78,8 @@ public class SaveDataManager : PersistentSingleton<SaveDataManager>
             return new();
         }
     }
+
+    private static string LevelDifficultyKey(string levelId, Difficulty difficulty) => $"{levelId}__{difficulty}";
 
     private void Save(HighScores highScores)
     {

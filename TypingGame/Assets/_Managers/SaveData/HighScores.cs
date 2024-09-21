@@ -5,11 +5,11 @@ using System.Linq;
 [Serializable]
 public class HighScores
 {
-    public Dictionary<string, List<HighScore>> LevelHighScores = new();
+    public Dictionary<string, List<HighScore>> LevelDifficultyHighScores = new();
 
     public override string ToString()
     {
-        return $"{Environment.NewLine}{string.Join(Environment.NewLine, LevelHighScores.Select(kvp => $"{kvp.Key}:{Environment.NewLine}{string.Join(Environment.NewLine, kvp.Value)}"))}";
+        return $"{Environment.NewLine}{string.Join(Environment.NewLine, LevelDifficultyHighScores.Select(kvp => $"{kvp.Key}:{Environment.NewLine}{string.Join(Environment.NewLine, kvp.Value)}"))}";
     }
 }
 

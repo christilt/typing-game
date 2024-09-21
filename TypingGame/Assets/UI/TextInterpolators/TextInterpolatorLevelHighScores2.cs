@@ -8,10 +8,12 @@ public class TextInterpolatorLevelHighScores2 : TextInterpolator
     protected override object[] GetTextArgs()
     {
         var levelId = LevelSettingsManager.Instance.LevelSettings.LevelId;
-        var levelHighScores = SaveDataManager.Instance.LoadLevelHighScores(levelId);
+        var difficulty = GameSettingsManager.Instance.Difficulty;
+        var levelHighScores = SaveDataManager.Instance.LoadLevelHighScores(levelId, difficulty.Difficulty);
 
         var whiteColourString = ColorUtility.ToHtmlStringRGB(Color.white);
         var argsList = new List<object>();
+        argsList.Add(difficulty.Difficulty == Difficulty.Normal ? "" : $"{difficulty.Name} mode");
         for (var i = 0; i < 5; i++)
         {
             if (levelHighScores.Count > i)
