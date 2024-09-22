@@ -28,3 +28,25 @@ public class HighScore
         return $"{Initials}...{Score}";
     }
 }
+
+public class EditableHighScores
+{
+    private readonly string _levelDifficultyKey;
+
+    public EditableHighScores(HighScores highScores, string levelDifficultyKey, int? levelDifficultyNewEntryIndex)
+    {
+        HighScores = highScores;
+        _levelDifficultyKey = levelDifficultyKey;
+        LevelDifficultyNewEntryIndex = levelDifficultyNewEntryIndex;
+    }
+
+    public HighScores HighScores { get; }
+    public List<HighScore> LevelDifficultyHighScores => HighScores.LevelDifficultyHighScores[_levelDifficultyKey];
+    public int? LevelDifficultyNewEntryIndex { get; private set; }
+    public void UpdateInitials(string playerInitials)
+    {
+        if (LevelDifficultyNewEntryIndex == null) throw new InvalidOperationException("Cannot update initials for highscores that do not have a new entry");
+
+        HighScores.LevelDifficultyHighScores[_levelDifficultyKey][LevelDifficultyNewEntryIndex.Value].Initials = playerInitials;
+    }
+}

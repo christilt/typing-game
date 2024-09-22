@@ -23,13 +23,17 @@ public class SaveDataManager : PersistentSingleton<SaveDataManager>
         _highScoresPath = Path.Combine(Application.persistentDataPath, "highscores.bin");
     }
 
-    public List<HighScore> SaveLevelHighScore(string levelId, Difficulty difficulty, string playerInitials, LevelStats stats)
+    public void SaveLastPlayerInitials(string playerInitials) => PlayerPrefs.SetString("player_last_initials", playerInitials);
+
+    public string LoadLastPlayerInitials() => PlayerPrefs.GetString("player_last_initials", string.Empty);
+
+    public EditableHighScores LoadHighScoresWithNewEntry(string levelId, Difficulty difficulty, LevelStats stats)
     {
         var levelDifficultyKey = LevelDifficultyKey(levelId, difficulty);
 
         var highScore = new HighScore
         {
-            Initials = playerInitials,
+            Initials = string.Empty,
             Score = stats.Score,
             RankColourHtmlString = ColorUtility.ToHtmlStringRGB(stats.Category.GetColour()),
             Minutes = stats.Speed.TimeTaken.Minutes,
@@ -38,16 +42,29 @@ public class SaveDataManager : PersistentSingleton<SaveDataManager>
         };
 
         var highScores = LoadHighScoresOrDefault() ?? new();
+        int? newIndex = null;
 
         if (highScores.LevelDifficultyHighScores.TryGetValue(levelDifficultyKey, out var levelHighScores))
         {
-            levelHighScores.Add(highScore);
-            highScores.LevelDifficultyHighScores[levelDifficultyKey] = levelHighScores
+            levelHighScores.Add(highScore); 
+            levelHighScores = levelHighScores
                 .OrderByDescending(ps => ps.Score)
+                .ThenByDescending(ps => ps.Minutes)
+                .ThenByDescending(ps => ps.Seconds)
                 .ThenBy(ps => ps.Initials)
                 .Take(_maxHighScoreEntriesPerLevel)
                 .ToList();
-            Save(highScores);
+            highScores.LevelDifficultyHighScores[levelDifficultyKey] = levelHighScores;
+            var emptyIndicies = levelHighScores.Select((Score, Index) => (Score, Index)).Where(x => x.Score.Initials == string.Empty).ToList();
+            if (emptyIndicies.Count > 1)
+            {
+                // TODO: Remove
+                Debug.LogWarning($"More than 1 set of empty initials found in highscores: {highScores}");
+            }
+            else if (emptyIndicies.Count == 1)
+            {
+                newIndex = emptyIndicies.Single().Index;
+            }
         }
         else
         {
@@ -55,33 +72,13 @@ public class SaveDataManager : PersistentSingleton<SaveDataManager>
             {
                 highScore
             });
-            Save(highScores);
+            newIndex = 0;
         }
 
-        return highScores.LevelDifficultyHighScores[levelDifficultyKey];
+        return new EditableHighScores(highScores, levelDifficultyKey, newIndex);
     }
 
-    public List<HighScore> LoadLevelHighScores(string levelId, Difficulty difficulty)
-    {
-        var levelDifficultyKey = LevelDifficultyKey(levelId, difficulty);
-
-        var highScores = LoadHighScoresOrDefault();
-        if (highScores == null)
-            return new();
-
-        if (highScores.LevelDifficultyHighScores.TryGetValue(levelDifficultyKey, out var levelHighScores))
-        {
-            return levelHighScores;
-        }
-        else
-        {
-            return new();
-        }
-    }
-
-    private static string LevelDifficultyKey(string levelId, Difficulty difficulty) => $"{levelId}__{difficulty}";
-
-    private void Save(HighScores highScores)
+    public void Save(HighScores highScores)
     {
         using var stream = new FileStream(_highScoresPath, FileMode.Create);
         _formatter.Serialize(stream, highScores);
@@ -89,6 +86,8 @@ public class SaveDataManager : PersistentSingleton<SaveDataManager>
         // TODO: Remove
         Debug.Log($"HighScores saved at {_highScoresPath}: {highScores}");
     }
+
+    private static string LevelDifficultyKey(string levelId, Difficulty difficulty) => $"{levelId}__{difficulty}";
 
 
     private HighScores LoadHighScoresOrDefault()

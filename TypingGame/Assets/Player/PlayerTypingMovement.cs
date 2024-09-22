@@ -24,10 +24,10 @@ public class PlayerTypingMovement : MonoBehaviour
         _inputField.onValueChanged.RemoveAllListeners();
         _inputField.onValueChanged.AddListener(value =>
         {
-            if (value == "")
+            if (value == string.Empty)
                 return;
 
-            _inputField.text = "";
+            _inputField.text = string.Empty;
 
             var key = value[0];
             if (!IsTypingKey(key))

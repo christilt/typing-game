@@ -6,26 +6,28 @@ using UnityEngine.UI;
 
 public class MenuPage : MonoBehaviour
 {
-    [SerializeField] private MenuPage _nextPage;
-    [SerializeField] private bool _skipTransitionOnFirstEnable;
+    [SerializeField] protected MenuPage _nextPage;
+    [SerializeField] protected bool _skipTransitionOnFirstEnable;
 
-    private MenuPage _previousPage;
-    private Button _firstButton;
-    private int _enableCount;
+    protected MenuPage _previousPage;
+    protected Selectable[] _orderedSelectables;
+    protected Selectable _firstSelectable;
+    protected int _enableCount;
 
-    private Transitioner _optionalTransitioner;
+    protected Transitioner _optionalTransitioner;
 
-    private void Awake()
+    protected void Awake()
     {
         _optionalTransitioner = GetComponent<Transitioner>();
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         var isFirstEnable = _enableCount == 0;
         _enableCount++;
 
-        _firstButton ??= GetFirstButtonOrDefault();
+        _orderedSelectables ??= GetOrderedSeletables();
+        _firstSelectable ??= _orderedSelectables.FirstOrDefault();
 
         if (_optionalTransitioner != null && (!isFirstEnable  || !_skipTransitionOnFirstEnable))
         {
@@ -33,11 +35,11 @@ public class MenuPage : MonoBehaviour
                 ? _optionalTransitioner.TransitionIn()
                 : _optionalTransitioner.TransitionInRepeated();
 
-            tween.OnComplete(() => _firstButton?.Select());
+            tween.OnComplete(() => _firstSelectable?.Select());
         }
         else
         {
-            _firstButton?.Select();
+            _firstSelectable?.Select();
         }
     }
 
@@ -86,7 +88,7 @@ public class MenuPage : MonoBehaviour
         }
     }
 
-    private void OpenFromPrevious(MenuPage previous)
+    protected void OpenFromPrevious(MenuPage previous)
     {
         if (_previousPage == null)
             _previousPage = previous;
@@ -97,7 +99,7 @@ public class MenuPage : MonoBehaviour
             .SetUpdate(true);
     }
 
-    private void OpenFromNext()
+    protected void OpenFromNext()
     {
         DOTween.Sequence()
             .Append(_nextPage.Disable())
@@ -105,12 +107,12 @@ public class MenuPage : MonoBehaviour
             .SetUpdate(true);
     }
 
-    private Button GetFirstButtonOrDefault()
+    protected Selectable[] GetOrderedSeletables()
     {
-        return GetComponentsInChildren<Button>()
+        return GetComponentsInChildren<Selectable>()
             .Where(b => b.IsInteractable())
-            .OrderByDescending(b => b.transform.localPosition.y) // top to bottom
-            .ThenBy(b => MathF.Abs(b.transform.localPosition.x)) // middle to sides
-            .FirstOrDefault();
+            .OrderByDescending(b => b.transform.position.y) // top to bottom
+            .ThenBy(b => MathF.Abs(b.transform.position.x)) // middle to sides
+            .ToArray();
     }
 }

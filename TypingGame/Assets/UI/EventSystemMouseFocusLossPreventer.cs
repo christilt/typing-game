@@ -22,8 +22,8 @@ public class EventSystemMouseFocusLossPreventer : Singleton<EventSystemMouseFocu
             || !_lastSelectedObject.activeSelf)
             return;
 
-        var button = _lastSelectedObject.GetComponent<Button>();
-        if (button == null || !button.interactable)
+        var selectable = _lastSelectedObject.GetComponent<Selectable>();
+        if (selectable == null || !selectable.interactable)
             return;
 
         Debug.Log($"Focus lost due to mouse - returning focus to last selected object {_lastSelectedObject.name}");
