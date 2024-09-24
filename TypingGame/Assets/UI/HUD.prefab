@@ -2853,6 +2853,10 @@ PrefabInstance:
       propertyPath: _fader
       value: 
       objectReference: {fileID: 5457150287109287014}
+    - target: {fileID: 1463674765475261740, guid: 87e97709dd6384f44800f6fe2af7c7c3, type: 3}
+      propertyPath: m_OnDeselect.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3138119852573836024, guid: 87e97709dd6384f44800f6fe2af7c7c3, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -416
@@ -2941,6 +2945,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4331953957584003002, guid: 87e97709dd6384f44800f6fe2af7c7c3, type: 3}
+      propertyPath: m_OnDeselect.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5116389550509278818, guid: 87e97709dd6384f44800f6fe2af7c7c3, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -344
@@ -2953,9 +2961,21 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -488
       objectReference: {fileID: 0}
+    - target: {fileID: 6851207967021302194, guid: 87e97709dd6384f44800f6fe2af7c7c3, type: 3}
+      propertyPath: m_OnDeselect.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7252596511566982146, guid: 87e97709dd6384f44800f6fe2af7c7c3, type: 3}
       propertyPath: m_Name
       value: LevelHighScoresPage
+      objectReference: {fileID: 0}
+    - target: {fileID: 7425084264149140726, guid: 87e97709dd6384f44800f6fe2af7c7c3, type: 3}
+      propertyPath: m_OnDeselect.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8709330699904657846, guid: 87e97709dd6384f44800f6fe2af7c7c3, type: 3}
+      propertyPath: m_OnDeselect.m_PersistentCalls.m_Calls.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8880523173074071327, guid: 87e97709dd6384f44800f6fe2af7c7c3, type: 3}
       propertyPath: _screenSpaceCanvasScaler

@@ -8,7 +8,7 @@ public class TextInterpolatorLevelStats1 : TextInterpolator
 
         return new object[]
         {
-            ColorUtility.ToHtmlStringRGB(stats.Category.GetColour()),
+            ColorUtility.ToHtmlStringRGBA(stats.Category.GetColour()),
             stats.Rank.ToString(),
 
             stats.Score.ToString(),

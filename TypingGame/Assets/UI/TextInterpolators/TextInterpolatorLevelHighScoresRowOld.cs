@@ -23,7 +23,7 @@ public class TextInterpolatorLevelHighScoresRowOld : TextInterpolator
             var highScore = _highScores[_index];
             argsList.Add(_index + 1);
             argsList.Add(highScore.Initials);
-            argsList.Add(highScore.RankColourHtmlString);
+            argsList.Add(highScore.RankColourHtmlString); // TODO: Make this dim?
             argsList.Add(highScore.Score);
             argsList.Add(highScore.TimeColourHtmlString);
             argsList.Add(new TimeSpan(0, highScore.Minutes, highScore.Seconds));

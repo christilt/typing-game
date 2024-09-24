@@ -14,7 +14,7 @@ public static class TextHelper
 
     public static string WithColour(string text, Color color)
     {
-        var colorString = ColorUtility.ToHtmlStringRGB(color);
+        var colorString = ColorUtility.ToHtmlStringRGBA(color);
         return $"<color=#{colorString}>{text}</color>";
     }
 }

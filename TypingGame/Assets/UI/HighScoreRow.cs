@@ -6,7 +6,7 @@ public class HighScoreRow : MonoBehaviour
     [SerializeField] private HighScoreRowOld _oldRow;
     [SerializeField] private HighScoreRowNew _newRow;
 
-    public void Enable(bool isNewRow, int index, List<HighScore> highScores, string whiteColourString, string lastPlayerInitials)
+    public void Enable(bool isNewRow, int index, List<HighScore> highScores, string whiteColourString, string dimWhiteColourString, string lastPlayerInitials)
     {
         if (isNewRow)
         {
@@ -15,7 +15,7 @@ public class HighScoreRow : MonoBehaviour
         }
         else
         {
-            _oldRow.TextInterpolator.Enable(index, highScores, whiteColourString);
+            _oldRow.TextInterpolator.Enable(index, highScores, dimWhiteColourString);
         }
 
         gameObject.SetActive(true);

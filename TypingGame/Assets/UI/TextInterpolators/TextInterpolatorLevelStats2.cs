@@ -8,16 +8,16 @@ public class TextInterpolatorLevelStats2 : TextInterpolator
 
         return new object[]
         {
-            ColorUtility.ToHtmlStringRGB(stats.Accuracy.Category.GetColour()),
+            ColorUtility.ToHtmlStringRGBA(stats.Accuracy.Category.GetColour()),
             stats.Accuracy.Proportion,
 
-            ColorUtility.ToHtmlStringRGB(stats.Speed.Category.GetColour()),
+            ColorUtility.ToHtmlStringRGBA(stats.Speed.Category.GetColour()),
             stats.Speed.TimeTaken,
 
-            ColorUtility.ToHtmlStringRGB(stats.BestStreak.Category.GetColour()),
+            ColorUtility.ToHtmlStringRGBA(stats.BestStreak.Category.GetColour()),
             stats.BestStreak.Count,
 
-            ColorUtility.ToHtmlStringRGB(stats.TopSpeed.Category.GetColour()),
+            ColorUtility.ToHtmlStringRGBA(stats.TopSpeed.Category.GetColour()),
             $"{stats.TopSpeed.WordsPerMinute} WPM",
         };
     }

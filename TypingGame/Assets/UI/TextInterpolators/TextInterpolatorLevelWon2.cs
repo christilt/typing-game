@@ -6,7 +6,7 @@ public class TextInterpolatorLevelWon2 : TextInterpolator
     {
         var stats = StatsManager.Instance.CalculateEndOfLevelStats();
         var color = stats.Category.GetColour();
-        var colorString = ColorUtility.ToHtmlStringRGB(color);
+        var colorString = ColorUtility.ToHtmlStringRGBA(color);
 
         return new object[]
         {

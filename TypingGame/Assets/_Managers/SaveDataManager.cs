@@ -35,10 +35,10 @@ public class SaveDataManager : PersistentSingleton<SaveDataManager>
         {
             Initials = string.Empty,
             Score = stats.Score,
-            RankColourHtmlString = ColorUtility.ToHtmlStringRGB(stats.Category.GetColour()),
+            RankColourHtmlString = ColorUtility.ToHtmlStringRGBA(stats.Category.GetColour()),
             Minutes = stats.Speed.TimeTaken.Minutes,
             Seconds = stats.Speed.TimeTaken.Seconds,
-            TimeColourHtmlString = ColorUtility.ToHtmlStringRGB(stats.Speed.Category.GetColour()),
+            TimeColourHtmlString = ColorUtility.ToHtmlStringRGBA(stats.Speed.Category.GetColour()),
         };
 
         var highScores = LoadHighScoresOrDefault() ?? new();
