@@ -5120,7 +5120,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _visual: {fileID: 1764523070787639356}
   _typingMovement: {fileID: 2979496603171898421}
-  _attackController: {fileID: 2988345805388265238}
+  _inputController: {fileID: 2988345805388265238}
   _collider: {fileID: 6176550253247425463}
 --- !u!114 &2979496603171898421
 MonoBehaviour:

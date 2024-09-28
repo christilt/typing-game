@@ -31,7 +31,7 @@ public class KeyTiles : Singleton<KeyTiles>
 
     private void OnGameStateChanging(GameState state)
     {
-        if (state.EndsPlayerControl())
+        if (state.EndsGameplay())
         {
             gameObject.SetActive(false);
         }

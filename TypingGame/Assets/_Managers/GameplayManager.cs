@@ -13,14 +13,30 @@ public class GameplayManager : Singleton<GameplayManager>
 
     public GameState State { get; private set; }
 
-    public void LevelPLaying()
+    public void LevelGameplayStarting()
     {
-        TryChangeState(GameState.LevelPlaying);
+        TryChangeState(GameState.LevelGameplayStarting);
     }
 
     public void LevelWinning()
     {
         TryChangeState(GameState.LevelWinning);
+    }
+
+    public void LevelPausing()
+    {
+        if (!ValidateOperation(nameof(LevelPausing), state => state.AllowsPausing()))
+            return;
+
+        TryChangeState(GameState.LevelPausing);
+    }
+
+    public void LevelUnpausing()
+    {
+        if (!ValidateOperation(nameof(LevelUnpausing), state => state == GameState.LevelPausing))
+            return;
+
+        TryChangeState(GameState.LevelUnpausing);
     }
 
     public void PlayerDying()
@@ -42,6 +58,11 @@ public class GameplayManager : Singleton<GameplayManager>
         if (!ValidateOperation(nameof(PlayerExploded), state => state.InvolvesLevelLosing()))
             return;
 
+    }
+
+    public void SceneEnding()
+    {
+        _pauseHelper.Unpause();
     }
 
     private void Start()
@@ -83,8 +104,18 @@ public class GameplayManager : Singleton<GameplayManager>
                 break;
             case GameState.LevelIntroducing:
                 break;
-            case GameState.LevelPlaying:
+            case GameState.LevelGameplayStarting:
                 _pauseHelper.Unpause();
+                TryChangeState(GameState.LevelPlaying);
+                break;
+            case GameState.LevelPlaying:
+                break;
+            case GameState.LevelPausing:
+                _pauseHelper.Pause();
+                break;
+            case GameState.LevelUnpausing:
+                _pauseHelper.Unpause();
+                TryChangeState(GameState.LevelPlaying);
                 break;
             case GameState.LevelWinning:
                 _pauseHelper.Slow();
@@ -107,7 +138,6 @@ public class GameplayManager : Singleton<GameplayManager>
             case GameState.LevelLosing:
                 break;
             case GameState.LevelLost:
-                break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(state), state, null);
         }
@@ -117,9 +147,17 @@ public class GameplayManager : Singleton<GameplayManager>
     {
         switch (State)
         {
+            case GameState.LevelStarting:
+                break;
             case GameState.LevelIntroducing:
                 break;
+            case GameState.LevelGameplayStarting:
+                break;
             case GameState.LevelPlaying:
+                break;
+            case GameState.LevelPausing:
+                break;
+            case GameState.LevelUnpausing:
                 break;
             case GameState.LevelWinning:
                 break;
@@ -154,7 +192,10 @@ public enum GameState
 {
     LevelStarting,
     LevelIntroducing,
+    LevelGameplayStarting,
     LevelPlaying,
+    LevelPausing,
+    LevelUnpausing,
     LevelWinning,
     LevelWon,
     PlayerDying,
@@ -184,15 +225,25 @@ public static class GameStateExtensions
         return state == GameState.LevelIntroducing;
     }
 
-    public static bool StartsPlayerControl(this GameState state)
+    public static bool StartsGameplay(this GameState state)
+    {
+        return state == GameState.LevelGameplayStarting;
+    }
+
+    public static bool EndsGameplay(this GameState state)
+    {
+        return state.InvolvesLevelWinning()
+            || state.InvolvesLevelLosing();
+    }
+
+    public static bool AllowsPausing(this GameState state)
     {
         return state == GameState.LevelPlaying;
     }
 
-    public static bool EndsPlayerControl(this GameState state)
+    public static bool AllowsUnpausing(this GameState state)
     {
-        return state.InvolvesLevelWinning()
-            || state.InvolvesLevelLosing();
+        return state == GameState.LevelPausing;
     }
 
     public static bool IsEndOfLevel(this GameState state)

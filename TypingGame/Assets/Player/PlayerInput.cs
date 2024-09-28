@@ -28,9 +28,18 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             ""id"": ""458a1d1e-cf75-4048-bb51-296069abcb3a"",
             ""actions"": [
                 {
-                    ""name"": ""Trigger"",
+                    ""name"": ""AttackTrigger"",
                     ""type"": ""Button"",
                     ""id"": ""7d5fa726-6712-4528-976c-b9c19fede9f2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PauseTrigger"",
+                    ""type"": ""Button"",
+                    ""id"": ""df8542c3-b498-4631-96bb-da959e310d82"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -45,7 +54,18 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Trigger"",
+                    ""action"": ""AttackTrigger"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dda91e32-29b9-485c-b3a3-e5192cb40c67"",
+                    ""path"": ""<Keyboard>/pause"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseTrigger"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -56,7 +76,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
 }");
         // Main
         m_Main = asset.FindActionMap("Main", throwIfNotFound: true);
-        m_Main_Trigger = m_Main.FindAction("Trigger", throwIfNotFound: true);
+        m_Main_AttackTrigger = m_Main.FindAction("AttackTrigger", throwIfNotFound: true);
+        m_Main_PauseTrigger = m_Main.FindAction("PauseTrigger", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -118,12 +139,14 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     // Main
     private readonly InputActionMap m_Main;
     private List<IMainActions> m_MainActionsCallbackInterfaces = new List<IMainActions>();
-    private readonly InputAction m_Main_Trigger;
+    private readonly InputAction m_Main_AttackTrigger;
+    private readonly InputAction m_Main_PauseTrigger;
     public struct MainActions
     {
         private @PlayerInput m_Wrapper;
         public MainActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Trigger => m_Wrapper.m_Main_Trigger;
+        public InputAction @AttackTrigger => m_Wrapper.m_Main_AttackTrigger;
+        public InputAction @PauseTrigger => m_Wrapper.m_Main_PauseTrigger;
         public InputActionMap Get() { return m_Wrapper.m_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -133,16 +156,22 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_MainActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_MainActionsCallbackInterfaces.Add(instance);
-            @Trigger.started += instance.OnTrigger;
-            @Trigger.performed += instance.OnTrigger;
-            @Trigger.canceled += instance.OnTrigger;
+            @AttackTrigger.started += instance.OnAttackTrigger;
+            @AttackTrigger.performed += instance.OnAttackTrigger;
+            @AttackTrigger.canceled += instance.OnAttackTrigger;
+            @PauseTrigger.started += instance.OnPauseTrigger;
+            @PauseTrigger.performed += instance.OnPauseTrigger;
+            @PauseTrigger.canceled += instance.OnPauseTrigger;
         }
 
         private void UnregisterCallbacks(IMainActions instance)
         {
-            @Trigger.started -= instance.OnTrigger;
-            @Trigger.performed -= instance.OnTrigger;
-            @Trigger.canceled -= instance.OnTrigger;
+            @AttackTrigger.started -= instance.OnAttackTrigger;
+            @AttackTrigger.performed -= instance.OnAttackTrigger;
+            @AttackTrigger.canceled -= instance.OnAttackTrigger;
+            @PauseTrigger.started -= instance.OnPauseTrigger;
+            @PauseTrigger.performed -= instance.OnPauseTrigger;
+            @PauseTrigger.canceled -= instance.OnPauseTrigger;
         }
 
         public void RemoveCallbacks(IMainActions instance)
@@ -162,6 +191,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     public MainActions @Main => new MainActions(this);
     public interface IMainActions
     {
-        void OnTrigger(InputAction.CallbackContext context);
+        void OnAttackTrigger(InputAction.CallbackContext context);
+        void OnPauseTrigger(InputAction.CallbackContext context);
     }
 }

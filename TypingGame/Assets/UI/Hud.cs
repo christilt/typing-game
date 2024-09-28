@@ -17,6 +17,7 @@ public class Hud : MonoBehaviour
     [SerializeField] private MenuPage _introPage;
     [SerializeField] private MenuPage _levelCompleteMenu;
     [SerializeField] private MenuPage _levelLostPage;
+    [SerializeField] private MenuPage _pauseMenu;
 
     private void Awake()
     {
@@ -73,8 +74,8 @@ public class Hud : MonoBehaviour
             PlayerAttackManager.Instance.OnReadinessChanged -= _attackBar.UpdateReadiness;
         }
     }
-
-    public void StartLevel() => GameplayManager.Instance.LevelPLaying();
+    public void Unpause() => GameplayManager.Instance.LevelUnpausing();
+    public void StartLevel() => GameplayManager.Instance.LevelGameplayStarting();
     public void NextLevel() => LoadSceneManager.Instance.LoadNextLevel();
     public void RetryLevel() => LoadSceneManager.Instance.ReloadLevel();
     public void MainMenu() => LoadSceneManager.Instance.StartLoad(SceneNames.MainMenu);
@@ -83,7 +84,7 @@ public class Hud : MonoBehaviour
     {
         UpdateMenusForGameState(state);
 
-        if (state.StartsPlayerControl())
+        if (state.StartsGameplay())
         {
             _statusEffectPanel.gameObject.SetActive(true);
             _burstPopUp.gameObject.SetActive(true);
@@ -92,7 +93,7 @@ public class Hud : MonoBehaviour
                 _attackBar.gameObject.SetActive(true);
         }
 
-        if (state.EndsPlayerControl())
+        if (state.EndsGameplay())
         {
             _statusEffectPanel.gameObject.SetActive(false);
             _burstPopUp.gameObject.SetActive(false);
@@ -109,9 +110,15 @@ public class Hud : MonoBehaviour
             case GameState.LevelIntroducing:
                 _introPage.gameObject.SetActive(true);
                 break;
-            case GameState.LevelPlaying:
+            case GameState.LevelGameplayStarting:
                 _introPage.Disable();
                 _hider.Unhide(GameSettingsManager.Instance.MenuTransitions.FadeOutDuration);
+                break;
+            case GameState.LevelPausing:
+                _hider.TransitionToOpaque(0, onComplete: () => _pauseMenu.gameObject.SetActive(true), unscaled: true);
+                break;
+            case GameState.LevelUnpausing:
+                _hider.Unhide(0, onComplete: () => _pauseMenu.gameObject.SetActive(false), unscaled: true);
                 break;
             case GameState.LevelWon:
                 _levelCompleteMenu.gameObject.SetActive(true);

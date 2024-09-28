@@ -33,6 +33,6 @@ public class UILoadingScreen : MonoBehaviour
             return;
 
         _tween?.Kill();
-        _tween = _image.DOFillAmount(progress, 0.1f);
+        _tween = _image.DOFillAmount(progress, 0.1f).SetUpdate(true);
     }
 }

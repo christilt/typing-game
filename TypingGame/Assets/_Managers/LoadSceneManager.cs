@@ -75,11 +75,13 @@ public class LoadSceneManager : PersistentSingleton<LoadSceneManager>
         {
             SceneHider.Instance.EndOfSceneFadeOut(() =>
             {
+                GameplayManager.Instance.SceneEnding();
                 SceneManager.LoadScene(SceneNames.Loading);
             });
         }
         else
         {
+            GameplayManager.Instance.SceneEnding();
             SceneManager.LoadScene(SceneNames.Loading);
         }
     }

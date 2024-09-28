@@ -7,7 +7,7 @@ public class Player : Singleton<Player>
 {
     [SerializeField] private PlayerVisual _visual;
     [SerializeField] private PlayerTypingMovement _typingMovement;
-    [SerializeField] private PlayerAttackController _attackController;
+    [SerializeField] private PlayerInputController _inputController;
     [SerializeField] private Collider2D _collider;
 
     private void Start()
@@ -92,7 +92,8 @@ public class Player : Singleton<Player>
         if (revertAfterSeconds.HasValue && !state.IsRevertable())
             throw new ArgumentException($"Cannot specify {nameof(revertAfterSeconds)} with state {state} as not revertable");
 
-        StopPendingStateChanges();
+        if (state.InterruptsPendingStateChanges())
+            StopPendingStateChanges();
 
         OnStateChanging?.Invoke(state);
 
@@ -104,6 +105,9 @@ public class Player : Singleton<Player>
                 break;
             case PlayerState.Normal:
                 SetMoveableAndCollidable(true);
+                break;
+            case PlayerState.Paused:
+                SetMoveableAndCollidable(false);
                 break;
             case PlayerState.Dying:
                 SetMoveableAndCollidable(false);
@@ -144,12 +148,18 @@ public class Player : Singleton<Player>
             case GameState.LevelPlaying:
                 TryChangeState(PlayerState.Normal);
                 break;
+            case GameState.LevelPausing:
+                TryChangeState(PlayerState.Paused);
+                break;
             case GameState.LevelWinning:
                 Celebrate();
                 break;
             default:
                 break; // Do nothing for other state changes
         }
+
+        var isPausable = state.AllowsPausing() || state.AllowsUnpausing();
+        SetPausableAndUnpausable(isPausable);
     }
 
     private void HandlePacmanExploding()
@@ -180,12 +190,24 @@ public class Player : Singleton<Player>
         if (enabled)
         {
             _typingMovement.EnableComponent();
-            _attackController.EnableComponent();
+            _inputController.EnableAttack();
         }
         else
         {
             _typingMovement.DisableComponent();
-            _attackController.DisableComponent();
+            _inputController.DisableAttack();
+        }
+    }
+
+    private void SetPausableAndUnpausable(bool enabled)
+    {
+        if (enabled)
+        {
+            _inputController.EnablePauseAndUnpause();
+        }
+        else
+        {
+            _inputController.DisablePauseAndUnpause();
         }
     }
 }
@@ -194,6 +216,7 @@ public enum PlayerState
 {
     Initial,
     Normal,
+    Paused,
     Invincible,
     Greedy,
     Dying,
@@ -211,5 +234,10 @@ public static class PlayerStateExtensions
     public static bool IsRevertable(this PlayerState state)
     {
         return state.IsEffect();
+    }
+
+    public static bool InterruptsPendingStateChanges(this PlayerState state)
+    {
+        return state != PlayerState.Paused;
     }
 }
