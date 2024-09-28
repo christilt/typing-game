@@ -12,6 +12,7 @@ public class MenuPage : MonoBehaviour
     protected MenuPage _previousPage;
     protected Selectable[] _orderedSelectables;
     protected Selectable _firstSelectable;
+    protected Button _firstButton;
     protected int _enableCount;
 
     protected Transitioner _optionalTransitioner;
@@ -28,6 +29,7 @@ public class MenuPage : MonoBehaviour
 
         _orderedSelectables ??= GetOrderedSeletables();
         _firstSelectable ??= _orderedSelectables.FirstOrDefault();
+        _firstButton ??= _orderedSelectables.Where(s => s.GetComponent<Button>() != null).FirstOrDefault() as Button;
 
         if (_optionalTransitioner != null && (!isFirstEnable  || !_skipTransitionOnFirstEnable))
         {
@@ -35,12 +37,20 @@ public class MenuPage : MonoBehaviour
                 ? _optionalTransitioner.TransitionIn()
                 : _optionalTransitioner.TransitionInRepeated();
 
-            tween.OnComplete(() => _firstSelectable?.Select());
+            tween.OnComplete(() => SelectFirstSelectableOrButton(isFirstEnable));
         }
         else
         {
-            _firstSelectable?.Select();
+            SelectFirstSelectableOrButton(isFirstEnable);
         }
+    }
+
+    protected void SelectFirstSelectableOrButton(bool isFirstEnable)
+    {
+        if (isFirstEnable)
+            _firstSelectable?.Select();
+        else
+            _firstButton?.Select();
     }
 
     public void OpenNext(MenuPage page)
