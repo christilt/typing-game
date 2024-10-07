@@ -4,11 +4,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-[RequireComponent(typeof(SortingGroup))]
 public class Hud : MonoBehaviour
 {
     [SerializeField] private UIStatusEffectPanel _statusEffectPanel;
-    [SerializeField] private Canvas _canvas;
     [SerializeField] private UIStreakPopUp _streakPopUp;
     [SerializeField] private UIBurstPopUp _burstPopUp;
     [SerializeField] private UIAttackBar _attackBar;
@@ -18,12 +16,6 @@ public class Hud : MonoBehaviour
     [SerializeField] private MenuPage _levelCompleteMenu;
     [SerializeField] private MenuPage _levelLostPage;
     [SerializeField] private MenuPage _pauseMenu;
-
-    private void Awake()
-    {
-        _canvas.worldCamera = Camera.main;
-        _canvas.sortingLayerID = GetComponent<SortingGroup>().sortingLayerID;
-    }
 
     private void Start()
     {

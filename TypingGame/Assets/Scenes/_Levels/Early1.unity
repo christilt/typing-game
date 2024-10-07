@@ -315,6 +315,10 @@ PrefabInstance:
       propertyPath: m_Colors.m_SelectedColor.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6005932605000500777, guid: 4bf4520ef3d37e54399a631d09dce9c2, type: 3}
+      propertyPath: m_SortAtRoot
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6279038638494696200, guid: 4bf4520ef3d37e54399a631d09dce9c2, type: 3}
       propertyPath: m_Name
       value: LevelSettingsManager

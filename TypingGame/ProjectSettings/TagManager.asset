@@ -50,7 +50,10 @@ TagManager:
   - name: Icons
     uniqueID: 4034209783
     locked: 0
-  - name: UI
+  - name: PopUpsAndPanels
+    uniqueID: 1567968577
+    locked: 0
+  - name: Menus
     uniqueID: 3608429825
     locked: 0
   - name: Hider
