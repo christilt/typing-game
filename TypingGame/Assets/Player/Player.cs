@@ -17,6 +17,8 @@ public class Player : Singleton<Player>
         _visual.OnPacmanExploded += HandlePacmanExploded;
         _typingMovement.OnCorrectKeyTyped += HandleCorrectKeyTyped;
         _typingMovement.OnIncorrectKeyTyped += HandleIncorrectKeyTyped;
+        _inputController.OnAttack += HandleAttack;
+        _inputController.OnPauseOrUnpause += HandlePauseOrUnpause;
     }
 
     private void OnDestroy()
@@ -35,6 +37,21 @@ public class Player : Singleton<Player>
             _typingMovement.OnCorrectKeyTyped -= HandleCorrectKeyTyped;
             _typingMovement.OnIncorrectKeyTyped -= HandleIncorrectKeyTyped;
         }
+        if (_inputController != null)
+        {
+            _inputController.OnAttack -= HandleAttack;
+            _inputController.OnPauseOrUnpause -= HandlePauseOrUnpause;
+        }
+    }
+
+    private void HandleAttack()
+    {
+        SoundManager.Instance.PlayPlayerAttack();
+    }
+
+    private void HandlePauseOrUnpause()
+    {
+
     }
 
     private void HandleCorrectKeyTyped(KeyTile keyTile)
@@ -44,6 +61,7 @@ public class Player : Singleton<Player>
     }
     private void HandleIncorrectKeyTyped(KeyTile keyTile)
     {
+        SoundManager.Instance.PlayTypeMiss();
         StatsManager.Instance.TypingRecorder.LogIncorrectKey();
     }
 

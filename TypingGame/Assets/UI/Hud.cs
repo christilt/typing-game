@@ -66,6 +66,7 @@ public class Hud : MonoBehaviour
             PlayerAttackManager.Instance.OnReadinessChanged -= _attackBar.UpdateReadiness;
         }
     }
+
     public void Unpause() => GameplayManager.Instance.LevelUnpausing();
     public void StartLevel() => GameplayManager.Instance.LevelGameplayStarting();
     public void NextLevel() => LoadSceneManager.Instance.LoadNextLevel();

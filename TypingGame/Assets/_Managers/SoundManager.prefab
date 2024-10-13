@@ -46,7 +46,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioSourceGlobal: {fileID: 4382879433103474172}
+  _soundEffectGameStart: {fileID: 8300000, guid: 56b416c4058beb3459cc78feee7f1e13, type: 3}
+  _soundEffectPlayerAttack: {fileID: 8300000, guid: 55cf734d37ac5c3489af9ab9a0c9661c, type: 3}
   _soundEffectType: {fileID: 8300000, guid: 56af7d2921c7fe349b96fa2d27ef6ef9, type: 3}
+  _soundEffectTypeMiss: {fileID: 8300000, guid: 3a38b57ceebadbe44ab28afc032c9ffe, type: 3}
 --- !u!82 &4382879433103474172
 AudioSource:
   m_ObjectHideFlags: 0

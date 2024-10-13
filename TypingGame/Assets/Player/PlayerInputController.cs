@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
 
 public class PlayerInputController : MonoBehaviour
@@ -7,6 +8,9 @@ public class PlayerInputController : MonoBehaviour
 
     private PlayerInput _input;
     private PlayerAttack _currentAttack;
+
+    public event Action OnAttack;
+    public event Action OnPauseOrUnpause;
 
     private void Awake()
     {
@@ -50,6 +54,7 @@ public class PlayerInputController : MonoBehaviour
     private void Attack()
     {
         _currentAttack = GameObject.Instantiate(_playerAttackPrefab, transform);
+        OnAttack?.Invoke();
     }
 
     private void PauseOrUnpause(CallbackContext context)
@@ -58,5 +63,6 @@ public class PlayerInputController : MonoBehaviour
             GameplayManager.Instance.LevelUnpausing();
         else
             GameplayManager.Instance.LevelPausing();
+        OnPauseOrUnpause?.Invoke();
     }
 }

@@ -31,5 +31,9 @@ public class MainMenu : MonoBehaviour
         GameSettingsManager.Instance.Difficulty = difficultySO;
     }
 
-    private void Load(string sceneName) => LoadSceneManager.Instance.StartLoad(sceneName);
+    private void Load(string sceneName)
+    {
+        SoundManager.Instance.PlayGameStart();
+        LoadSceneManager.Instance.StartLoad(sceneName);
+    }
 }
