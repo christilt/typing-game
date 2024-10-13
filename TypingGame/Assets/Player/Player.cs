@@ -37,8 +37,15 @@ public class Player : Singleton<Player>
         }
     }
 
-    private void HandleCorrectKeyTyped(KeyTile keyTile) => StatsManager.Instance.TypingRecorder.LogCorrectKey(keyTile);
-    private void HandleIncorrectKeyTyped(KeyTile keyTile) => StatsManager.Instance.TypingRecorder.LogIncorrectKey();
+    private void HandleCorrectKeyTyped(KeyTile keyTile)
+    {
+        SoundManager.Instance.PlayType();
+        StatsManager.Instance.TypingRecorder.LogCorrectKey(keyTile);
+    }
+    private void HandleIncorrectKeyTyped(KeyTile keyTile)
+    {
+        StatsManager.Instance.TypingRecorder.LogIncorrectKey();
+    }
 
     public event Action<PlayerState> OnStateChanging;
     public event Action<PlayerState> OnStateChanged;
