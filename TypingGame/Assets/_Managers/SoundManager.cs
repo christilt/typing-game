@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,10 @@ public class SoundManager : PersistentSingleton<SoundManager>
     [SerializeField] private AudioClip _soundEffectTypeMiss;
 
     [SerializeField] private AudioClip _musicInGame;
+
+    [SerializeField] private float _musicFadeDuration;
+
+    private float _musicOriginalVolume;
 
 
     public void PlayGameStart() => _sfxSourceGlobal.PlayOneShot(_soundEffectGameStart);
@@ -37,9 +42,14 @@ public class SoundManager : PersistentSingleton<SoundManager>
 
     public void StopMusicInGame()
     {
-        _musicSourceGlobal.Stop();
+        _musicOriginalVolume = _musicSourceGlobal.volume;
+        _musicSourceGlobal
+            .DOFade(0, _musicFadeDuration)
+            .OnComplete(() =>
+            {
+                _musicSourceGlobal.Stop();
+                _musicSourceGlobal.volume = _musicOriginalVolume;
+            });
     }
-
-    // TODO: Pause music / fade in out music?
 
 }
