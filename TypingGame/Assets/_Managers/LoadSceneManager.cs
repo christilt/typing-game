@@ -61,8 +61,16 @@ public class LoadSceneManager : PersistentSingleton<LoadSceneManager>
         }
     }
 
-    public void StartLoad(string sceneName) => StartLoad(() => _loadSceneName = sceneName);
-    public void StartLoad(int sceneBuildIndex) => StartLoad(() => _loadBuildIndex = sceneBuildIndex);
+    public void StartLoad(string sceneName) => StartLoad(() =>
+    {
+        _loadSceneName = sceneName;
+        _loadBuildIndex = null;
+    });
+    public void StartLoad(int sceneBuildIndex) => StartLoad(() =>
+    {
+        _loadSceneName = null;
+        _loadBuildIndex = sceneBuildIndex;
+    });
 
     private void StartLoad(Action setSceneNameOrSceneBuildIndex)
     {
@@ -71,17 +79,18 @@ public class LoadSceneManager : PersistentSingleton<LoadSceneManager>
 
         setSceneNameOrSceneBuildIndex();
 
+        var isExitingGameplay = _loadSceneName == SceneNames.MainMenu;
         if (SceneHider.Instance != null)
         {
             SceneHider.Instance.EndOfSceneFadeOut(() =>
             {
-                GameplayManager.Instance?.SceneEnding();
+                GameplayManager.Instance?.SceneEnding(isExitingGameplay);
                 SceneManager.LoadScene(SceneNames.Loading);
             });
         }
         else
         {
-            GameplayManager.Instance?.SceneEnding();
+            GameplayManager.Instance?.SceneEnding(isExitingGameplay);
             SceneManager.LoadScene(SceneNames.Loading);
         }
     }

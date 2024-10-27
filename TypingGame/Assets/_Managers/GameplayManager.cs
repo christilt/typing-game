@@ -60,8 +60,11 @@ public class GameplayManager : Singleton<GameplayManager>
 
     }
 
-    public void SceneEnding()
+    public void SceneEnding(bool isExitingGameplay)
     {
+        if (isExitingGameplay)
+            SoundManager.Instance.StopMusicInGame();
+
         _pauseHelper.Unpause();
     }
 
@@ -97,6 +100,7 @@ public class GameplayManager : Singleton<GameplayManager>
             case GameState.LevelStarting:
                 _pauseHelper.Pause();
                 SceneHider.Instance.StartOfSceneFadeIn();
+                SoundManager.Instance.StartMusicInGame();
                 KeyTiles.Instance.Initialise(() =>
                 {
                     TryChangeState(GameState.LevelIntroducing);
