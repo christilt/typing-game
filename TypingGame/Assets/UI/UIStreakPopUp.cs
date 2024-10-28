@@ -14,6 +14,7 @@ public class UIStreakPopUp : MonoBehaviour
     {
         var colour = streak.Category.GetColour();
         var text = TextHelper.WithColour($"Streak x{streak.Count}", colour);
+        SoundManager.Instance.PlayAchievement();
         _notificationPopUp.ShowText(text);
     }
 

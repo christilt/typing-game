@@ -16,6 +16,7 @@ public class CollectableIsGoal : CollectableEffect, ICollectableGoal
 
     public override void ManagerApplyEffect()
     {
+        SoundManager.Instance.PlayCollectGoal();
         GoalManager.Instance.Complete(this);
     }
 }

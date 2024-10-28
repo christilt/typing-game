@@ -13,6 +13,7 @@ public class CollectableMakesPlayerGreedy : CollectableStatusEffect
 
     public override void ManagerApplyEffect()
     {
+        SoundManager.Instance.PlayStatusEffectPositive();
         Player.Instance.BecomeGreedy();
         UnitManager.Instance.FrightenEnemies();
     }

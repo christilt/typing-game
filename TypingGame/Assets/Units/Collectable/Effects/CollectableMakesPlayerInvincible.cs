@@ -13,6 +13,7 @@ public class CollectableMakesPlayerInvincible : CollectableStatusEffect
 
     public override void ManagerApplyEffect()
     {
+        SoundManager.Instance.PlayStatusEffectPositive();
         Player.Instance.BecomeInvincible();
     }
 

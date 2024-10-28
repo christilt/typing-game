@@ -61,6 +61,7 @@ public class MenuPage : MonoBehaviour
             return;
         }
 
+        SoundManager.Instance?.PlayMenuMove();
         _nextPage = page;
 
         _nextPage.OpenFromPrevious(this);

@@ -20,6 +20,7 @@ public class UIBurstPopUp : MonoBehaviour
         var colour = burst.Category.GetColour();
         var floorWpm = Math.Floor(burst.WordsPerMinute); // Because if rounded this same rounding would not occur later
         var text = TextHelper.WithColour($"{floorWpm} WPM", colour);
+        SoundManager.Instance.PlayAchievement();
         _notificationPopUp.ShowText(text);
     }
 

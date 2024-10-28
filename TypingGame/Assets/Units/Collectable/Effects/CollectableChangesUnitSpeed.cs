@@ -15,6 +15,10 @@ public class CollectableChangesUnitSpeed : CollectableStatusEffect
 
     public override void ManagerApplyEffect()
     {
+        if (_multiplier < 1)
+            SoundManager.Instance.PlayStatusEffectPositive();
+        else
+            SoundManager.Instance.PlayStatusEffectNegative();
         UnitManager.Instance.ChangeUnitSpeed(_multiplier);
     }
 

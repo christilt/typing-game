@@ -56,7 +56,7 @@ public class Player : Singleton<Player>
 
     private void HandleCorrectKeyTyped(KeyTile keyTile)
     {
-        SoundManager.Instance.PlayType();
+        SoundManager.Instance.PlayTypeHit();
         StatsManager.Instance.TypingRecorder.LogCorrectKey(keyTile);
     }
     private void HandleIncorrectKeyTyped(KeyTile keyTile)
