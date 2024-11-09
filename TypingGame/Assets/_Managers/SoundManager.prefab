@@ -307,6 +307,7 @@ MonoBehaviour:
   _soundEffectAchievement: {fileID: 8300000, guid: e94f041f1f129de4d9033207996b722e, type: 3}
   _soundEffectCollectGoal: {fileID: 8300000, guid: 8455c82c5867e3d419d9ba1deb5b5ad3, type: 3}
   _soundEffectGameStart: {fileID: 8300000, guid: 32359d4a8b820a84bb818776cae0b1c5, type: 3}
+  _soundEffectLevelComplete: {fileID: 8300000, guid: e1ebf5a01f0fef845952eebb5ce9f246, type: 3}
   _soundEffectMenuBack: {fileID: 8300000, guid: 3a38b57ceebadbe44ab28afc032c9ffe, type: 3}
   _soundEffectMenuComplete: {fileID: 8300000, guid: 32359d4a8b820a84bb818776cae0b1c5, type: 3}
   _soundEffectMenuMove: {fileID: 8300000, guid: 56af7d2921c7fe349b96fa2d27ef6ef9, type: 3}

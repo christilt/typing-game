@@ -8,15 +8,16 @@ public class SequenceDirector : MonoBehaviour
 
     public void LevelWinning(Action onComplete)
     {
+        SoundManager.Instance.PlayLevelComplete();
         PromoteCamera();
         HideLevel(2, onComplete);
     }
 
     public void PlayerDying(Action onComplete)
     {
+        SoundManager.Instance.PlayPlayerExplode();
         PromoteCamera();
         HideLevel(2.5f, onComplete);
-        SoundManager.Instance.PlayPlayerExplode();
     }
 
     public void PlayerExploding()

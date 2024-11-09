@@ -14,6 +14,7 @@ public class SoundManager : PersistentSingleton<SoundManager>
     [SerializeField] private AudioClip _soundEffectAchievement;
     [SerializeField] private AudioClip _soundEffectCollectGoal;
     [SerializeField] private AudioClip _soundEffectGameStart;
+    [SerializeField] private AudioClip _soundEffectLevelComplete;
     [SerializeField] private AudioClip _soundEffectMenuBack;
     [SerializeField] private AudioClip _soundEffectMenuComplete;
     [SerializeField] private AudioClip _soundEffectMenuMove;
@@ -35,6 +36,7 @@ public class SoundManager : PersistentSingleton<SoundManager>
     public void PlayAchievement() => _sfxSourceGlobal.PlayOneShot(_soundEffectAchievement);
     public void PlayCollectGoal() => _sfxSourceGlobal.PlayOneShot(_soundEffectCollectGoal);
     public void PlayGameStart() => _sfxSourceGlobal.PlayOneShot(_soundEffectGameStart);
+    public void PlayLevelComplete() => _sfxSourceGlobal.PlayOneShot(_soundEffectLevelComplete);
     public void PlayMenuBack() => _sfxSourceGlobal.PlayOneShot(_soundEffectMenuBack);
     public void PlayMenuComplete() => _sfxSourceGlobal.PlayOneShot(_soundEffectMenuComplete);
     public void PlayMenuMove() => _sfxSourceGlobal.PlayOneShot(_soundEffectMenuMove);
