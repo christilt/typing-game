@@ -16,6 +16,7 @@ public class SequenceDirector : MonoBehaviour
     {
         PromoteCamera();
         HideLevel(2.5f, onComplete);
+        SoundManager.Instance.PlayPlayerExplode();
     }
 
     public void PlayerExploding()

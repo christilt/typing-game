@@ -6,8 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class GameTextInput : MonoBehaviour
+public class GameTextInput : MonoBehaviour, IDeselectHandler
 {
     [SerializeField] private TMP_InputField _inputField;
 
@@ -16,5 +17,12 @@ public class GameTextInput : MonoBehaviour
         if (!gameObject.activeInHierarchy) return;
 
         _inputField.caretPosition = _inputField.text.Length;
+    }
+
+    public void PlayTypeSound() => SoundManager.Instance.PlayTypeHit();
+
+    public void OnDeselect(BaseEventData eventData)
+    {
+        SoundManager.Instance?.PlayMenuMove();
     }
 }

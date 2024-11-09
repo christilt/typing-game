@@ -307,13 +307,18 @@ MonoBehaviour:
   _soundEffectAchievement: {fileID: 8300000, guid: e94f041f1f129de4d9033207996b722e, type: 3}
   _soundEffectCollectGoal: {fileID: 8300000, guid: 8455c82c5867e3d419d9ba1deb5b5ad3, type: 3}
   _soundEffectGameStart: {fileID: 8300000, guid: 32359d4a8b820a84bb818776cae0b1c5, type: 3}
+  _soundEffectMenuBack: {fileID: 8300000, guid: 3a38b57ceebadbe44ab28afc032c9ffe, type: 3}
+  _soundEffectMenuComplete: {fileID: 8300000, guid: 32359d4a8b820a84bb818776cae0b1c5, type: 3}
   _soundEffectMenuMove: {fileID: 8300000, guid: 56af7d2921c7fe349b96fa2d27ef6ef9, type: 3}
   _soundEffectPlayerAttack: {fileID: 8300000, guid: 55cf734d37ac5c3489af9ab9a0c9661c, type: 3}
-  _soundEffectStatusEffectKillsEnemies: {fileID: 0}
+  _soundEffectPlayerExplode: {fileID: 8300000, guid: 54e632e0bf4f38643a1e88916045b3c6, type: 3}
+  _soundEffectStatusEffectKillsEnemies: {fileID: 8300000, guid: 55cf734d37ac5c3489af9ab9a0c9661c, type: 3}
   _soundEffectStatusEffectNegative: {fileID: 8300000, guid: 54e632e0bf4f38643a1e88916045b3c6, type: 3}
   _soundEffectStatusEffectPositive: {fileID: 8300000, guid: f3817c697558f434db75826f0e03c2ee, type: 3}
   _soundEffectTypeHit: {fileID: 8300000, guid: 56af7d2921c7fe349b96fa2d27ef6ef9, type: 3}
   _soundEffectTypeMiss: {fileID: 8300000, guid: 3a38b57ceebadbe44ab28afc032c9ffe, type: 3}
   _musicInGame:
   - {fileID: 8300000, guid: 6226ea6d47078214eab2e1d4d096711a, type: 3}
+  - {fileID: 8300000, guid: 843d591f0d5e11043a262b45cd5c9545, type: 3}
+  - {fileID: 8300000, guid: c54397c29a3595d468753c7e2923aff6, type: 3}
   _musicFadeDuration: 0.75

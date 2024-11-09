@@ -68,10 +68,29 @@ public class Hud : MonoBehaviour
     }
 
     public void Unpause() => GameplayManager.Instance.LevelUnpausing();
-    public void StartLevel() => GameplayManager.Instance.LevelGameplayStarting();
-    public void NextLevel() => LoadSceneManager.Instance.LoadNextLevel();
-    public void RetryLevel() => LoadSceneManager.Instance.ReloadLevel();
-    public void MainMenu() => LoadSceneManager.Instance.StartLoad(SceneNames.MainMenu);
+    public void StartLevel()
+    {
+        SoundManager.Instance.PlayMenuMove();
+        GameplayManager.Instance.LevelGameplayStarting();
+    }
+
+    public void NextLevel()
+    {
+        SoundManager.Instance.PlayMenuComplete();
+        LoadSceneManager.Instance.LoadNextLevel();
+    }
+
+    public void RetryLevel()
+    {
+        SoundManager.Instance.PlayMenuComplete();
+        LoadSceneManager.Instance.ReloadLevel();
+    }
+
+    public void MainMenu()
+    {
+        SoundManager.Instance.PlayMenuComplete();
+        LoadSceneManager.Instance.StartLoad(SceneNames.MainMenu);
+    }
 
     private void UpdateForGameState(GameState state)
     {

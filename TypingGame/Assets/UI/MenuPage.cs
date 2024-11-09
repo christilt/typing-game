@@ -77,6 +77,7 @@ public class MenuPage : MonoBehaviour
             return;
         }
 
+        SoundManager.Instance?.PlayMenuBack();
         _previousPage.OpenFromNext();
     }
 
