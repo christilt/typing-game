@@ -22,7 +22,7 @@ public class SoundManager : PersistentSingleton<SoundManager>
     [SerializeField] private AudioClip _soundEffectTypeHit;
     [SerializeField] private AudioClip _soundEffectTypeMiss;
 
-    [SerializeField] private AudioClip _musicInGame;
+    [SerializeField] private AudioClip[] _musicInGame;
 
     [SerializeField] private float _musicFadeDuration;
 
@@ -43,15 +43,16 @@ public class SoundManager : PersistentSingleton<SoundManager>
 
     public void StartMusicInGame()
     {
-        if (_musicSourceGlobal.clip == _musicInGame && _musicSourceGlobal.isPlaying)
+        if (_musicSourceGlobal.isPlaying)
             return;
 
-        _musicSourceGlobal.clip = _musicInGame;
+        _musicSourceGlobal.clip =  _musicInGame[UnityEngine.Random.Range(0, _musicInGame.Length)];
         _musicOriginalVolume = _musicSourceGlobal.volume;
         _musicSourceGlobal.volume = 0;
         _musicSourceGlobal.Play();
         _musicSourceGlobal
-            .DOFade(_musicOriginalVolume, _musicFadeDuration);
+            .DOFade(_musicOriginalVolume, _musicFadeDuration)
+            .SetUpdate(true);
     }
 
     public void StopMusicInGame()
@@ -62,7 +63,8 @@ public class SoundManager : PersistentSingleton<SoundManager>
             {
                 _musicSourceGlobal.Stop();
                 _musicSourceGlobal.volume = _musicOriginalVolume;
-            });
+            })
+            .SetUpdate(true);
     }
 
 }

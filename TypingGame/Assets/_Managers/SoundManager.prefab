@@ -314,5 +314,6 @@ MonoBehaviour:
   _soundEffectStatusEffectPositive: {fileID: 8300000, guid: f3817c697558f434db75826f0e03c2ee, type: 3}
   _soundEffectTypeHit: {fileID: 8300000, guid: 56af7d2921c7fe349b96fa2d27ef6ef9, type: 3}
   _soundEffectTypeMiss: {fileID: 8300000, guid: 3a38b57ceebadbe44ab28afc032c9ffe, type: 3}
-  _musicInGame: {fileID: 8300000, guid: c54397c29a3595d468753c7e2923aff6, type: 3}
+  _musicInGame:
+  - {fileID: 8300000, guid: 6226ea6d47078214eab2e1d4d096711a, type: 3}
   _musicFadeDuration: 0.75
