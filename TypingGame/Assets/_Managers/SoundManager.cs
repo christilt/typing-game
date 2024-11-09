@@ -47,12 +47,15 @@ public class SoundManager : PersistentSingleton<SoundManager>
             return;
 
         _musicSourceGlobal.clip = _musicInGame;
+        _musicOriginalVolume = _musicSourceGlobal.volume;
+        _musicSourceGlobal.volume = 0;
         _musicSourceGlobal.Play();
+        _musicSourceGlobal
+            .DOFade(_musicOriginalVolume, _musicFadeDuration);
     }
 
     public void StopMusicInGame()
     {
-        _musicOriginalVolume = _musicSourceGlobal.volume;
         _musicSourceGlobal
             .DOFade(0, _musicFadeDuration)
             .OnComplete(() =>
