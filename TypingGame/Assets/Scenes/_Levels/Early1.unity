@@ -327,6 +327,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelSettingsManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7259859200493872167, guid: 4bf4520ef3d37e54399a631d09dce9c2, type: 3}
+      propertyPath: m_ApplyToSortingLayers.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7259859200493872167, guid: 4bf4520ef3d37e54399a631d09dce9c2, type: 3}
+      propertyPath: m_ApplyToSortingLayers.Array.data[0]
+      value: 177567387
+      objectReference: {fileID: 0}
+    - target: {fileID: 7259859200493872167, guid: 4bf4520ef3d37e54399a631d09dce9c2, type: 3}
+      propertyPath: m_ApplyToSortingLayers.Array.data[1]
+      value: -260757513
+      objectReference: {fileID: 0}
+    - target: {fileID: 7259859200493872167, guid: 4bf4520ef3d37e54399a631d09dce9c2, type: 3}
+      propertyPath: m_ApplyToSortingLayers.Array.data[2]
+      value: 1567968577
+      objectReference: {fileID: 0}
+    - target: {fileID: 7259859200493872167, guid: 4bf4520ef3d37e54399a631d09dce9c2, type: 3}
+      propertyPath: m_ApplyToSortingLayers.Array.data[3]
+      value: -686537471
+      objectReference: {fileID: 0}
+    - target: {fileID: 7259859200493872167, guid: 4bf4520ef3d37e54399a631d09dce9c2, type: 3}
+      propertyPath: m_ApplyToSortingLayers.Array.data[4]
+      value: -2080167333
+      objectReference: {fileID: 0}
+    - target: {fileID: 7259859200493872167, guid: 4bf4520ef3d37e54399a631d09dce9c2, type: 3}
+      propertyPath: m_ApplyToSortingLayers.Array.data[5]
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7394368756682333164, guid: 4bf4520ef3d37e54399a631d09dce9c2, type: 3}
       propertyPath: _levelSettings
       value: 
