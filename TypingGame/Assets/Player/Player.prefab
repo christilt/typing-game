@@ -5420,7 +5420,9 @@ MonoBehaviour:
   _celebrationParticles: {fileID: 4207527154940014597}
   _pacmanSprite: {fileID: 7211972778639226964}
   _player: {fileID: 2318449380209835701}
+  _light: {fileID: 368126967297401283}
   _celebrationSpinSpeed: 300
+  _greedyLightIntensity: 3
 --- !u!1 &8662901171505159560
 GameObject:
   m_ObjectHideFlags: 0

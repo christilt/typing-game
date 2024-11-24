@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerVisual : MonoBehaviour
 {
@@ -8,14 +8,19 @@ public class PlayerVisual : MonoBehaviour
     [SerializeField] private ParticleSystem _celebrationParticles;
     [SerializeField] private SpriteRenderer _pacmanSprite;
     [SerializeField] private Player _player;
+    [SerializeField] private Light2D _light;
 
     [SerializeField] private float _celebrationSpinSpeed;
+    [SerializeField] private float _greedyLightIntensity;
+
+    private float _lightInitialIntensity;
 
     public event Action OnPacmanExploding;
     public event Action OnPacmanExploded;
 
     private void Start()
     {
+        _lightInitialIntensity = _light.intensity;
         _player.OnStateChanging += HandlePlayerStateChanging;
     }
 
@@ -47,7 +52,7 @@ public class PlayerVisual : MonoBehaviour
                 PacmanInvincible();
                 break;
             case PlayerState.Greedy:
-                PacmanIdle();
+                PacmanGreedy();
                 break;
             default:
                 break;
@@ -56,6 +61,7 @@ public class PlayerVisual : MonoBehaviour
 
     private void PacmanIdle()
     {
+        _light.intensity = _lightInitialIntensity;
         _animator.Play("Initial", -1, 0);
     }
 
@@ -64,13 +70,21 @@ public class PlayerVisual : MonoBehaviour
         _animator.Play("Pacman_Invincible", -1, 0);
     }
 
+    private void PacmanGreedy()
+    {
+        _light.intensity = _greedyLightIntensity;
+        _animator.Play("Initial", -1, 0);
+    }
+
     private void PacmanDie()
     {
+        _light.intensity = _lightInitialIntensity;
         _animator.Play("Pacman_Die", -1, 0);
     }
 
     private void PacmanCelebrate()
     {
+        _light.intensity = _lightInitialIntensity;
         _celebrationParticles.Play();
         _animator.Play("Pacman_Celebrate", -1, 0);
     }
