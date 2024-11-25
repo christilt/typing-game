@@ -10,6 +10,10 @@ public class LevelSettingsSO : ScriptableObject
 {
     [SerializeField] private string _id;
     public string LevelId => _id;
+    [SerializeField] private int _order;
+    public int LevelOrder => _order;
+    [SerializeField] private string _sceneName;
+    public string SceneName => _sceneName;  
 
     [SerializeField] private List<DifficultyOverride> _difficultyOverrides;
 

@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Early1Settings
   m_EditorClassIdentifier: 
   _id: early_01
+  _order: 101
+  _sceneName: Early1
   _difficultyOverrides:
   - Difficulty: 1
     CharacterSet: {fileID: 11400000, guid: 04765f6220d92214e9fb2643957dff8c, type: 2}

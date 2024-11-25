@@ -13,6 +13,7 @@ public class SaveDataManager : PersistentSingleton<SaveDataManager>
 
     private BinaryFormatter _formatter;
     private string _highScoresPath;
+    private string _gameProgressPath;
 
 
     protected override void Awake()
@@ -21,6 +22,7 @@ public class SaveDataManager : PersistentSingleton<SaveDataManager>
 
         _formatter = new BinaryFormatter();
         _highScoresPath = Path.Combine(Application.persistentDataPath, "highscores.bin");
+        _gameProgressPath = Path.Combine(Application.persistentDataPath, "progress.bin");
     }
 
     public void SaveLastPlayerInitials(string playerInitials) => PlayerPrefs.SetString("player_last_initials", playerInitials);
@@ -85,6 +87,29 @@ public class SaveDataManager : PersistentSingleton<SaveDataManager>
 
         // TODO: Remove
         Debug.Log($"HighScores saved at {_highScoresPath}: {highScores}");
+    }
+
+    public GameProgress LoadGameProgress()
+    {
+        if (!File.Exists(_gameProgressPath))
+            return new();
+
+        using var stream = new FileStream(_gameProgressPath, FileMode.Open);
+        var gameProgress = (GameProgress)_formatter.Deserialize(stream);
+
+        // TODO: Remove
+        Debug.Log($"GameProgress loaded from {_gameProgressPath}: {gameProgress}");
+
+        return gameProgress;
+    }
+
+    public void Save(GameProgress gameProgress)
+    {
+        using var stream = new FileStream(_gameProgressPath, FileMode.Create);
+        _formatter.Serialize(stream, gameProgress);
+
+        // TODO: Remove
+        Debug.Log($"GameProgress saved at {_gameProgressPath}: {gameProgress}");
     }
 
     private static string LevelDifficultyKey(string levelId, Difficulty difficulty) => $"{levelId}__{difficulty}";

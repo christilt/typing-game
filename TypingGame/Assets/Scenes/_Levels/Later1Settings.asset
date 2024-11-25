@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Later1Settings
   m_EditorClassIdentifier: 
   _id: later_01
+  _order: 301
+  _sceneName: Later1
   _difficultyOverrides:
   - Difficulty: 1
     CharacterSet: {fileID: 11400000, guid: a306241fe59deb74388220fd915b78f6, type: 2}
