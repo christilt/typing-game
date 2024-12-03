@@ -77,7 +77,8 @@ public class Hud : MonoBehaviour
     public void NextLevel()
     {
         SoundManager.Instance.PlayMenuComplete();
-        LoadSceneManager.Instance.LoadNextLevel();
+        // TODO: What do we do at the end??
+        LoadSceneManager.Instance.StartLoad(LevelSettingsManager.Instance.LevelSettings.NextLevel.SceneName);
     }
 
     public void RetryLevel()

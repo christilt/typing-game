@@ -19,13 +19,6 @@ public class LoadSceneManager : PersistentSingleton<LoadSceneManager>
         StartLoad(currentSceneName);
     }
 
-    public void LoadNextLevel()
-    { 
-        // TODO: What should happen once on last scene / on a scene that should not go to the following one?
-        var nextSceneBuildIndex = SceneManager.GetActiveScene().buildIndex + 1;
-        StartLoad(nextSceneBuildIndex);
-    }
-
     public void LoadingSceneLoad()
     {
         if (!LoadingSceneIsCurrent)

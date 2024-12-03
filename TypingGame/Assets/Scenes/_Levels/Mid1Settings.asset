@@ -30,6 +30,7 @@ MonoBehaviour:
   _namePart1: World 2
   _namePart2: 1
   _namePartSeparator: ' - '
+  _nextLevel: {fileID: 11400000, guid: 4d412967a587b2b4080c6d1b1c228aec, type: 2}
   _wallColor: {r: 0.3529412, g: 1, b: 1, a: 1}
   _benchmarkDurationSeconds: 45
   _characterSet: {fileID: 11400000, guid: 7b8d998525760ea49a3134b14edc838b, type: 2}

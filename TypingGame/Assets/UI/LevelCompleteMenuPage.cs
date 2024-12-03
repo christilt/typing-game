@@ -10,15 +10,15 @@ public class LevelCompleteMenuPage : MenuPage
     protected override void OnEnable()
     {
         var progress = SaveDataManager.Instance.LoadGameProgress();
-        var levelOrderValue = LevelSettingsManager.Instance.LevelSettings.LevelOrder;
+        var levelOrderValue = LevelSettingsManager.Instance.LevelSettings.NextLevel?.LevelOrder ?? LevelSettingsManager.Instance.LevelSettings.LevelOrder;
         var difficultyKey = GameSettingsManager.Instance.Difficulty.Difficulty.ToString();
-        if (progress.DifficultyHighestCompleteLevels.TryGetValue(difficultyKey, out var currentHighestCompleteLevelOrderValue))
+        if (progress.DifficultyHighestReachedLevels.TryGetValue(difficultyKey, out var currentHighestReachedLevelOrderValue))
         {
-            progress.DifficultyHighestCompleteLevels[difficultyKey] = Math.Max(levelOrderValue, currentHighestCompleteLevelOrderValue);
+            progress.DifficultyHighestReachedLevels[difficultyKey] = Math.Max(levelOrderValue, currentHighestReachedLevelOrderValue);
         }
         else
         {
-            progress.DifficultyHighestCompleteLevels.Add(difficultyKey, levelOrderValue);
+            progress.DifficultyHighestReachedLevels.Add(difficultyKey, levelOrderValue);
         }
 
         SaveDataManager.Instance.Save(progress);

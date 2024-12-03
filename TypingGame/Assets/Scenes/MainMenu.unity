@@ -132,6 +132,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 7032196871454500991}
     m_Modifications:
     - target: {fileID: 1585522281974940819, guid: d21aaca480b943c4f8eb55e101d37283, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1585522281974940819, guid: d21aaca480b943c4f8eb55e101d37283, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 5558361929459950624}
@@ -283,6 +287,14 @@ PrefabInstance:
       propertyPath: m_text
       value: world 2 - level
       objectReference: {fileID: 0}
+    - target: {fileID: 8050542664158316007, guid: d21aaca480b943c4f8eb55e101d37283, type: 3}
+      propertyPath: _level
+      value: 
+      objectReference: {fileID: 11400000, guid: cf3cb3994725ceb4aa5687d4eee01744, type: 2}
+    - target: {fileID: 8050542664158316007, guid: d21aaca480b943c4f8eb55e101d37283, type: 3}
+      propertyPath: _levelSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: cf3cb3994725ceb4aa5687d4eee01744, type: 2}
     - target: {fileID: 8497095772831365071, guid: d21aaca480b943c4f8eb55e101d37283, type: 3}
       propertyPath: m_Name
       value: World2LevelMenuPage
@@ -2106,6 +2118,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 7032196871454500991}
     m_Modifications:
     - target: {fileID: 1585522281974940819, guid: d21aaca480b943c4f8eb55e101d37283, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1585522281974940819, guid: d21aaca480b943c4f8eb55e101d37283, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 5558361929459950624}
@@ -2249,6 +2265,14 @@ PrefabInstance:
       propertyPath: m_text
       value: world 3 - level
       objectReference: {fileID: 0}
+    - target: {fileID: 8050542664158316007, guid: d21aaca480b943c4f8eb55e101d37283, type: 3}
+      propertyPath: _level
+      value: 
+      objectReference: {fileID: 11400000, guid: 4d412967a587b2b4080c6d1b1c228aec, type: 2}
+    - target: {fileID: 8050542664158316007, guid: d21aaca480b943c4f8eb55e101d37283, type: 3}
+      propertyPath: _levelSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: 4d412967a587b2b4080c6d1b1c228aec, type: 2}
     - target: {fileID: 8497095772831365071, guid: d21aaca480b943c4f8eb55e101d37283, type: 3}
       propertyPath: m_Name
       value: World3LevelMenulPage
@@ -3302,12 +3326,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 7032196871454500991}
     m_Modifications:
     - target: {fileID: 968871174646397978, guid: d21aaca480b943c4f8eb55e101d37283, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 968871174646397978, guid: d21aaca480b943c4f8eb55e101d37283, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 5558361929459950624}
     - target: {fileID: 1585522281974940819, guid: d21aaca480b943c4f8eb55e101d37283, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      propertyPath: m_Interactable
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1585522281974940819, guid: d21aaca480b943c4f8eb55e101d37283, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1585522281974940819, guid: d21aaca480b943c4f8eb55e101d37283, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
@@ -3473,12 +3505,28 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 7646093236245858421, guid: d21aaca480b943c4f8eb55e101d37283, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050542664158316007, guid: d21aaca480b943c4f8eb55e101d37283, type: 3}
+      propertyPath: _level
+      value: 
+      objectReference: {fileID: 11400000, guid: 7661401621d32bc49b6dc62639e5f626, type: 2}
+    - target: {fileID: 8050542664158316007, guid: d21aaca480b943c4f8eb55e101d37283, type: 3}
+      propertyPath: _levelSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: 7661401621d32bc49b6dc62639e5f626, type: 2}
     - target: {fileID: 8497095772831365071, guid: d21aaca480b943c4f8eb55e101d37283, type: 3}
       propertyPath: m_Name
       value: World1LevelMenuPage
       objectReference: {fileID: 0}
     - target: {fileID: 8497095772831365071, guid: d21aaca480b943c4f8eb55e101d37283, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8918989203818835165, guid: d21aaca480b943c4f8eb55e101d37283, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8918989203818835165, guid: d21aaca480b943c4f8eb55e101d37283, type: 3}

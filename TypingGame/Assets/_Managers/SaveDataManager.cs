@@ -15,6 +15,7 @@ public class SaveDataManager : PersistentSingleton<SaveDataManager>
     private string _highScoresPath;
     private string _gameProgressPath;
 
+    private GameProgress _cachedGameProgress;
 
     protected override void Awake()
     {
@@ -94,17 +95,22 @@ public class SaveDataManager : PersistentSingleton<SaveDataManager>
         if (!File.Exists(_gameProgressPath))
             return new();
 
+        if (_cachedGameProgress != null)
+            return _cachedGameProgress;
+
         using var stream = new FileStream(_gameProgressPath, FileMode.Open);
-        var gameProgress = (GameProgress)_formatter.Deserialize(stream);
+        _cachedGameProgress = (GameProgress)_formatter.Deserialize(stream);
 
         // TODO: Remove
-        Debug.Log($"GameProgress loaded from {_gameProgressPath}: {gameProgress}");
+        Debug.Log($"GameProgress loaded from {_gameProgressPath}: {_cachedGameProgress}");
 
-        return gameProgress;
+        return _cachedGameProgress;
     }
 
     public void Save(GameProgress gameProgress)
     {
+        _cachedGameProgress = gameProgress;
+
         using var stream = new FileStream(_gameProgressPath, FileMode.Create);
         _formatter.Serialize(stream, gameProgress);
 

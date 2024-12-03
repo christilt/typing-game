@@ -22,6 +22,9 @@ public class LevelSettingsSO : ScriptableObject
     [SerializeField] private string _namePartSeparator;
     public string LevelName => $"{_namePart1}{_namePartSeparator}{_namePart2}";
 
+    [SerializeField] private LevelSettingsSO _nextLevel;
+    public LevelSettingsSO NextLevel => _nextLevel;
+
     [SerializeField] private Color _wallColor;
     public Color WallColor => _wallColor;
 

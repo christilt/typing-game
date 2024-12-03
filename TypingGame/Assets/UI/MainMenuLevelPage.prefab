@@ -404,6 +404,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level3Button
       objectReference: {fileID: 0}
+    - target: {fileID: 4148251710950241763, guid: df4f1b3589fdf714396b5879f3bfccc8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5011668176081959173, guid: df4f1b3589fdf714396b5879f3bfccc8, type: 3}
       propertyPath: m_Interactable
       value: 0
@@ -416,11 +420,33 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: MainMenu, Assembly-CSharp
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -7954215509632254910, guid: df4f1b3589fdf714396b5879f3bfccc8, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4148251710950241763, guid: df4f1b3589fdf714396b5879f3bfccc8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4854592693694493840}
   m_SourcePrefab: {fileID: 100100000, guid: df4f1b3589fdf714396b5879f3bfccc8, type: 3}
+--- !u!1 &565786941460357179 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4148251710950241763, guid: df4f1b3589fdf714396b5879f3bfccc8, type: 3}
+  m_PrefabInstance: {fileID: 4488849447598740952}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4854592693694493840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 565786941460357179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d8a78642a9b7aa46b0ca9a18cb42363, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _levelSettings: {fileID: 0}
 --- !u!224 &1699290300912893503 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3017006359690947559, guid: df4f1b3589fdf714396b5879f3bfccc8, type: 3}
@@ -522,6 +548,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level2Button
       objectReference: {fileID: 0}
+    - target: {fileID: 4148251710950241763, guid: df4f1b3589fdf714396b5879f3bfccc8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5011668176081959173, guid: df4f1b3589fdf714396b5879f3bfccc8, type: 3}
       propertyPath: m_Interactable
       value: 0
@@ -534,16 +564,38 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: MainMenu, Assembly-CSharp
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -7954215509632254910, guid: df4f1b3589fdf714396b5879f3bfccc8, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4148251710950241763, guid: df4f1b3589fdf714396b5879f3bfccc8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6557038117759301296}
   m_SourcePrefab: {fileID: 100100000, guid: df4f1b3589fdf714396b5879f3bfccc8, type: 3}
 --- !u!224 &6999040053555916536 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3017006359690947559, guid: df4f1b3589fdf714396b5879f3bfccc8, type: 3}
   m_PrefabInstance: {fileID: 5259952112792978719}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8173635746684416252 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4148251710950241763, guid: df4f1b3589fdf714396b5879f3bfccc8, type: 3}
+  m_PrefabInstance: {fileID: 5259952112792978719}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6557038117759301296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8173635746684416252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d8a78642a9b7aa46b0ca9a18cb42363, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _levelSettings: {fileID: 0}
 --- !u!1001 &5943533298126255328
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -772,6 +824,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level1Button
       objectReference: {fileID: 0}
+    - target: {fileID: 4148251710950241763, guid: df4f1b3589fdf714396b5879f3bfccc8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5011668176081959173, guid: df4f1b3589fdf714396b5879f3bfccc8, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5011668176081959173, guid: df4f1b3589fdf714396b5879f3bfccc8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: World1Level1
@@ -780,11 +840,33 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: MainMenu, Assembly-CSharp
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -7954215509632254910, guid: df4f1b3589fdf714396b5879f3bfccc8, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4148251710950241763, guid: df4f1b3589fdf714396b5879f3bfccc8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8050542664158316007}
   m_SourcePrefab: {fileID: 100100000, guid: df4f1b3589fdf714396b5879f3bfccc8, type: 3}
+--- !u!1 &7646093236245858421 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4148251710950241763, guid: df4f1b3589fdf714396b5879f3bfccc8, type: 3}
+  m_PrefabInstance: {fileID: 6020729661190569366}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8050542664158316007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7646093236245858421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d8a78642a9b7aa46b0ca9a18cb42363, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _levelSettings: {fileID: 0}
 --- !u!224 &8814497708247275121 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3017006359690947559, guid: df4f1b3589fdf714396b5879f3bfccc8, type: 3}
