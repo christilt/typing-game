@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class GameSettingsManager : PersistentSingleton<GameSettingsManager>
 {
@@ -7,8 +8,14 @@ public class GameSettingsManager : PersistentSingleton<GameSettingsManager>
     public DifficultySO Difficulty
     {
         get => _difficulty ?? _defaultDifficulty;
-        set => _difficulty = value;
+        set
+        {
+            _difficulty = value;
+            OnDifficultyChanged?.Invoke(value);
+        }
     }
+
+    public event Action<DifficultySO> OnDifficultyChanged;
 
     [SerializeField] private PaletteSO _palette;
     public PaletteSO Palette => _palette;

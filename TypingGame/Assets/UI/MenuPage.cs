@@ -14,18 +14,40 @@ public class MenuPage : MonoBehaviour
     protected Selectable _firstSelectable;
     protected Button _firstButton;
     protected int _enableCount;
+    protected bool _areConditionalButtonsSet;
 
     protected Transitioner _optionalTransitioner;
+
+    protected MenuLevelConditionalButton[] _menuLevelConditionalButtons;
 
     protected void Awake()
     {
         _optionalTransitioner = GetComponent<Transitioner>();
+
+        _menuLevelConditionalButtons = GetComponentsInChildren<MenuLevelConditionalButton>(includeInactive: true);
+    }
+
+    protected void Start()
+    {
+        // TODO: Do this in a manager with states
+        SceneHider.Instance.StartOfSceneFadeIn();
+
+        GameSettingsManager.Instance.OnDifficultyChanged += HandleDifficultyChanged;
     }
 
     protected virtual void OnEnable()
     {
         var isFirstEnable = _enableCount == 0;
         _enableCount++;
+
+        if (!_areConditionalButtonsSet)
+        {
+            foreach(var button in _menuLevelConditionalButtons)
+            {
+                var progress = SaveDataManager.Instance.LoadGameProgress();
+                button.MaybeSetInteractable(progress);
+            }
+        }
 
         _orderedSelectables ??= GetOrderedSeletables();
         _firstSelectable ??= _orderedSelectables.FirstOrDefault();
@@ -42,6 +64,14 @@ public class MenuPage : MonoBehaviour
         else
         {
             SelectFirstSelectableOrButton(isFirstEnable);
+        }
+    }
+
+    protected void OnDestroy()
+    {
+        if (GameSettingsManager.Instance != null)
+        {
+            GameSettingsManager.Instance.OnDifficultyChanged -= HandleDifficultyChanged;
         }
     }
 
@@ -126,5 +156,14 @@ public class MenuPage : MonoBehaviour
             .OrderByDescending(b => b.transform.position.y) // top to bottom
             .ThenBy(b => MathF.Abs(b.transform.position.x)) // middle to sides
             .ToArray();
+    }
+
+    protected void HandleDifficultyChanged(DifficultySO difficultySO)
+    {
+        _areConditionalButtonsSet = false;
+
+        _orderedSelectables = null;
+        _firstSelectable = null;
+        _firstButton = null;
     }
 }
