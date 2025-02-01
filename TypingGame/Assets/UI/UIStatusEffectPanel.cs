@@ -49,6 +49,7 @@ public class UIStatusEffectPanel : MonoBehaviour
     {
         var nextIndex = _iconsByType.Count;
         var position = PositionForIndex(nextIndex);
+        // TODO: Causing pauses?
         var added = UIStatusIcon.Instantiate(_iconPrefab, position, this.transform, info.Effect.Sprite);
         _iconsByType.Add(info.Type, added);
     }

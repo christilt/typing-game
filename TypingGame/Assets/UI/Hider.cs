@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(SortingGroup))]
@@ -10,6 +11,7 @@ public class Hider : MonoBehaviour
 {
     [SerializeField] private Image _hiderImage;
     [SerializeField] private Canvas _hiderCanvas;
+    [SerializeField] private Camera _mainCamera; // Referencing Camera.main causes issues with scene loading additively
     [SerializeField, Range(0, 255)] private int _startAlpha;
     [SerializeField, Range(0, 255)] private int _opaqueAlpha;
     [SerializeField] private Ease _hideEase;
@@ -21,11 +23,11 @@ public class Hider : MonoBehaviour
 
     private void Awake()
     {
-        _hiderCanvas.worldCamera = Camera.main;
+        _hiderCanvas.worldCamera = _mainCamera;
         _hiderCanvas.sortingLayerID = GetComponent<SortingGroup>().sortingLayerID;
         _opaqueAlphaFloat = _opaqueAlpha / 255f;
         _startAlphaFloat = _startAlpha / 255f;
-        var startColour = Camera.main.backgroundColor;
+        var startColour = _mainCamera.backgroundColor;
         startColour.a = _startAlphaFloat;
         _hiderImage.color = startColour;
     }

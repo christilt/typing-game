@@ -38,6 +38,7 @@ public class CollectableEffectManager : Singleton<CollectableEffectManager>
 
     private void Update()
     {
+        List<Type> typesToRemove = null;
         foreach (var typeEffect in _currentEffectsByType)
         {
             var effect = typeEffect.Value;
@@ -46,6 +47,8 @@ public class CollectableEffectManager : Singleton<CollectableEffectManager>
             {
                 effect.Effect.ManagerRevertEffect();
                 OnCollectableEffectRemoved?.Invoke(effect);
+                typesToRemove ??= new();
+                typesToRemove.Add(typeEffect.Key);
             }
             else if (effect.DurationRemainingSeconds <= (effect.DurationRemainingSecondsOfLastUpdate - _collectableEffectUpdateIntervalSeconds))
             {
@@ -54,9 +57,13 @@ public class CollectableEffectManager : Singleton<CollectableEffectManager>
             }
         }
 
-        _currentEffectsByType = _currentEffectsByType
-            .Where(typeEffect => typeEffect.Value.DurationRemainingSeconds > 0)
-            .ToDictionary(typeEffect => typeEffect.Key, typeEffect => typeEffect.Value);
+        if (typesToRemove != null)
+        {
+            foreach (var type in typesToRemove)
+            {
+                _currentEffectsByType.Remove(type);
+            }
+        }
     }
 }
 

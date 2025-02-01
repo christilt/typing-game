@@ -933,6 +933,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1511449659}
     m_Modifications:
+    - target: {fileID: 1242157733746906660, guid: 7e1f6f0b3042b9b4f8cfcb52192acdbb, type: 3}
+      propertyPath: _mainCamera
+      value: 
+      objectReference: {fileID: 834462896}
     - target: {fileID: 4736953459938292362, guid: 7e1f6f0b3042b9b4f8cfcb52192acdbb, type: 3}
       propertyPath: m_Name
       value: SceneHider
