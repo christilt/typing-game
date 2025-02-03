@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class GameplayManager : Singleton<GameplayManager>
 {
     [SerializeField] private SequenceDirector _sequenceDirector;
+    [SerializeField] private Camera _mainCamera;
 
     private PauseHelper _pauseHelper;
 
@@ -12,6 +13,11 @@ public class GameplayManager : Singleton<GameplayManager>
     public event Action<GameState> OnStateChanged;
 
     public GameState State { get; private set; }
+
+    public void LoadComplete()
+    {
+        TryChangeState(GameState.LevelStarting);
+    }
 
     public void LevelGameplayStarting()
     {
@@ -71,7 +77,7 @@ public class GameplayManager : Singleton<GameplayManager>
     private void Start()
     {
         _pauseHelper = new();
-        TryChangeState(GameState.LevelStarting);
+        TryChangeState(GameState.LevelLoading);
     }
 
     private bool TryChangeState(GameState state)
@@ -97,14 +103,15 @@ public class GameplayManager : Singleton<GameplayManager>
         State = state;
         switch (state)
         {
-            case GameState.LevelStarting:
+            case GameState.LevelLoading:
                 _pauseHelper.Pause();
+                KeyTiles.Instance.Initialise();
+                break;
+            case GameState.LevelStarting:
+                _mainCamera.gameObject.SetActive(true);
                 SceneHider.Instance.StartOfSceneFadeIn();
                 SoundManager.Instance.StartMusicInGame();
-                KeyTiles.Instance.Initialise(() =>
-                {
-                    TryChangeState(GameState.LevelIntroducing);
-                });
+                TryChangeState(GameState.LevelIntroducing);
                 break;
             case GameState.LevelIntroducing:
                 break;
@@ -151,6 +158,8 @@ public class GameplayManager : Singleton<GameplayManager>
     {
         switch (State)
         {
+            case GameState.LevelLoading:
+                break;
             case GameState.LevelStarting:
                 break;
             case GameState.LevelIntroducing:
@@ -194,6 +203,7 @@ public class GameplayManager : Singleton<GameplayManager>
 
 public enum GameState
 {
+    LevelLoading,
     LevelStarting,
     LevelIntroducing,
     LevelGameplayStarting,

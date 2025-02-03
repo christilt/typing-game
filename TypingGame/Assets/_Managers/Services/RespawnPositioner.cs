@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class RespawnPositioner : MonoBehaviour
+public class RespawnPositioner : MonoBehaviour, ILoadsSlowly
 {
     [SerializeField] private LayerMask _positionObstaclesMask;
     [SerializeField] private float _positionObstaclesCheckRadius;
@@ -30,6 +30,8 @@ public class RespawnPositioner : MonoBehaviour
     private List<AllowedPosition> AllowedPositionsAvailable => _allowedPositions
         .Where(l => _allowedPositionsTaken.All(p => p != l.PositionWithCentre.Position))
         .ToList();
+
+    public bool IsLoaded { get; private set; }
 
     public void RegisterStartPosition(Unit unit)
     {
@@ -121,6 +123,8 @@ public class RespawnPositioner : MonoBehaviour
         {
             _allowedPositions.Add(new AllowedPosition(position, isRandom: true));
         }
+
+        IsLoaded = true;
     }
 
     private struct AllowedPosition

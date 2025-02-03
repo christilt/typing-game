@@ -6,7 +6,7 @@ using System.Linq;
 using UnityEngine.UIElements;
 using System;
 
-public class KeyTiles : Singleton<KeyTiles>
+public class KeyTiles : Singleton<KeyTiles>, ILoadsSlowly
 {
     [SerializeField] private Tilemap _pathTiles;
     [SerializeField] private GameObject _keyIconPrefab;
@@ -42,6 +42,8 @@ public class KeyTiles : Singleton<KeyTiles>
     }
 
     public IReadOnlyCollection<Vector2Int> Positions { get; private set; }
+
+    public bool IsLoaded { get; private set; }
 
     public void Initialise(Action onComplete = null)
     {
@@ -117,6 +119,7 @@ public class KeyTiles : Singleton<KeyTiles>
         Positions = _keyTilesByPosition.Keys.ToList();
 
         OnInitialised?.Invoke();
+        IsLoaded = true;
 
         if (onComplete != null)
             onComplete();

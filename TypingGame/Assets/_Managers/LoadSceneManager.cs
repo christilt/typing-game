@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-// TODO do things like load level tiles in loading screen?
-// Based on https://www.youtube.com/watch?v=3I5d2rUJ0pE
 public class LoadSceneManager : PersistentSingleton<LoadSceneManager>
 {
     private string _sceneNameToLoad;
@@ -18,6 +18,11 @@ public class LoadSceneManager : PersistentSingleton<LoadSceneManager>
     {
         var currentSceneName = SceneManager.GetActiveScene().name;
         StartLoad(currentSceneName);
+    }
+
+    private class LoadingSceneInfo
+    {
+        public bool LoadingFadeOutComplete { get; set; }
     }
 
     public void LoadingSceneLoad()
@@ -36,25 +41,18 @@ public class LoadSceneManager : PersistentSingleton<LoadSceneManager>
         {
             _loadingAsyncOperation = SceneManager.LoadSceneAsync(_sceneBuildIndexToLoad.Value, LoadSceneMode.Additive);
         }
-        // See https://docs.unity3d.com/ScriptReference/AsyncOperation-allowSceneActivation.html
-        _loadingAsyncOperation.allowSceneActivation = false;
+
         StartCoroutine(AwaitSceneLoadedCoroutine());
 
         IEnumerator AwaitSceneLoadedCoroutine()
         {
-            // Apparently .progress doesn't reach 1.0 until .allowSceneActivation is set
-            // So begin fading out shortly before 1.0 and set .allowSceneActivation after
-            while (_loadingAsyncOperation.progress < 0.9f)
-                yield return null;
+            // See https://docs.unity3d.com/ScriptReference/AsyncOperation-allowSceneActivation.html - we cannot get the scene until the async operation is complete
+            // However, objects in the scene need additional loading before the scene is usable
+            // So we allow the scene to be activated, and prevent additive scene objects from appearing until all additional loading in the scene is complete.
+            // We do this by:
+            //   Using a culling mask on the Loading scene camera, for Loading objects only
+            //   Only activating the scene camera once loading is complete (signalling completion on the GameplayManager
 
-            SceneHider.Instance.EndOfSceneFadeOut(() =>
-            {
-                _loadingAsyncOperation.allowSceneActivation = true;
-            });
-
-            // Unloading the previous scene requires the previous scene no longer being the active one
-            // Scene object to get root game objects but also cannot .GetScene before .isDone
-            // So wait for .isDone, then .GetScene
             while (!_loadingAsyncOperation.isDone)
                 yield return null;
 
@@ -62,9 +60,26 @@ public class LoadSceneManager : PersistentSingleton<LoadSceneManager>
                 : SceneManager.GetSceneByBuildIndex(_sceneBuildIndexToLoad.Value);
 
             var sceneToLoadRootObjects = sceneToLoad.GetRootGameObjects();
-            foreach (GameObject obj in sceneToLoadRootObjects)
-                obj.SetActive(true);
+            var sceneSlowLoadingObjects = sceneToLoadRootObjects.SelectMany(o => o.GetComponentsInChildren<ILoadsSlowly>(includeInactive: true));
 
+            var toLoadCount = sceneSlowLoadingObjects.Count(o => !o.IsLoaded);
+            while (toLoadCount > 0)
+            {
+                yield return new WaitForEndOfFrame();
+                toLoadCount = sceneSlowLoadingObjects.Count(o => !o.IsLoaded);
+            }
+
+            // Avoid fading out until all loading is complete.  Otherwise frames are dropped during the fade
+            var info = new LoadingSceneInfo();
+            SceneHiderLoadingScreen.Instance.EndOfSceneFadeOut(() =>
+            {
+                info.LoadingFadeOutComplete = true;
+            });
+
+            while (!info.LoadingFadeOutComplete)
+                yield return null;
+
+            GameplayManager.Instance.LoadComplete();
             var unloadingAsyncOperation = SceneManager.UnloadSceneAsync(SceneNames.Loading);
 
             while (!unloadingAsyncOperation.isDone)

@@ -10,7 +10,7 @@ public class UILoadingScreen : MonoBehaviour
 
     private void Start()
     {
-        SceneHider.Instance.StartOfSceneFadeIn(() =>
+        SceneHiderLoadingScreen.Instance.StartOfSceneFadeIn(() =>
         {
             LoadSceneManager.Instance.LoadingSceneLoad();
         });
