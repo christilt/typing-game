@@ -12,17 +12,14 @@ public class LoadSceneManager : PersistentSingleton<LoadSceneManager>
     private int? _sceneBuildIndexToLoad;
     private AsyncOperation _loadingAsyncOperation;
 
+    public event Action OnLoadComplete;
+
     public float LoadingProgress => _loadingAsyncOperation?.progress ?? 0;
 
     public void ReloadLevel()
     {
         var currentSceneName = SceneManager.GetActiveScene().name;
         StartLoad(currentSceneName);
-    }
-
-    private class LoadingSceneInfo
-    {
-        public bool LoadingFadeOutComplete { get; set; }
     }
 
     public void LoadingSceneLoad()
@@ -79,11 +76,12 @@ public class LoadSceneManager : PersistentSingleton<LoadSceneManager>
             while (!info.LoadingFadeOutComplete)
                 yield return null;
 
-            GameplayManager.Instance.LoadComplete();
             var unloadingAsyncOperation = SceneManager.UnloadSceneAsync(SceneNames.Loading);
 
             while (!unloadingAsyncOperation.isDone)
                 yield return null;
+
+            OnLoadComplete?.Invoke();
 
             // Docs state this is not called as part of .LoadScene when mode is Additive, we must call it ourselves
             Resources.UnloadUnusedAssets();
@@ -127,4 +125,8 @@ public class LoadSceneManager : PersistentSingleton<LoadSceneManager>
     }
 
     private bool LoadingSceneIsCurrent => SceneManager.GetActiveScene().name == SceneNames.Loading;
+    private class LoadingSceneInfo
+    {
+        public bool LoadingFadeOutComplete { get; set; }
+    }
 }

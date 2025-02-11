@@ -78,6 +78,23 @@ public class GameplayManager : Singleton<GameplayManager>
     {
         _pauseHelper = new();
         TryChangeState(GameState.LevelLoading);
+
+        if (SceneHelper.IsSceneLoadedAdditively(LevelSettingsManager.Instance.LevelSettings.SceneName))
+        {
+            LoadSceneManager.Instance.OnLoadComplete += LoadComplete;
+        }
+        else
+        {
+            LoadComplete();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (LoadSceneManager.Instance != null)
+        {
+            LoadSceneManager.Instance.OnLoadComplete -= LoadComplete;
+        }
     }
 
     private bool TryChangeState(GameState state)

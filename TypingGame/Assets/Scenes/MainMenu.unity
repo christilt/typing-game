@@ -1293,7 +1293,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &834462895
 AudioListener:
   m_ObjectHideFlags: 0
@@ -4097,6 +4097,7 @@ MonoBehaviour:
   NormalDifficultySO: {fileID: 11400000, guid: 70079c4248084984fb98716f68d61006, type: 2}
   ChallengeDifficultySO: {fileID: 11400000, guid: bb3abe1fe5789974f94fd3f623225df2, type: 2}
   ExtremeDifficultySO: {fileID: 11400000, guid: fe27f630900433549b58f9c73e70ed89, type: 2}
+  _mainCamera: {fileID: 834462896}
 --- !u!224 &6313700825307830112
 RectTransform:
   m_ObjectHideFlags: 0

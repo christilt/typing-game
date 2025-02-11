@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private DifficultySO NormalDifficultySO;
     [SerializeField] private DifficultySO ChallengeDifficultySO;
     [SerializeField] private DifficultySO ExtremeDifficultySO;
+    [SerializeField] private Camera _mainCamera;
 
     private MenuLevelButton[] _menuLevelButtons;
 
@@ -19,7 +20,15 @@ public class MainMenu : MonoBehaviour
     private void Start()
     {
         // TODO: Do this in a manager with states
-        SceneHider.Instance.StartOfSceneFadeIn();
+
+        if (SceneHelper.IsSceneLoadedAdditively(SceneNames.MainMenu))
+        {
+            LoadSceneManager.Instance.OnLoadComplete += OnLoadComplete;
+        }
+        else
+        {
+            OnLoadComplete();
+        }
 
         foreach (var button in _menuLevelButtons)
         {
@@ -29,6 +38,11 @@ public class MainMenu : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (LoadSceneManager.Instance != null)
+        {
+            LoadSceneManager.Instance.OnLoadComplete -= OnLoadComplete;
+        }
+
         foreach (var button in _menuLevelButtons)
         {
             button.OnLevelSubmit -= HandleLevelButtonSubmit;
@@ -56,5 +70,11 @@ public class MainMenu : MonoBehaviour
     private void HandleLevelButtonSubmit(LevelSettingsSO levelSettings)
     {
         Load(levelSettings.SceneName);
+    }
+
+    private void OnLoadComplete()
+    {
+        _mainCamera.gameObject.SetActive(true);
+        SceneHider.Instance.StartOfSceneFadeIn();
     }
 }
