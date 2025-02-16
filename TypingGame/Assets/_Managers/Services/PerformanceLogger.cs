@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class FrameRateLogger : MonoBehaviour
+public class PerformanceLogger : MonoBehaviour
 {
     [SerializeField] private float _thresholdFps;
     [SerializeField] private float _logIntervalSeconds;
@@ -13,7 +13,11 @@ public class FrameRateLogger : MonoBehaviour
     private float _deltaTime;
     private float _fps;
     private float _logIntervalElapsedSeconds;
-
+    private float _gcCountPrevious;
+    private void Start()
+    {
+        _gcCountPrevious = GC.CollectionCount(0);
+    }
 
     private void Update()
     {
@@ -24,10 +28,23 @@ public class FrameRateLogger : MonoBehaviour
         if (_logIntervalElapsedSeconds < _logIntervalSeconds)
             return;
         _logIntervalElapsedSeconds = 0;
+
+        var gcCount = GC.CollectionCount(0);
+        var gcOccurred = gcCount != _gcCountPrevious;
+        _gcCountPrevious = gcCount;
         
         if (_fps < _thresholdFps)
         {
-            Debug.LogWarning($"{_fps:n01} FPS");
+            var message = new StringBuilder();
+            message.Append($"{_fps:n01} FPS");
+
+            if (gcOccurred)
+            {
+                message.Append("; ");
+                message.Append($"GC occurred: {gcCount}");
+            }
+
+            Debug.LogWarning(message);
         }
     }
 }

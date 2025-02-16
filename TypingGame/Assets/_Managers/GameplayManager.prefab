@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sequenceDirector: {fileID: 2540076281141040766}
-  _frameRateLogger: {fileID: 2096788635299967473}
+  _performanceLogger: {fileID: 2096788635299967473}
   _mainCamera: {fileID: 0}
 --- !u!1 &6839917574759678154
 GameObject:
@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 6528214025067442335}
   - component: {fileID: 2096788635299967473}
   m_Layer: 0
-  m_Name: FrameRateLogger
+  m_Name: PerformanceLogger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
