@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class GameplayManager : Singleton<GameplayManager>
 {
     [SerializeField] private SequenceDirector _sequenceDirector;
+    [SerializeField] private FrameRateLogger _frameRateLogger;
     [SerializeField] private Camera _mainCamera;
 
     private PauseHelper _pauseHelper;
@@ -126,6 +127,9 @@ public class GameplayManager : Singleton<GameplayManager>
                 break;
             case GameState.LevelStarting:
                 _mainCamera.gameObject.SetActive(true);
+#if DEBUG
+                _frameRateLogger.gameObject.SetActive(true);
+#endif
                 SceneHider.Instance.StartOfSceneFadeIn();
                 SoundManager.Instance.StartMusicInGame();
                 TryChangeState(GameState.LevelIntroducing);
