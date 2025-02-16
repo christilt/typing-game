@@ -22,6 +22,8 @@ public class CollectableEffectManager : Singleton<CollectableEffectManager>
 
     public void ApplyStatus<T>(CollectableStatusEffect effect) where T : CollectableStatusEffect
     {
+        Debug.Log($"Collectable effect applied: {effect.name}");
+
         var added = new CollectableEffectInfo(effect.DurationSeconds, effect, typeof(T));
         var isReplacement = _currentEffectsByType.TryGetValue(typeof(T), out var replaced);
         if (isReplacement)

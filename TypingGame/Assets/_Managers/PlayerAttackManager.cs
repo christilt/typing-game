@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 public class PlayerAttackManager : Singleton<PlayerAttackManager>
 {
@@ -38,6 +39,8 @@ public class PlayerAttackManager : Singleton<PlayerAttackManager>
     {
         if (!IsReady)
             return false;
+
+        Debug.Log($"Player attack");
 
         MaybeUpdateReadiness(0);
 

@@ -48,7 +48,7 @@ public class LoadSceneManager : PersistentSingleton<LoadSceneManager>
             // So we allow the scene to be activated, and prevent additive scene objects from appearing until all additional loading in the scene is complete.
             // We do this by:
             //   Using a culling mask on the Loading scene camera, for Loading objects only
-            //   Only activating the scene camera once loading is complete (signalling completion on the GameplayManager
+            //   Only activating the scene camera once loading is complete (signalling completion on the GameplayManager)
 
             while (!_loadingAsyncOperation.isDone)
                 yield return null;
@@ -81,12 +81,14 @@ public class LoadSceneManager : PersistentSingleton<LoadSceneManager>
             while (!unloadingAsyncOperation.isDone)
                 yield return null;
 
-            OnLoadComplete?.Invoke();
-
             // Docs state this is not called as part of .LoadScene when mode is Additive, we must call it ourselves
             Resources.UnloadUnusedAssets();
+
             _sceneNameToLoad = null;
             _sceneBuildIndexToLoad = null;
+
+            Debug.Log($"Loaded scene {sceneToLoad.name}; Unloaded Loading scene");
+            OnLoadComplete?.Invoke();
         }
     }
 

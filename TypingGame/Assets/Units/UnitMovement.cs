@@ -63,7 +63,7 @@ public class UnitMovement : MonoBehaviour
             if (!TryGetNeighbourCell(CellPosition, Direction, out var neighbourCell))
             {
                 // TODO: Understand why this happens
-                Debug.LogError($"Could not get neighbour of cell {CellPosition} in direction {Direction}!");
+                //Debug.LogError($"Could not get neighbour of cell {CellPosition} in direction {Direction}!");
                 return;
             }
             _centreMovement = new Movement(_centre.position, GetCellCentre(neighbourCell));

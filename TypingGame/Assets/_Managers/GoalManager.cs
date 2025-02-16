@@ -19,6 +19,8 @@ public class GoalManager : Singleton<GoalManager>
 
     public bool Complete(ICollectableGoal goal)
     {
+        Debug.Log($"Goal collected");
+
         var isUnregistered = TryUnregister(goal);
         if (!isUnregistered)
             return isUnregistered;

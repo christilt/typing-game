@@ -21,6 +21,8 @@ public class StatsManager : Singleton<StatsManager>
             return _endOfLevelStats;
         }
 
+        Debug.Log($"End of level stats calculating...");
+
         _endOfLevelStats = LevelStats.Calculate(TypingRecorder, _speedRecorder);
         return _endOfLevelStats;
     }
