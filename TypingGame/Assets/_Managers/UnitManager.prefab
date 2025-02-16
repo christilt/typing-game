@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitsHolder: {fileID: 0}
+  _explosionPartPrefab: {fileID: 3677354577644754419, guid: 2e0930a1b912a7b4ca348d84f1fd04ad, type: 3}
+  _explosionPartPoolCapacity: 20
 --- !u!114 &627451066810542232
 MonoBehaviour:
   m_ObjectHideFlags: 0

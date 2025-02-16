@@ -13,14 +13,14 @@ public class UnitExplosionPart : MonoBehaviour
     
     public event Action<UnitExplosionPart> OnDistanceReached;
 
-    public static UnitExplosionPart Instantiate(UnitExplosionPart prefab, Vector3 position, Quaternion euler, Transform parent, Sprite prefabSprite)
+    public static UnitExplosionPart InstantiateInPool(UnitExplosionPart prefab, Sprite prefabSprite)
     {
         prefab.gameObject.SetActive(false);
-        var obj = Instantiate(prefab, position, euler, parent);
+        var obj = Instantiate(prefab);
         var spriteRenderer = obj.gameObject.AddComponent<SpriteRenderer>();
         spriteRenderer.sprite = prefabSprite;
         obj.SpriteRenderer = spriteRenderer;
-        obj.gameObject.SetActive(true);
+
         return obj;
     }
 
