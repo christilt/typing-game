@@ -5137,6 +5137,7 @@ GameObject:
   - component: {fileID: 2979496603171898421}
   - component: {fileID: 1606095541761813135}
   - component: {fileID: 2988345805388265238}
+  - component: {fileID: 7420942899596614291}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -5298,6 +5299,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerAttackPrefab: {fileID: 2595632531808501596, guid: 49861bf7af90bf74d84ca883c9d186a2, type: 3}
+--- !u!114 &7420942899596614291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5174265362219546210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efb07678075c2bf478b32540f8147fdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerGoalPointerPrefab: {fileID: 2759244938812492180, guid: 6ecff0abc71f09b428a770ca732b12d0, type: 3}
+  _radius: 2
+  _centre: {fileID: 1914599170983055476}
 --- !u!1 &6036842454388901638
 GameObject:
   m_ObjectHideFlags: 0
