@@ -13,9 +13,11 @@ public class CollectableIsGoal : CollectableEffect, ICollectableGoal
     }
 
     public int Id { get; protected set; }
+    public bool IsCompleted { get; private set; } 
 
     public override void ManagerApplyEffect()
     {
+        IsCompleted = true;
         SoundManager.Instance.PlayCollectGoal();
         GoalManager.Instance.Complete(this);
     }

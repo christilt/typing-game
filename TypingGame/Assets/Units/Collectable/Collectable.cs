@@ -17,6 +17,8 @@ public class Collectable : Unit
         UnitManager.Instance.TryRegister(this);
     }
 
+    public CollectableEffect[] Effects => _effects;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.TryGetRigidbodyComponent<Player>(out var player))

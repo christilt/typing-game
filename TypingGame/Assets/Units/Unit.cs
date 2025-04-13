@@ -9,7 +9,8 @@ public class Unit : MonoBehaviour
     [SerializeField] protected float _spawningSeconds;
     [SerializeField] protected Transform _centre;
     [SerializeField] protected bool _beginDestroyed;
-    [SerializeField] protected LayerMask _excludeCollisionLayersWhenSpawning; 
+    [SerializeField] protected LayerMask _excludeCollisionLayersWhenSpawning;
+    [SerializeField] protected Color _color;
 
     protected UnitMovement _movement;
     protected UnitBrain _brain;
@@ -24,6 +25,7 @@ public class Unit : MonoBehaviour
     public Vector2 Centre => _centre.position;
     public PositionWithCentre PositionWithCentre => new PositionWithCentre(transform.position, Centre);
     public bool HasBoundary => _optionalBoundary != null;
+    public Color Color => _color;
 
     protected virtual void Awake()
     {

@@ -9,6 +9,7 @@ public class Player : Singleton<Player>
     [SerializeField] private PlayerTypingMovement _typingMovement;
     [SerializeField] private PlayerInputController _inputController;
     [SerializeField] private Collider2D _collider;
+    [SerializeField] private PlayerGoalPointers _goalPointers;
 
     private void Start()
     {
@@ -136,9 +137,11 @@ public class Player : Singleton<Player>
                 break;
             case PlayerState.Dying:
                 SetMoveableAndCollidable(false);
+                _goalPointers.enabled = false;
                 break;
             case PlayerState.Celebrating:
                 SetMoveableAndCollidable(false);
+                _goalPointers.enabled = false;
                 break;
             case PlayerState.Invincible:
                 SetMoveableAndCollidable(true);

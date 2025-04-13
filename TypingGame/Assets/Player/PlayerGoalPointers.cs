@@ -1,59 +1,88 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerGoalPointers : MonoBehaviour
 {
-    [SerializeField] private GameObject _playerGoalPointerPrefab;
-    [SerializeField] private float _radius;
-    [SerializeField] private float _minDistance;
+    [SerializeField] private PlayerGoalPointer _playerGoalPointerPrefab;
     [SerializeField] private GameObject _centre;
 
-    private Transform _target;
-    private GameObject _goalPointer;
+    [SerializeField] private float _radius;
+    [SerializeField] private float _minDistance;
+    [SerializeField] private float _filterTargetsEverySeconds;
+
+    private Dictionary<int, Collectable> _targetsById;
+    private Dictionary<int, PlayerGoalPointer> _goalPointersByTargetId;
+    private Vector3 _centreOffset;
+    private float _lastTargetFilterSecondsAgo;
 
     private void Start()
     {
-        _target = GetRandomTarget();
+        _centreOffset = _centre.transform.position - transform.position;
+        _goalPointersByTargetId = new();
+        _targetsById = GetTargetsById();
     }
 
     private void Update()
     {
-        if (_target == null)
-        {
-            if (_goalPointer != null)
-                Destroy(_goalPointer);
+        _lastTargetFilterSecondsAgo += Time.deltaTime;
 
-            return;
-        }
-        // TODO: Remove if nearer than min distance
+        if (_lastTargetFilterSecondsAgo >= _filterTargetsEverySeconds)
+        {
+            // Update goal pointer objects based on targets
+            _targetsById = GetTargetsById();
 
-        var direction = (_target.position - _centre.transform.position).normalized;
-        var position = _centre.transform.position + direction * _radius;
-        var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        var rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
-        if (_goalPointer == null)
-        {
-            _goalPointer = Instantiate(_playerGoalPointerPrefab, position, rotation, gameObject.transform);
+            var toRemove = _goalPointersByTargetId.Keys.Except(_targetsById.Keys).ToList();
+
+            foreach (var id in toRemove)
+            {
+                var goalPointer = _goalPointersByTargetId[id];
+                goalPointer.BeDestroyed();
+                _goalPointersByTargetId.Remove(id);
+            }
+
+            _lastTargetFilterSecondsAgo = 0;
         }
-        else
+
+        foreach (var (id, target) in _targetsById)
         {
-            _goalPointer.gameObject.transform.position = position;
-            _goalPointer.gameObject.transform.rotation = rotation;
+            var direction = (CentreOf(target.transform.position) - _centre.transform.position).normalized;
+            var position = _centre.transform.position + direction * _radius;
+            var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            var rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
+
+            if (!_goalPointersByTargetId.TryGetValue(id, out var existingTarget))
+            {
+                var goalPointer = PlayerGoalPointer.Instantiate(_playerGoalPointerPrefab, position, rotation, gameObject.transform, target.Color);
+                _goalPointersByTargetId.Add(id, goalPointer);
+            }
+            else
+            {
+                existingTarget.gameObject.transform.position = position;
+                existingTarget.gameObject.transform.rotation = rotation;
+            }
         }
-        
     }
 
-    private Transform GetRandomTarget()
+    private void OnDisable()
+    {
+        foreach (var (id, goalPointer) in _goalPointersByTargetId)
+        {
+            goalPointer.BeDestroyed();
+        }
+    }
+
+    private Vector3 CentreOf(Vector3 position) => position + _centreOffset;
+
+    private Dictionary<int, Collectable> GetTargetsById()
     {
         var scene = SceneManager.GetSceneByName(LevelSettingsManager.Instance.LevelSettings.SceneName);
         return scene.GetRootGameObjects()
-            .SelectMany(o => o.GetComponentsInChildren<CollectableIsGoal>())
-            .FirstOrDefault()
-            ?.transform;
+            .SelectMany(o => 
+                o.GetComponentsInChildren<Collectable>()
+                 .Where(c => c.Effects.OfType<CollectableIsGoal>()
+                                      .Any(c => !c.IsCompleted)))
+            .ToDictionary(x => x.transform.GetInstanceID(), x => x);
     }
 }
