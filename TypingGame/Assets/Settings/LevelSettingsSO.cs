@@ -36,6 +36,9 @@ public class LevelSettingsSO : ScriptableObject
     [SerializeField] private CharacterSetSO _characterSet;
     public CharacterSetSO GetCharacterSet(DifficultySO difficulty) => GetDifficultyValue(difficulty.Difficulty, x => x.CharacterSet, _characterSet);
 
+    [SerializeField] private bool _areGoalPointersEnabled;
+    public bool AreGoalPointersEnabled => _areGoalPointersEnabled;
+
 
     public float GetUnitSpeedModifier(DifficultySO difficulty) => GetDifficultyValue(difficulty.Difficulty, x => x.UnitSpeedModifier, difficulty.DefaultSpeedModifier);
 

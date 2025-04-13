@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerGoalPointers : MonoBehaviour
 {
+    [SerializeField] private PlayerTypingMovement _typingMovement;
     [SerializeField] private PlayerGoalPointer _playerGoalPointerPrefab;
     [SerializeField] private GameObject _centre;
 
@@ -16,8 +18,9 @@ public class PlayerGoalPointers : MonoBehaviour
     private Dictionary<int, PlayerGoalPointer> _goalPointersByTargetId;
     private Vector3 _centreOffset;
     private float _lastTargetFilterSecondsAgo;
+    private List<UnitBoundary> _boundariesPassed;
 
-    private void Start()
+    private void OnEnable()
     {
         _centreOffset = _centre.transform.position - transform.position;
         _goalPointersByTargetId = new();
@@ -26,11 +29,11 @@ public class PlayerGoalPointers : MonoBehaviour
 
     private void Update()
     {
+        // Update goal pointer objects based on targets
         _lastTargetFilterSecondsAgo += Time.deltaTime;
 
         if (_lastTargetFilterSecondsAgo >= _filterTargetsEverySeconds)
         {
-            // Update goal pointer objects based on targets
             _targetsById = GetTargetsById();
 
             var toRemove = _goalPointersByTargetId.Keys.Except(_targetsById.Keys).ToList();

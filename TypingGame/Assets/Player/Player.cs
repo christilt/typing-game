@@ -20,6 +20,10 @@ public class Player : Singleton<Player>
         _typingMovement.OnIncorrectKeyTyped += HandleIncorrectKeyTyped;
         _inputController.OnAttack += HandleAttack;
         _inputController.OnPauseOrUnpause += HandlePauseOrUnpause;
+        if (LevelSettingsManager.Instance.LevelSettings.AreGoalPointersEnabled)
+        {
+            _goalPointers.enabled = true;
+        }
     }
 
     private void OnDestroy()
