@@ -87,6 +87,13 @@ public class Player : Singleton<Player>
 
     public void BecomeNotGreedy() => BecomeNormalIfStatus(PlayerState.Greedy);
 
+    public void HitCollectable(Collectable collectable)
+    {
+        collectable.BeEffected();
+
+        _goalPointers.UpdateTargetCollection();
+    }
+
     public void HitEnemy(Enemy enemy)
     {
         if (State == PlayerState.Invincible)
@@ -104,6 +111,16 @@ public class Player : Singleton<Player>
         {
             GameplayManager.Instance.PlayerDying();
         }
+    }
+
+    public void EnterBoundary(Boundary boundary)
+    {
+        _goalPointers.IncludeEnteredBoundary(boundary);
+    }
+
+    public void ExitBoundary(Boundary boundary)
+    {
+        _goalPointers.IncludeExitedBoundary(boundary);
     }
 
     private void Celebrate()
@@ -135,9 +152,11 @@ public class Player : Singleton<Player>
                 break;
             case PlayerState.Normal:
                 SetMoveableAndCollidable(true);
+                _goalPointers.enabled = true;
                 break;
             case PlayerState.Paused:
                 SetMoveableAndCollidable(false);
+                _goalPointers.enabled = false;
                 break;
             case PlayerState.Dying:
                 SetMoveableAndCollidable(false);

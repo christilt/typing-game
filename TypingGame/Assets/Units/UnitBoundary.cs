@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UnitBoundary : MonoBehaviour
 {
-    [SerializeField] private Renderer[] _areas;
+    [SerializeField] private Collider2D[] _areas;
 
     private void Awake()
     {

@@ -23,11 +23,16 @@ public class Collectable : Unit
     {
         if (collision.TryGetRigidbodyComponent<Player>(out var player))
         {
-            foreach(var effect in _effects) 
-            {
-                effect.Trigger();
-            }
-            BeDestroyed();
+            player.HitCollectable(this);
         }
+    }
+
+    public void BeEffected()
+    {
+        foreach (var effect in _effects)
+        {
+            effect.Trigger();
+        }
+        BeDestroyed();
     }
 }

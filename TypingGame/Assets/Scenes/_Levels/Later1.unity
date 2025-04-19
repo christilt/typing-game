@@ -514,7 +514,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4669198741857756270, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
       propertyPath: m_Name
-      value: UnitBoundary
+      value: Boundary
       objectReference: {fileID: 0}
     - target: {fileID: 4669198741857756270, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
       propertyPath: m_IsActive
@@ -578,9 +578,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7097919592021091883, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
   m_PrefabInstance: {fileID: 1148918145420975526}
   m_PrefabAsset: {fileID: 0}
---- !u!212 &1148918145420975528 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 1495691000887531368, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
+--- !u!61 &1148918145420975528 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 9007401020261881022, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
   m_PrefabInstance: {fileID: 1148918145420975526}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1512679717831623886
@@ -593,7 +593,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4669198741857756270, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
       propertyPath: m_Name
-      value: UnitBoundaryL
+      value: BoundaryL
       objectReference: {fileID: 0}
     - target: {fileID: 7097919592021091883, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
       propertyPath: m_LocalScale.x
@@ -653,9 +653,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7097919592021091883, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
   m_PrefabInstance: {fileID: 1512679717831623886}
   m_PrefabAsset: {fileID: 0}
---- !u!212 &1512679717831623888 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 1495691000887531368, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
+--- !u!61 &1512679717831623888 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 9007401020261881022, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
   m_PrefabInstance: {fileID: 1512679717831623886}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1990747365732441995
@@ -668,7 +668,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4669198741857756270, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
       propertyPath: m_Name
-      value: UnitBoundary (1)
+      value: Boundary (1)
       objectReference: {fileID: 0}
     - target: {fileID: 7097919592021091883, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
       propertyPath: m_LocalScale.x
@@ -728,9 +728,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7097919592021091883, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
   m_PrefabInstance: {fileID: 1990747365732441995}
   m_PrefabAsset: {fileID: 0}
---- !u!212 &1990747365732441997 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 1495691000887531368, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
+--- !u!61 &1990747365732441997 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 9007401020261881022, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
   m_PrefabInstance: {fileID: 1990747365732441995}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2585948882421801593
@@ -883,7 +883,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4669198741857756270, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
       propertyPath: m_Name
-      value: UnitBoundaryBL
+      value: BoundaryBL
       objectReference: {fileID: 0}
     - target: {fileID: 7097919592021091883, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
       propertyPath: m_LocalScale.x
@@ -1015,7 +1015,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4669198741857756270, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
       propertyPath: m_Name
-      value: UnitBoundary (3)
+      value: Boundary (3)
       objectReference: {fileID: 0}
     - target: {fileID: 7097919592021091883, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
       propertyPath: m_LocalScale.x
@@ -1075,9 +1075,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7097919592021091883, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
   m_PrefabInstance: {fileID: 3629274791758388199}
   m_PrefabAsset: {fileID: 0}
---- !u!212 &3629274791758388201 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 1495691000887531368, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
+--- !u!61 &3629274791758388201 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 9007401020261881022, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
   m_PrefabInstance: {fileID: 3629274791758388199}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3838531206670688674
@@ -24216,7 +24216,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4669198741857756270, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
       propertyPath: m_Name
-      value: UnitBoundaryTR
+      value: BoundaryTR
       objectReference: {fileID: 0}
     - target: {fileID: 7097919592021091883, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
       propertyPath: m_LocalScale.x
@@ -24276,9 +24276,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7097919592021091883, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
   m_PrefabInstance: {fileID: 4797273662236258371}
   m_PrefabAsset: {fileID: 0}
---- !u!212 &4797273662236258373 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 1495691000887531368, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
+--- !u!61 &4797273662236258373 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 9007401020261881022, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
   m_PrefabInstance: {fileID: 4797273662236258371}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5456547730612666622
@@ -24367,7 +24367,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4669198741857756270, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
       propertyPath: m_Name
-      value: UnitBoundary (2)
+      value: Boundary (2)
       objectReference: {fileID: 0}
     - target: {fileID: 7097919592021091883, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
       propertyPath: m_LocalScale.x
@@ -24427,9 +24427,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7097919592021091883, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
   m_PrefabInstance: {fileID: 5662691637578617474}
   m_PrefabAsset: {fileID: 0}
---- !u!212 &5662691637578617476 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 1495691000887531368, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
+--- !u!61 &5662691637578617476 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 9007401020261881022, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
   m_PrefabInstance: {fileID: 5662691637578617474}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6238984603272233337
@@ -24442,7 +24442,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4669198741857756270, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
       propertyPath: m_Name
-      value: UnitBoundaryT
+      value: BoundaryT
       objectReference: {fileID: 0}
     - target: {fileID: 7097919592021091883, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
       propertyPath: m_LocalScale.x
@@ -24502,9 +24502,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7097919592021091883, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
   m_PrefabInstance: {fileID: 6238984603272233337}
   m_PrefabAsset: {fileID: 0}
---- !u!212 &6238984603272233339 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 1495691000887531368, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
+--- !u!61 &6238984603272233339 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 9007401020261881022, guid: 57ba56adc72d70d46a1ee3a2a79938cd, type: 3}
   m_PrefabInstance: {fileID: 6238984603272233337}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6596996324467896979
@@ -25013,7 +25013,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _areas:
-  - {fileID: 6238984603272233339}
   - {fileID: 4797273662236258373}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
